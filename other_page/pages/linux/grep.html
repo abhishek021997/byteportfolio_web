@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Linux grep command with options and descriptions">
+    <title>Linux Grep Command</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+   
+    </style>
+</head>
+<body>
+    <main>
+    <h1>Linux Grep Command</h1>
+    <p>The <code>grep</code> command in Linux is used to search for a specific pattern of text in files or input. Below is a list of commonly used options with their descriptions:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>-i</code></td>
+                <td>Ignore case distinctions in patterns and data.</td>
+            </tr>
+            <tr>
+                <td><code>-v</code></td>
+                <td>Invert the match to select non-matching lines.</td>
+            </tr>
+            <tr>
+                <td><code>-r</code> or <code>-R</code></td>
+                <td>Recursively search directories for the pattern.</td>
+            </tr>
+            <tr>
+                <td><code>-n</code></td>
+                <td>Display line numbers with the matching lines.</td>
+            </tr>
+            <tr>
+                <td><code>-c</code></td>
+                <td>Count the number of matching lines.</td>
+            </tr>
+            <tr>
+                <td><code>-l</code></td>
+                <td>List only the names of files with matching lines.</td>
+            </tr>
+            <tr>
+                <td><code>-w</code></td>
+                <td>Match whole words only.</td>
+            </tr>
+            <tr>
+                <td><code>-e</code></td>
+                <td>Specify multiple patterns to search for.</td>
+            </tr>
+            <tr>
+                <td><code>--color</code></td>
+                <td>Highlight the matching text in the output.</td>
+            </tr>
+            <tr>
+                <td><code>-A [num]</code></td>
+                <td>Show [num] lines of trailing context after matching lines.</td>
+            </tr>
+            <tr>
+                <td><code>-B [num]</code></td>
+                <td>Show [num] lines of leading context before matching lines.</td>
+            </tr>
+            <tr>
+                <td><code>-C [num]</code></td>
+                <td>Show [num] lines of context around matching lines.</td>
+            </tr>
+            <tr>
+                <td><code>-E</code></td>
+                <td>Interpret the pattern as an extended regular expression.</td>
+            </tr>
+            <tr>
+                <td><code>^</code></td>
+                <td>Match the beginning of a line.</td>
+            </tr>
+            <tr>
+                <td><code>$</code></td>
+                <td>Match the end of a line.</td>    
+            </tr>
+            <tr>
+                <td><code>^[#]</code></td>
+                <td>Match lines starting with a specific character (e.g., #).</td>
+            </tr>
+
+        </tbody>
+    </table>
+    <p>Example usage:</p>
+    <pre><code>grep -i "pattern" filename  </code>:- This command searches for "pattern" in the specified file, ignoring case.</pre>
+    
+    <p>Grep Command with Pipe symbole</p>
+    <pre><code>cat file.txt | grep -i "pattern"</code></pre>
+    <p>Grep Command search with multiple words</p>
+    <pre><code>grep -E "pattern1|pattern2" filename</code></pre>
+
+    <p>Grep Command provide output with after some lines and before some lines or command some lines </p>
+    <p>Example:</p>
+    <pre><code>grep -n -A 2 "pattern" filename</code></pre>
+    <pre><code>grep -n -B 2 "pattern" filename</code></pre>
+    <pre><code>grep -n -c 2 "pattern" filename</code></pre>
+    
+
+
+    </main>
+</body>
+</html>

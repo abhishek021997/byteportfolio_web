@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Networking Commands and Concepts</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+   
+    </style>
+</head>
+<body>
+    <main>
+    <h1>Linux Networking Commands and Concepts</h1>
+
+    <h2>Networking Concepts</h2>
+    <p>Networking in Linux involves managing and configuring network interfaces, routing, and services. Below are some key concepts:</p>
+    <ul>
+        <li><strong>IP Address:</strong> A unique identifier for a device on a network.</li>
+        <li><strong>Subnet Mask:</strong> Defines the network and host portions of an IP address.</li>
+        <li><strong>Gateway:</strong> A router that connects a local network to other networks.</li>
+        <li><strong>DNS:</strong> Resolves domain names to IP addresses.</li>
+    </ul>
+
+    <h2>Class of ip address</h2>
+    <p>IP addresses are divided into classes based on their leading bits. The classes are:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Class</th>
+                <th>IP Address Range</th>
+            </tr>
+        </thead>
+            <tbody>
+                <tr><td>A</td>
+                    <td>0 - 126</td>
+                </tr>
+                <tr><td>B</td>
+                    <td>128 - 191</td>
+                </tr>
+                <tr>
+                    <td>C</td>
+                    <td>192 - 223</td>
+                </tr>
+                <tr><td>D</td>
+                    <td>224 - 239</td>
+                </tr>
+                <tr><td>E</td>
+                    <td>240 - 255</td>
+                </tr>
+            </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">Note: Class D is used for multicast, and Class E is reserved for future use.</td>
+            </tr>
+        </tfoot>
+
+        <thead>
+            <tr>
+                <th>Class</th>
+                <th>Subnet mask range</th>
+            </tr>
+        </thead>
+            <tbody>
+                <tr>
+                    <td>A</td>
+                    <td>255.0.0.0</td>
+                </tr>
+                <tr>
+                    <td>B</td>
+                    <td>255.255.0.0</td>
+                </tr>
+                <tr>
+                    <td>C</td>
+                    <td>255.255.255.0</td>
+                </tr>
+            </tbody>
+    </table>
+    <p>Class A, B, and C are used for unicast communication, while Class D is used for multicast communication.</p>
+    <p>Class E is reserved for experimental purposes.</p>
+
+
+    <h2>Common Networking Commands</h2>
+
+    <h3>Check Network Interfaces</h3>
+    <p>Use this command to view network interfaces and their IP addresses.</p>
+    
+    <pre>
+<code># ip addr</code>
+<code># ifconfig /all</code>
+<code># ip a</code>
+<code># ip add show</code>
+<code># ip link</code>
+    </pre>
+    <div class="example">
+        <strong>Example Output:</strong>
+        <pre>
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    inet 127.0.0.1/8 scope host lo
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    inet 192.168.1.10/24 brd 192.168.1.255 scope global eth0
+        </pre>
+    </div>
+
+    <h3>Ping a Host</h3>
+    <p>Use the <code>ping</code> command to test connectivity to another host.</p>
+    <pre><code>ping google.com</code></pre>
+    <div class="example">
+        <strong>Example Output:</strong>
+        <pre>
+PING google.com (142.250.190.78) 56(84) bytes of data.
+64 bytes from 142.250.190.78: icmp_seq=1 ttl=115 time=12.3 ms
+        </pre>
+    </div>
+
+    <h3>Display Routing Table</h3>
+    <p>Use the <code>route</code> or <code>ip route</code> command to view the routing table.</p>
+    <pre><code>ip route</code></pre>
+    <div class="example">
+        <strong>Example Output:</strong>
+        <pre>
+default via 192.168.1.1 dev eth0
+192.168.1.0/24 dev eth0 proto kernel scope link src 192.168.1.10
+        </pre>
+    </div>
+
+    <h3>Manual Network Configuration</h3>
+    <p>Network configuration can be done manually by editing network configuration files. For example:</p>
+    <pre><code>/etc/network/interfaces</code></pre>
+    <div class="example">
+        <strong>Example Configuration:</strong>
+        <pre>
+auto eth0
+iface eth0 inet static
+    address 192.168.1.100
+    netmask 255.255.255.0
+    gateway 192.168.1.1
+        </pre>
+    </div>
+
+    <h3>Nmcli basic command</h3>
+    <p>NetworkManager provides the <code>nmcli</code> command-line tool for managing network connections.</p>
+    <ul>
+        <li><strong>View Network connection status:</strong> <code>nmcli connection show</code></li>
+        <li><strong>Delete a adapter:</strong> <code>nmcli connection delete ens10</code></li>
+        <li><strong>Add a new connection:</strong> <code>nmcli connection add</code></li>
+        <li><strong>Modify a network connection:</strong> <code>nmcli connection modify</code></li>
+    </ul>
+    <h3>1. View Network connection status</h3>
+    <p>To view the status of network connections, use:</p>
+    <pre><code>nmcli connection show</code></pre>
+    <p>This command displays a list of all network connections and their status.</p>
+    <p>To view the status of a specific connection, use:</p>
+    <pre><code>nmcli connection show my-connection</code></pre>
+    <p>This command displays detailed information about the specified connection.</p>
+    <p>To view the status of all devices, use:</p>
+    <pre><code>nmcli device status</code></pre>
+    <p>This command displays the status of all network devices.</p>
+    <p>To view the status of a specific device, use:</p>
+    <pre><code>nmcli device show eth0</code></pre>
+    <p>This command displays detailed information about the specified device.</p>
+
+    <div class="example">
+        <strong>Example Output:</strong>
+        <pre>
+DEVICE  TYPE      STATE         CONNECTION
+eth0    ethernet  connected     Wired connection 1
+lo      loopback  unmanaged     --
+        </pre>
+    </div>
+
+    <h3>2. Delete a adapter</h3>
+    <p>To delete a network connection, use:</p>
+    <pre><code>nmcli connection delete my-connection</code></pre>
+    <p>This command deletes the specified connection.</p>
+    <p>To delete a network device, use:</p>
+    <pre><code>nmcli device delete eth0</code></pre>
+    <p>This command deletes the specified device.</p>
+    
+    <h3>3. Modify a network connection</h3>
+    <p>To modify a network connection, use:</p>
+    <pre><code>nmcli connection modify eth0 ipv4.address 192.168.0.15/24</code></pre>
+    <p>This command modifies the specified connection to use the new IP address.</p>
+    <p>To modify the DNS settings of a connection, use:</p>
+    <pre><code>nmcli connection modify eth0 +ipv4.dns 4.4.4.4</code></pre>
+    <p>This command adds a new DNS server to the connection.</p>    
+    <p>To modify the gateway of a connection, use:</p>
+    <pre><code>nmcli connection modify eth0 gw4 192.168.1.1</code></pre>
+    <p>This command modifies the gateway of the specified connection.</p>
+
+    <h3>4. Add a new connection</h3>
+    <pre><code>nmcli connection add type ethernet ifname eth0 con-name my-connection autoconnect yes ip4 192.168.0.10/24 gw4 192.168.0.1 ipv4.dns 8.8.8.8 +ipv4.dns 4.2.2.2</code></pre>
+    <p>This command adds a new Ethernet connection named "my-connection" with the specified IP address, gateway, and DNS servers.</p>
+    <div class="example">
+        <strong>Example Output:</strong>
+        <pre>
+Connection 'my-connection' (UUID: 12345678-1234-1234-1234-123456789abc) successfully added.
+        </pre>
+    </div>
+    <p>To connect to a Wi-Fi network:</p>
+    <pre><code>nmcli device wifi connect "SSID" password "your_password"</code></pre>
+    <div class="example">
+        <strong>Example Output:</strong>
+        <pre>
+Connection successfully activated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/1)
+        </pre>
+    </div>
+
+    <p>To disconnect a device:</p>
+    <pre><code>nmcli device disconnect eth0</code></pre>
+    <div class="example">
+        <strong>Example Output:</strong>
+        <pre>
+Device 'eth0' successfully disconnected.
+        </pre>
+    </div>
+    
+
+
+
+
+    <h3>5. Restart Networking Service</h3>
+    <p>After making changes to network configuration files, restart the networking service:</p>
+    <pre><code>sudo systemctl restart networking</code></pre>
+
+    <h2>Conclusion</h2>
+    <p>Linux provides powerful tools and commands for managing networks. Understanding these commands and concepts is essential for system administrators and network engineers.</p>
+    </main>
+</body>
+</html>

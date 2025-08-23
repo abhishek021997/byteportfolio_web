@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Guide to install and configure FTP on Red Hat and Ubuntu Linux.">
+    <title>FTP Installation and Configuration - Red Hat & Ubuntu</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+  
+    </style>
+</head>
+<body>
+    
+    <main>
+        <h1>FTP Installation and Configuration</h1>
+        <p>For Red Hat and Ubuntu Linux</p>
+        <section>
+            <h2>Installing FTP on Red Hat</h2>
+            <p>To install and configure FTP on Red Hat, follow these steps:</p>
+            <h3>Step 1: Install vsftpd</h3>
+            <pre><code>sudo yum install vsftpd</code></pre>
+            <h3>Step 2: Start and Enable the Service</h3>
+            <pre><code>
+sudo systemctl start vsftpd
+sudo systemctl enable vsftpd
+            </code></pre>
+            <h3>Step 3: Configure vsftpd</h3>
+            <p>Edit the configuration file:</p>
+            <pre><code>sudo nano /etc/vsftpd/vsftpd.conf</code></pre>
+            <p>Make necessary changes, such as enabling anonymous access or setting up local user access.</p>
+            <h3>Step 4: Restart the Service</h3>
+            <pre><code>sudo systemctl restart vsftpd</code></pre>
+        </section>
+        <section>
+            <h2>Installing FTP on Ubuntu</h2>
+            <p>To install and configure FTP on Ubuntu, follow these steps:</p>
+            <h3>Step 1: Install vsftpd</h3>
+            <pre><code>sudo apt update && sudo apt install vsftpd</code></pre>
+            <h3>Step 2: Start and Enable the Service</h3>
+            <pre><code>
+sudo systemctl start vsftpd
+sudo systemctl enable vsftpd
+            </code></pre>
+            <h3>Step 3: Configure vsftpd</h3>
+            <p>Edit the configuration file:</p>
+            <pre><code>sudo nano /etc/vsftpd.conf</code></pre>
+            <p>Make necessary changes, such as enabling anonymous access or setting up local user access.</p>
+            <h3>Step 4: Restart the Service</h3>
+            <pre><code>sudo systemctl restart vsftpd</code></pre>
+        </section>
+        <section>
+            <h2>Testing the FTP Server</h2>
+            <p>To test the FTP server, use the following command:</p>
+            <pre><code>ftp localhost</code></pre>
+            <p>Ensure you can connect and transfer files successfully.</p>
+        </section>
+
+        <section>
+            <h2> ftp commands</h2>
+            <p>Here are some common FTP commands:</p>
+            <ul>
+                <li><strong>ls</strong>: List files in the current directory.</li>
+                <li><strong>cd</strong>: Change directory.</li>
+                <li><strong>get</strong>: Download a file from the server.</li>
+                <li><strong>put</strong>: Upload a file to the server.</li>
+                <li><strong>bye</strong>: Exit the FTP session.</li>
+            </ul>
+            <p>For more detailed information, refer to the official documentation:</p>
+        </section>
+
+    </main>
+</body>
+</html>

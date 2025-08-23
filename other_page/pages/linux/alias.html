@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about the Linux alias command with examples and file entry usage.">
+    <title>Linux Alias Command</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <main>
+    <h1>Linux Alias Command</h1>
+    <p>The <code>alias</code> command in Linux is used to create shortcuts for long or frequently used commands. This can save time and reduce errors when typing commands.</p>
+
+    <h2>Basic Syntax</h2>
+    <pre><code>alias name='command'</code></pre>
+    <p>Here, <code>name</code> is the shortcut name, and <code>command</code> is the full command you want to alias.</p>
+
+    <h2>Example</h2>
+    <p>Suppose you frequently use the <code>ls -la</code> command to list all files with detailed information. You can create an alias for it:</p>
+    <pre><code>alias ll='ls -la'</code></pre>
+    <p>Now, typing <code>ll</code> will execute <code>ls -la</code>.</p>
+
+    <h2>Making Aliases Permanent</h2>
+    <p>Aliases created using the <code>alias</code> command are temporary and will be lost after you close the terminal. To make them permanent, add them to your shell configuration file:</p>
+    <ul>
+        <li>For <code>bash</code>: Add the alias to <code>~/.bashrc</code></li>
+        <li>For <code>zsh</code>: Add the alias to <code>~/.zshrc</code></li>
+    </ul>
+    <p>Example:</p>
+    <pre><code>echo "alias ll='ls -la'" >> ~/.bashrc</code></pre>
+    <p>Then, reload the configuration file:</p>
+    <pre><code>source ~/.bashrc</code></pre>
+
+    <h2>Removing an Alias</h2>
+    <p>To remove an alias, use the <code>unalias</code> command:</p>
+    <pre><code>unalias ll</code></pre>
+    <p>This will remove the alias <code>ll</code>.</p>
+    </main>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Guide to install and configure DNS on Linux.">
+    <title>Linux DNS Installation and Configuration</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+</head>
+<style>
+    
+</style>
+<body>
+    <main>
+        <h1>Linux DNS Installation and Configuration</h1>
+        <section>
+            <h2>Introduction</h2>
+            <p>This guide provides step-by-step instructions to install and configure a DNS server on a Linux system.</p>
+        </section>
+        <section>
+            <h2>Installation</h2>
+            <p>To install a DNS server, use the following command:</p>
+            <pre><code>sudo apt update && sudo apt install bind9</code></pre>
+            <p>For Red Hat-based systems, use:</p>
+            <pre><code>sudo yum install bind</code></pre>
+        </section>
+        <section>
+            <h2>Configuration</h2>
+            <p>After installation, configure the DNS server by editing the <code>/etc/bind/named.conf.options    : Global DNS options</code> <br> <code>/etc/bind/named.conf.local    : For your zones</code> <br> <code>/etc/bind/named.conf.default-zones    : Default zones such as localhost, its reverse, and the root hints</code></p>
+
+            <pre><code>
+options {
+    directory "/var/cache/bind";
+    forwarders {
+        8.8.8.8;
+        8.8.4.4;
+    };
+    dnssec-validation auto;
+    listen-on-v6 { any; };
+};
+            </code></pre>
+
+
+            <p>Define your zones in the <code>/etc/bind/named.conf.local</code> file:</p>
+            <pre><code>
+zone "example.com" {
+    type master;
+    file "/etc/bind/db.example.com";
+};
+zone "1.168.192.in-addr.arpa" {
+    type master;
+    file "/etc/bind/db.192";
+};
+            </code></pre>   
+            <p>Create the zone files:</p>
+            <pre><code>
+sudo cp /etc/bind/db.local /etc/bind/db.example.com
+sudo cp /etc/bind/db.127 /etc/bind/db.192
+
+sudo vim /etc/bind/db.example.com  
+sudo vim /etc/bind/db.192
+            </code></pre>
+            <p>Example content for <code>/etc/bind/db.example.com</code>:</p>
+            <pre><code>
+$TTL    604800
+@       IN      SOA     ns.example.com. db.example.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      ns.example.com.
+@       IN      A       192.168.1.10
+@       IN      AAAA    ::1
+ns      IN      A       192.168.1.10
+                </code></pre>
+            <p>Example content for <code>/etc/bind/db.192</code>:</p>
+            <pre><code>
+$TTL    604800
+@       IN      SOA     ns.example.com. db.example.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      ns.example.com.
+@       IN      PTR     example.com.
+10      IN      PTR     ns.example.com.
+            </code></pre>
+            <p>Make sure to adjust the IP addresses and domain names as per your setup.</p>
+            <p>Check the configuration for syntax errors:</p>
+            <pre><code>sudo named-checkconf</code></pre>
+            <p>Check the zone files for errors:</p>
+            <pre><code>sudo named-checkzone example.com /etc/bind/db.example.com</code></pre>
+            <pre><code>sudo named-checkzone 1.168.192.in-addr.arpa /etc/bind/db.192</code></pre>
+            <p>Check the DNS server status:</p>
+            <pre><code>sudo systemctl status bind9</code></pre>
+            <p>If the service is not running, start it:</p>
+            <pre><code>sudo systemctl start bind9</code></pre>
+            <p>Enable the service to start on boot:</p>
+            <pre><code>sudo systemctl enable bind9</code></pre>
+            <p>Check the firewall settings to allow DNS traffic:</p>
+            <pre><code>sudo ufw allow 53</code></pre>
+            <p>For Red Hat-based systems, use:</p>
+            <pre><code>sudo firewall-cmd --add-service=dns --permanent
+sudo firewall-cmd --reload</code></pre>
+            <p>For SELinux, ensure that it allows DNS traffic:</p>  
+            <pre><code>sudo setsebool -P named_connect_any=1</code></pre>
+            <p>Check the SELinux status:</p>
+            <pre><code>sestatus</code></pre>
+            <p>If SELinux is enforcing, you may need to adjust the policies or set it to permissive mode:</p>
+            <pre><code>sudo setenforce 0</code></pre>
+            <p>To make the change permanent, edit the <code>/etc/selinux/config</code> file and set:</p>
+            <pre><code>SELINUX=permissive</code></pre>
+            <p>For systems using AppArmor, ensure that the DNS server is allowed to run:</p>
+            <pre><code>sudo aa-status</code></pre>
+            <p>If AppArmor is blocking the DNS server, you may need to adjust the profiles or disable it:</p>
+            <pre><code>sudo systemctl stop apparmor
+sudo systemctl disable apparmor</code></pre>
+            <p>To disable AppArmor for the DNS server, edit the profile file:</p>
+            <pre><code>sudo vim /etc/apparmor.d/usr.sbin.named</code></pre>
+            <p>Comment out the lines that restrict access to the DNS server files:</p>
+            <pre><code># /etc/bind/db.example.com r,
+# /etc/bind/db.192 r,
+# /etc/bind/named.conf.local r,
+# /etc/bind/named.conf.options r,
+# /etc/bind/named.conf.default-zones r,
+# /etc/bind/named.conf r,
+</code></pre>
+            <p>Then reload the AppArmor profiles:</p>
+            n <pre><code>sudo systemctl restart apparmor</code></pre>
+
+            <p>To check the AppArmor status:</p>
+            <pre><code>sudo aa-status</code></pre>
+            <p>If AppArmor is enforcing, you may need to adjust the profiles or set it to complain mode:</p>
+            <pre><code>sudo aa-complain /etc/apparmor.d/usr.sbin.named</code></pre>
+            <p>To make the change permanent, edit the <code>/etc/apparmor.d/usr.sbin.named</code> file and set:</p>
+            <pre><code>profile /usr/sbin/named flags=(attach_disconnected, complain) &#10627;</code></pre>
+            <p>Restart the AppArmor service to apply changes:</p>
+            <pre><code>sudo systemctl restart apparmor</code></pre>
+
+
+
+
+            <p>Restart the DNS service to apply changes:</p>
+            <pre><code>sudo systemctl restart bind9</code></pre>
+        </section>
+        <section>
+            <h2>Testing</h2>
+            <p>To test the DNS server, use the <code>dig</code> command:</p>
+            <pre><code>dig example.com</code></pre>
+        </section>
+
+        <section>
+            <h2>Common record types</h2>
+            <p> This section covers some of the most common DNS record types.</p>
+            <pre><code>www      IN    A      192.168.1.12 </code></pre>
+            <p> CNAME record Used to create an alias to an existing A record. You cannot create a CNAME record pointing to another CNAME record.</p>
+            <pre><code> web     IN    CNAME  www </code></pre>
+            <p> MX record Used to define where emails should be sent to. Must point to an A record, not a CNAME. </p>
+            <pre><code>
+@       IN    MX  1   mail.example.com.
+mail    IN    A       192.168.1.13
+            </code></pre>
+            <p>NS record Used to define which servers serve copies of a zone. It must point to an A record, not a CNAME. This is where primary and secondary servers are defined.</p>
+            <pre><code>
+@       IN    NS     ns.example.com.
+@       IN    NS     ns2.example.com.
+ns      IN    A      192.168.1.10
+ns2     IN    A      192.168.1.11
+                </code></pre>
+
+
+        </section>
+
+
+    </main>
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Guide to install and configure Samba on Linux.">
+    <title>Samba Installation on Linux</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+
+    </style>
+</head>
+<body>
+    <main>
+    <h1>Samba Installation</h1>
+    <p>Samba is an open-source software suite that provides file and print services to SMB/CIFS clients. Follow the steps below to install and configure Samba on your Linux system.</p>
+    <p><b>Package name:</b> samba <br>
+        <b>Demon name:</b> smbd <br>
+        <b>Configuration file:</b> /etc/samba/smb.conf <br>
+        <b>Default port:</b> 139, 445 <br>
+        <b>Default user:</b> nobody <br>
+        <b>Default group:</b> nogroup <br>
+        <b>Default directory:</b> /var/lib/samba/usershares <br>
+        <b>Default log directory:</b> /var/log/samba <br>
+        <b>Default configuration directory:</b> /etc/samba <br>
+    </p>
+    <p> 
+        <h3>Types of samba access method</h3>
+        <ul>
+            <li><b>Share mode:</b> This is the default mode. In this mode, the Samba server shares files and directories with clients using a share name.</li>
+            <li><b>User mode:</b> In this mode, each user has their own private directory on the Samba server. Users can only access their own directories.</li>
+            <li><b>Server mode:</b> In this mode, the Samba server acts as a file server for clients. Clients can access files and directories on the server without needing to log in.</li>
+            <li><b>Domain mode:</b> In this mode, the Samba server acts as a domain controller for Windows clients. Clients can log in to the Samba server using their Windows credentials.</li>
+        </ul>
+        <h3>Types of samba share</h3>
+        <ul>
+            <li><b>Public share:</b> This type of share is accessible to all users, regardless of their authentication status.</li>
+            <li><b>Private share:</b> This type of share is only accessible to users who have been granted permission.</li>
+            <li><b>Read-only share:</b> This type of share allows users to read files but not write to them.</li>
+            <li><b>Read-write share:</b> This type of share allows users to read and write files.</li>
+            <li><b>Hidden share:</b> This type of share is not visible to users unless they know the share name.</li>
+            <li><b>Encrypted share:</b> This type of share uses encryption to protect files and directories.</li>
+            <li><b>Backup share:</b> This type of share is used to store backup files.</li>
+            <li><b>Archive share:</b> This type of share is used to store archived files.</li>
+            <li><b>Temporary share:</b> This type of share is used to store temporary files.</li>
+            <li><b>Virtual share:</b> This type of share is used to store virtual files.</li>
+            <li><b>Remote share:</b> This type of share is used to access files and directories on a remote server.</li>
+            <li><b>Local share:</b> This type of share is used to access files and directories on the local server.</li>
+        </ul>
+        <h3>Types of samba user</h3>
+        <ul>
+            <li><b>Administrator:</b> This user has full access to all files and directories on the Samba server.</li>
+            <li><b>Guest:</b> This user has limited access to files and directories on the Samba server.</li>
+            <li><b>Regular user:</b> This user has access to their own files and directories on the Samba server.</li>
+            <li><b>Power user:</b> This user has access to all files and directories on the Samba server, but cannot modify system settings.</li>
+            <li><b>Read-only user:</b> This user can only read files and directories on the Samba server.</li>
+            <li><b>Read-write user:</b> This user can read and write files and directories on the Samba server.</li>
+        </ul>
+        <h3> How to access samba share</h3>
+        <ol>
+            <li> <b>Browser:</b> smb://&lt;serverIP&gt;</li>
+            <li> <b>Terminal access:</b> smbclient //&lt;serverIP&gt;/sharename</li>
+            <li> <b>Mounting:</b> cisf-utils</li>
+        </ol>
+        <h3> samba configuration file commented methods</h3>
+        <ul>
+            <li><b>#</b></li>
+            <li><b>;</b></li>
+        </ul>
+    </p>
+
+    <h1>Samba Installation on Ubuntu</h1>
+    <h2>Step 1: Update the System</h2>
+    <p>Before installing Samba, update your system packages:</p>
+    <pre><code>
+        sudo apt update 
+        sudo apt upgrade -y
+    </code></pre>
+
+    <h2>Step 2: Install Samba</h2>
+    <p>Install Samba using the package manager:</p>
+    <pre><code>
+        sudo apt install samba -y
+    </code></pre>
+
+    <h2>Step 3: Verify Installation</h2>
+    <p>Check if Samba is installed correctly:</p>
+    <pre><code>
+        samba --version
+    </code></pre>
+
+    <h2>Step 4: Configure Samba</h2>
+    <p>Edit the Samba configuration file to set up shared directories:</p>
+    <pre><code>
+        sudo nano /etc/samba/smb.conf
+    </code></pre>
+    <p>Add the following configuration for a shared directory:</p>
+    <pre><code>
+        [shared]
+        comment = Shared Directory  # Description of the share
+        path = /path/to/shared/directory
+        browseable = yes
+        writable = yes
+        guest ok = yes
+        read only = no
+    </code></pre>
+
+    <h2>Step 5: Restart Samba Service</h2>
+    <p>Restart the Samba service to apply the changes:</p>
+    <pre><code>
+        sudo systemctl restart smbd
+    </code></pre>
+
+    <h2>Step 6: Test the Configuration</h2>
+    <p>Test the Samba configuration for errors:</p>
+    <pre><code>
+        testparm
+    </code></pre>
+
+    <h2>Step 7: Access the Shared Directory</h2>
+    <p>Access the shared directory from a Windows or Linux client using the following format:</p>
+    <pre><code>
+        \\&lt;server-ip&gt;\shared
+        </code></pre>
+
+    <h2>Step 8: To set Private Samba configuration</h2>
+    <p>To set up a private Samba share, you can create a user and set permissions:</p>
+
+    <pre><code>
+        sudo useradd sambauser # Create a new user for any name
+        sudo smbpasswd -a sambauser # Set a password for the Samba user
+        sudo chown sambauser:sambauser /path/to/shared/directory # Change ownership to the Samba user
+        sudo chmod 770 /path/to/shared/directory    # Set permissions to allow only the owner and group to access
+    </code></pre>
+
+    <p>Then, modify the Samba configuration file to restrict access:</p>
+
+    <pre><code>
+        [private]
+        comment = Private Directory
+        path = /path/to/private/directory
+        browseable = no
+        writable = yes
+        valid users = sambauser
+        read only = no
+    </code></pre>
+
+    <p>Restart the Samba service again:</p>
+
+    <pre><code>
+        sudo systemctl restart smbd
+    </code></pre>
+
+    <h2>Step 9: Firewall Configuration</h2>
+    <p>If you have a firewall enabled, allow Samba traffic:</p>
+
+    <pre><code>
+        sudo ufw allow samba
+    </code></pre>
+
+    <h2>Step 10: Check Samba Status</h2>
+    <p>Check the status of the Samba service:</p>
+
+    <pre><code>
+        sudo systemctl status smbd
+    </code></pre>
+    <p>Ensure that the service is active and running.</p>
+
+    <!-- how to install samba in redhat-->
+    <h1>Samba Installation on Redhat</h1>
+    <h2>Step 1: Update the System</h2>
+    <p>Before installing Samba, update your system packages:</p>
+    <pre><code>
+        sudo yum update -y
+        sudo yum upgrade -y
+    </code></pre>
+    <h2>Step 2: Install Samba</h2>
+    <p>Install Samba using the package manager:</p>
+    <pre><code>
+        sudo yum install samba samba-client samba-common -y
+    </code></pre>
+    <h2>Step 3: Verify Installation</h2>
+    <p>Check if Samba is installed correctly:</p>
+    <pre><code>
+        samba --version
+    </code></pre>
+    <h2>Step 4: Configure Samba</h2>
+    <p>Edit the Samba configuration file to set up shared directories:</p>
+    <pre><code>
+        sudo vim /etc/samba/smb.conf
+    </code></pre>
+    <p>Add the following configuration for a shared directory:</p>
+    <pre><code>
+        [shared]
+        comment = Shared Directory
+        path = /path/to/shared/directory
+        browseable = yes
+        writable = yes
+        guest ok = yes
+        read only = no
+    </code></pre>
+    <h2>Step 5: Restart Samba Service</h2>
+    <p>Restart the Samba service to apply the changes:</p>
+    <pre><code>
+        sudo systemctl restart smb
+        sudo systemctl restart nmb
+    </code></pre>
+    <h2>Step 6: Test the Configuration</h2>
+    <p>Test the Samba configuration for errors:</p>
+    <pre><code>
+        testparm
+    </code></pre>
+    <h2>Step 7: Access the Shared Directory</h2>
+    <p>Access the shared directory from a Windows or Linux client using the following format:</p>
+    <pre><code>
+        \\&lt;server-ip&gt;\shared
+    </code></pre>
+
+    <h2>Step 8: To set Private Samba configuration</h2>
+    <p>To set up a private Samba share, you can create a user and set permissions:</p>
+    <pre><code>
+        sudo useradd sambauser
+        sudo smbpasswd -a sambauser
+        sudo chown sambauser:sambauser /path/to/shared/directory
+        sudo chmod 770 /path/to/shared/directory
+    </code></pre>
+    <p>Then, modify the Samba configuration file to restrict access:</p>
+    <pre><code>
+        [private]
+        comment = Private Directory
+        path = /path/to/private/directory
+        browseable = no
+        writable = yes
+        valid users = sambauser
+        read only = no
+    </code></pre>
+    <p>Restart the Samba service again:</p>
+    <pre><code>
+        sudo systemctl restart smb
+        sudo systemctl restart nmb
+    </code></pre>
+    <h2>Step 9: Firewall Configuration</h2>
+    <p>If you have a firewall enabled, allow Samba traffic:</p>
+    <pre><code>
+        sudo firewall-cmd --permanent --add-service=samba
+        sudo firewall-cmd --reload
+    </code></pre>
+    <h2>Step 10: Check Samba Status</h2>
+    <p>Check the status of the Samba service:</p>
+    <pre><code>
+        sudo systemctl status smb
+        sudo systemctl status nmb
+    </code></pre>
+    <p>Ensure that the service is active and running.</p>
+
+
+    <h2> step 11: If we have SElinux enabled</h2>
+    <p>To set SELinux to allow Samba to share files, you can use the following command:</p>
+    <pre><code>
+        chcon -R -t samba_share_t /path/to/shared/directory
+    </code></pre>
+
+
+<h1>Samba Clinet side installation:</h1>
+<p>To install Samba client on Ubuntu, you can use the following command:</p>
+<pre><code>
+    sudo apt install samba-client -y
+</code></pre>
+<p> or</p>
+<pre><code>
+    sudo apt install cifs-utils -y
+</code></pre>
+<p>To install Samba client on Redhat, you can use the following command:</p>
+<pre><code>
+    sudo yum install samba-client -y
+</code></pre>
+<p> or</p>
+<pre><code>
+    sudo yum install cifs-utils -y
+</code></pre>
+
+<p>Some basic commnad to use in SMB terminal</p>
+<pre><code>
+    smbclient -L //server_ip -U username
+    smbclient //server_ip/shared_directory -U username
+    
+    -> After login
+    smb:/> ls                                       # List files and directories
+    smb:/> cd directory_name                        # Change directory
+    smb:/> get file_name                            # Download file
+    smb:/> put local_file_name                      # Upload file
+    smb:/> mget file_name1 file_name2               # Download multiple files
+    smb:/> mput local_file_name1 local_file_name2   # Upload multiple files
+    smb:/> del file_name                            # Delete file
+    smb:/> rmdir directory_name                     # Remove directory
+    smb:/> mkdir directory_name                     # Create directory
+    smb:/> rename old_file_name new_file_name       # Rename file
+    smb:/> chmod 755 file_name                      # Change file permissions
+    smb:/> chown user_name file_name                # Change file owner
+    smb:/> ldc directory_name                       # Change to local directory
+    smb:/> exit                                     # Exit smbclient
+</code></pre>
+
+<p>Samba mount point via CISF commnad</p>
+<pre><code>
+    sudo mount -t cisf //server_ip/shared_directory /mnt/mount_point -o guest   # public share directory
+    sudo mount -t cifs //server_ip/shared_directory /mnt/mount_point -o username=username,password=password     # private share directory
+
+</code></pre>
+<p>To unmount the Samba share, use the following command:</p>
+<pre><code>
+    sudo umount /mnt/mount_point
+</code></pre>
+
+<p>To mount Samba share automatically at boot, add the following line to /etc/fstab:</p>
+<pre><code>
+    -> Method 1
+    //server_ip/shared_directory /mnt/mount_point cifs username=username,password=password,uid=1000,gid=1000,iocharset=utf8 0 0
+    OR
+    //server_ip/shared_directory /mnt/mount_point cifs username=username,password=password 0 0
+    
+    -> Method 2 # using credentials file (First create a file with username and password)
+    //server_ip/shared_directory /mnt/mount_point cifs credentials=/path/to/credentials_file,uid=1000,gid=1000,iocharset=utf8 0 0
+    OR
+    //server_ip/shared_directory /mnt/mount_point cifs credentials=/path/to/credentials_file 0 0
+    # where credentials_file contains:
+
+</code></pre>
+    
+</main>
+
+    
+</body>
+</html>

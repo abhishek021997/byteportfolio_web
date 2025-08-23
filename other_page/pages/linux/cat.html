@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about the Linux cat command and its options with descriptions.">
+    <title>Linux cat Command</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <main>
+    <h1>Linux <code>cat</code> Command</h1>
+    <p>The <code>cat</code> command in Linux is used to concatenate and display the contents of files. It is one of the most commonly used commands in Linux.</p>
+    
+    <h2>Options and Descriptions</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>-n</code></td>
+                <td>Number all output lines.</td>
+            </tr>
+            <tr>
+                <td><code>-b</code></td>
+                <td>Number non-blank output lines.</td>
+            </tr>
+            <tr>
+                <td><code>-s</code></td>
+                <td>Suppress repeated empty output lines.</td>
+            </tr>
+            <tr>
+                <td><code>-E</code></td>
+                <td>Display a <code>$</code> at the end of each line.</td>
+            </tr>
+            <tr>
+                <td><code>-T</code></td>
+                <td>Display tab characters as <code>^I</code>.</td>
+            </tr>
+            <tr>
+                <td><code>-A</code></td>
+                <td>Show all characters, including non-printing characters.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Examples</h2>
+    <p>Here are some examples of using the <code>cat</code> command:</p>
+    <ul>
+        <li><code>cat file.txt</code> - Display the contents of <code>file.txt</code>.</li>
+        <li><code>cat file1.txt file2.txt > combined.txt</code> - Concatenate <code>file1.txt</code> and <code>file2.txt</code> into <code>combined.txt</code>.</li>
+        <li><code>cat -n file.txt</code> - Display the contents of <code>file.txt</code> with line numbers.</li>
+        <li><code>&gt; file.txt</code> - Clear the whole file content</li>
+
+    </ul>
+
+    <h2> Tee command </h2>
+    <p> The <code>tee</code> command in Linux is used to read from standard input and write to standard output and files. It is often used in pipelines to redirect output to multiple destinations.</p>
+    <h2>Options and Descriptions</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>-a</code></td>
+                <td>Append the output to the specified file(s) instead of overwriting them.</td>
+            </tr>
+            <tr>
+                <td><code>-i</code></td>
+                <td>Ignore interrupts.</td>
+            </tr>
+            <tr>
+                <td><code>-p</code></td>
+                <td>Prompt before overwriting files.</td>
+            </tr>
+        </tbody>
+    </table>
+    <h2>Examples</h2>
+    <p>Here are some examples of using the <code>tee</code> command:</p>
+    <ul>
+        <li><code>echo "Hello, World!" | tee file.txt</code> - Write "Hello, World!" to <code>file.txt</code>.</li>
+        <li><code>cat file.txt | tee -a file2.txt</code> - Append the contents of <code>file.txt</code> to <code>file2.txt</code>.</li>
+        <li><code>command | tee output.txt</code> - Redirect the output of a command to both the terminal and <code>output.txt</code>.</li>
+        <li><code>command | tee >(command2)</code> - Redirect the output of a command to both the terminal and another command.</li>
+        <li><code>command | tee >(command2) >(command3)</code> - Redirect the output of a command to multiple commands.</li>
+        <li><code>command | tee >(command2) >(command3) > file.txt</code> - Redirect the output of a command to multiple commands and a file.</li>
+        <li><code>command | tee >(command2) >(command3) | command4</code> - Redirect the output of a command to multiple commands and pipe it to another command.</li>
+        <li><code>command | tee >(command2) >(command3) | command4 > file.txt</code> - Redirect the output of a command to multiple commands, pipe it to another command, and write it to a file.</li>
+    </ul>
+    </main>
+</body>
+</html>

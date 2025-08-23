@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Step-by-step guide to install KVM on Linux.">
+    <title>Linux KVM Installation Guide</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+       
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Linux KVM Installation Guide</h1>
+        <h2>Introduction</h2>
+        <p>KVM (Kernel-based Virtual Machine) is a virtualization solution for Linux. This guide will walk you through the process of installing KVM on a Linux system.</p>
+        
+        <h2>Prerequisites</h2>
+        <ul>
+            <li>A Linux distribution (e.g., Ubuntu, CentOS, Fedora).</li>
+            <li>Root or sudo access.</li>
+            <li>Hardware virtualization support (check with <code>lscpu</code>).</li>
+        </ul>
+        
+        <h2>Installation Steps</h2>
+        <h3>Step 1: Verify Hardware Virtualization Support</h3>
+        <p>Run the following command to check if your CPU supports virtualization:</p>
+        <pre><code>egrep -c '(vmx|svm)' /proc/cpuinfo</code></pre>
+        <p>If the output is greater than 0, your CPU supports virtualization.</p>
+        
+        <h3>Step 2: Install KVM and Required Packages</h3>
+        <p>Use the package manager for your distribution:</p>
+        <ul>
+            <li>For Ubuntu/Debian:</li>
+            <pre><code>sudo apt update
+sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virt-manager</code></pre>
+            <li>For CentOS/RHEL:</li>
+            <pre><code>sudo yum install qemu-kvm libvirt libvirt-python libguestfs-tools virt-install</code></pre>
+        </ul>
+        
+        <h3>Step 3: Start and Enable libvirtd Service</h3>
+        <pre><code>sudo systemctl start libvirtd
+sudo systemctl enable libvirtd</code></pre>
+        
+        <h3>Step 4: Verify Installation</h3>
+        <p>Run the following command to check if KVM is installed correctly:</p>
+        <pre><code>virsh list --all</code></pre>
+        <p>If the command runs without errors, KVM is installed successfully.</p>
+        
+        <h2>Conclusion</h2>
+        <p>You have successfully installed KVM on your Linux system. You can now create and manage virtual machines using tools like <code>virt-manager</code> or <code>virsh</code>.</p>
+    
+
+        <section>
+            <h2>Ubuntu KVM Installation</h2>
+            <p>Follow these steps to install KVM on Ubuntu:</p>
+            <ol>
+                <li>Update your package list:</li>
+                <pre><code>sudo apt update</code></pre>
+                <li>Install KVM and related packages:</li>
+                <pre><code>sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virt-manager</code></pre>
+                <li>Verify the installation:</li>
+                <pre><code>virsh list --all</code></pre>
+            </ol>
+        </section>
+
+        <section>
+            <h2>Red Hat KVM Installation</h2>
+            <p>Follow these steps to install KVM on Red Hat:</p>
+            <ol>
+                <li>Install KVM and related packages:</li>
+                <pre><code>sudo yum install qemu-kvm libvirt libvirt-python libguestfs-tools virt-install</code></pre>
+                <li>Start and enable the libvirtd service:</li>
+                <pre><code>sudo systemctl start libvirtd
+        sudo systemctl enable libvirtd</code></pre>
+                <li>Verify the installation:</li>
+                <pre><code>virsh list --all</code></pre>
+            </ol>
+        </section>
+</main>
+</body>
+</html>

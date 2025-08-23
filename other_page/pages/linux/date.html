@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Linux date command with options and examples">
+    <title>Linux Date Command</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <main>
+    <h1>Linux <code>date</code> Command</h1>
+    <p>The <code>date</code> command in Linux is used to display or set the system date and time. It is a powerful utility that allows you to format the output in various ways.</p>
+
+    <h2>Basic Syntax</h2>
+    <pre><code>date [OPTION]... [+FORMAT]</code></pre>
+
+    <h2>Common Options</h2>
+    <ul>
+        <li><code>+%Y</code>: Displays the year (e.g., 2023).</li>
+        <li><code>+%y</code>: Displays the last two digits of the year (e.g., 23).</li>
+        <li><code>+%m</code>: Displays the month (01-12).</li>
+        <li><code>+%d</code>: Displays the day of the month (01-31).</li>
+        <li><code>+%H</code>: Displays the hour (00-23).</li>
+        <li><code>+%M</code>: Displays the minute (00-59).</li>
+        <li><code>+%S</code>: Displays the second (00-59).</li>
+        <li><code>+%A</code>: Displays the full weekday name (e.g., Monday).</li>
+        <li><code>+%a</code>: Displays the abbreviated weekday name (e.g., Mon).</li>
+        <li><code>+%B</code>: Displays the full month name (e.g., January).</li>
+        <li><code>+%b</code>: Displays the abbreviated month name (e.g., Jan).</li>
+        <li><code>+%c</code>: Displays the date and time in the locale's format.</li>
+        <li><code>+%x</code>: Displays the date in the locale's format.</li>
+        <li><code>+%X</code>: Displays the time in the locale's format.</li>
+        <li><code>+%s</code>: Displays the number of seconds since the epoch (1970-01-01 00:00:00 UTC).</li>
+        <li><code>+%z</code>: Displays the time zone offset from UTC.</li>
+        <li><code>+%Z</code>: Displays the time zone name.</li>
+        <li><code>--date="STRING"</code>: Displays the date and time specified by the string.</li>
+        <li><code>--set="STRING"</code>: Sets the system date and time.</li>
+        <li><code>--utc</code>: Displays the date in UTC (Coordinated Universal Time).</li>
+        <li><code>--rfc-3339=TYPE</code>: Displays the date in RFC 3339 format.</li>
+        <li><code>--iso-8601=TYPE</code>: Displays the date in ISO 8601 format.</li>
+    </ul>
+
+    <h2>Examples</h2>
+    <h3>1. Display the Current Date and Time</h3>
+    <pre><code>date</code></pre>
+    <p>Output:</p>
+    <pre><code>Tue Oct 10 14:30:00 UTC 2023</code></pre>
+
+    <h3>2. Display Only the Current Year</h3>
+    <pre><code>date +%Y</code></pre>
+    <p>Output:</p>
+    <pre><code>2023</code></pre>
+
+    <h3>3. Display Date in Custom Format</h3>
+    <pre><code>date "+%Y-%m-%d %H:%M:%S"</code></pre>
+    <p>Output:</p>
+    <pre><code>2023-10-10 14:30:00</code></pre>
+
+    <h3>4. Set the System Date and Time</h3>
+    <pre><code>sudo date -s "2023-10-10 14:30:00"</code></pre>
+    <p>This command sets the system date and time to the specified value.</p>
+    <h3>5. Display the Date in RFC 3339 Format</h3>
+    <pre><code>date --rfc-3339=seconds</code></pre>
+    <p>Output:</p>
+    <pre><code>2023-10-10 14:30:00+00:00</code></pre>
+    <h3>6. Display the Date in ISO 8601 Format</h3>
+    <pre><code>date --iso-8601=seconds</code></pre>
+    <p>Output:</p>
+    <pre><code>2023-10-10T14:30:00+00:00</code></pre>
+    <h3>7. Display the Date in UTC</h3>
+    <pre><code>date --utc</code></pre>
+    <p>Output:</p>
+    <pre><code>Tue Oct 10 14:30:00 UTC 2023</code></pre>
+    <h3>8. Display the Date in a Specific Time Zone</h3>
+    <pre><code>TZ="America/New_York" date</code></pre>
+    <p>Output:</p>
+    <pre><code>Tue Oct 10 10:30:00 EDT 2023</code></pre>
+    <h3>9. Display the Date in a Specific Format</h3>
+    <pre><code>date "+%A, %B %d, %Y"</code></pre>
+    <p>Output:</p>
+    <pre><code>Tuesday, October 10, 2023</code></pre>
+    
+
+    <h3>Some Other method</h3>
+    <pre><code>0525115625.30</code></pre>
+    <p>This Time formate is "mmddHHmmyy.ss"</p>
+    <p>Where:</p>
+    <ul>
+        <li><code>mm</code>: Month (01-12)</li>
+        <li><code>dd</code>: Day of the month (01-31)</li>
+        <li><code>HH</code>: Hour (00-23)</li>
+        <li><code>mm</code>: Minute (00-59)</li>
+        <li><code>yy</code>: Year (last two digits)</li>
+        <li><code>ss</code>: Seconds (00-59)</li>
+    </ul>
+    <p>To convert this format to a standard date format, you can use the <code>date</code> command with the <code>-d</code> option:</p>
+    <pre><code>date -d "0525115625.30" +"%Y-%m-%d %H:%M:%S"</code></pre>
+    <p>Output:</p>
+    <pre><code>2025-05-25 11:56:25</code></pre>
+    
+    <h2>Set Time zone</h2>
+    <p>To set the time zone in Linux, you can use the <code>timedatectl</code> command. For example, to set the time zone to "America/New_York", you can use:</p>
+    <pre><code>sudo timedatectl set-timezone America/New_York</code></pre>
+    <p>To check the current time zone, you can use:</p>
+    <pre><code>timedatectl</code></pre>
+    <p>Output:</p>
+    <pre><code>Local time: Tue 2023-10-10 14:30:00 UTC
+Time zone: UTC (UTC, +0000)
+NTP enabled: yes
+NTP synchronized: yes
+RTC in local TZ: no
+</code></pre>
+    <p>To list all available time zones, you can use:</p>
+    <pre><code>timedatectl list-timezones</code></pre>
+    <p>This will display a list of all available time zones. You can scroll through the list or use the <code>grep</code> command to filter for a specific time zone.</p>
+    <p>For example, to find all time zones that contain "Asia", you can use:</p>
+    <pre><code>timedatectl list-timezones | grep Asia</code></pre>
+    <p>This will display a list of all time zones that contain "Asia".</p>
+    <p>To set the time zone to a specific time zone, you can use the <code>timedatectl set-timezone</code> command followed by the name of the time zone. For example:</p>
+    <pre><code>sudo timedatectl set-timezone Asia/Kolkata</code></pre>
+    <p>This will set the time zone to "Asia/Kolkata".</p>
+    <p>To verify that the time zone has been set correctly, you can use the <code>timedatectl</code> command again:</p>
+    <pre><code>timedatectl</code></pre>
+    <p>Output:</p>
+    <pre><code>Local time: Tue 2023-10-10 14:30:00 IST
+Time zone: Asia/Kolkata (IST, +5:30)
+NTP enabled: yes
+NTP synchronized: yes
+RTC in local TZ: no
+</code></pre>
+    
+    <p>Note: You may need to restart your system or log out and log back in for the changes to take effect.</p>
+
+
+
+
+    
+    </main>
+</body>
+</html>

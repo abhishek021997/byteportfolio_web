@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Step-by-step guide for configuring and installing SCSI and iSCSI on Linux with examples.">
+    <title>Linux SCSI and iSCSI Configuration Guide</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <main>
+    <h1>Linux SCSI and iSCSI Configuration and Installation</h1>
+    <p>This guide provides step-by-step instructions for configuring and installing SCSI and iSCSI on a Linux system. Follow the steps below to set up your environment.</p>
+
+    <h2>What is SCSI?</h2>
+    <p>SCSI (Small Computer System Interface) is a set of standards for connecting and transferring data between computers and peripheral devices.</p>
+
+    <h2>What is iSCSI?</h2>
+    <p>iSCSI (Internet Small Computer Systems Interface) is a protocol that allows SCSI commands to be sent over IP networks, enabling remote storage access.</p>
+
+    <p><b>Package name:</b> targetcli <br>
+    <b>Demon name:</b> targetd <br>
+    <b>Port number:</b> 3260 <br>
+    <b>Command name:</b> targetcli <br>
+    <b>Service name:</b> iscsid.service <br>
+    <b>Log file:</b> /var/log/messages <br>
+    <b>Configuration file:</b> /etc/iscsi/saveconfig.json</p>
+
+    <p><b>Note:</b> The iSCSI target service is typically managed by the <code>targetcli</code> command.</p>
+    
+
+    <h2>Second machine ISCSI</h2>
+    <p><b>Package name:</b> iscsi-initiator-utils <br>
+    <b>Demon name:</b> iscsid <br>
+    <b>Port number:</b> 3260 <br>
+    <b>Command name:</b> iscsiadm <br></p>
+
+
+
+    <h2>Steps to Configure and Install SCSI</h2>
+
+    <h3>1. Install Required Packages</h3>
+    <p>Install the necessary SCSI utilities:</p>
+    <pre><code>sudo apt update
+sudo apt install targetcli</code></pre>
+    <p>Redhat base installation</p>
+    <pre><code>sudo yum install targetcli</code></pre>
+
+    <h3>2. Start and Enable the Target Service</h3>
+    <p>Start and enable the target service to run on boot:</p>
+    <pre><code>sudo systemctl start target
+sudo systemctl enable target</code></pre>
+    <p>For Redhat base installation:</p>
+    <pre><code>sudo systemctl start targetd
+sudo systemctl enable targetd</code></pre>
+    <h3>3. Configure the SCSI Target</h3>
+    <p>Use the <code>targetcli</code> command to configure the SCSI target:</p>
+    <pre><code>sudo targetcli</code></pre>
+    <p>Within the targetcli shell, you can create a new target, add LUNs, and configure access control. For example:</p>
+    <pre><code>/> backstores/block create name=myblockstore dev=/dev/sdb
+/> iscsi/ create iqn.2023-10.com.example:mytarget
+/> iscsi/mytarget/tpg1/acls/ create iqn.2023-10.com.example:initiator
+/> iscsi/mytarget/tpg1/luns/ create /backstores/block/myblockstore
+/> saveconfig</code></pre>
+    <p>Exit the targetcli shell with:</p>
+    <pre><code>/> exit</code></pre>
+    <h3>4. Save the Configuration</h3>
+    <p>Save the configuration to ensure it persists across reboots:</p>
+    <pre><code>sudo targetcli saveconfig</code></pre>
+    <h3>5. Verify the Configuration</h3>
+    <p>Check the status of the target service:</p>
+    <pre><code>sudo systemctl status target</code></pre>
+    <p>For Redhat base installation:</p>
+    <pre><code>sudo systemctl status targetd</code></pre>
+    <h2>Steps to Configure and Install iSCSI Initiator</h2>
+    <h3>1. Install Required Packages</h3>
+    <p>Install the iSCSI initiator utilities:</p>
+    <pre><code>sudo apt update
+sudo apt install open-iscsi</code></pre>
+
+    <p>For Redhat base installation:</p>
+    <pre><code>sudo yum install iscsi-initiator-utils</code></pre>
+    <h3>2. Start and Enable the iSCSI Service</h3>
+    <p>Start and enable the iSCSI service to run on boot:</p>
+    <pre><code>sudo systemctl start iscsid
+sudo systemctl enable iscsid</code></pre>
+    <h3>3. Discover iSCSI Targets</h3>
+    <p>Discover available iSCSI targets on the network:</p>
+    <pre><code>sudo iscsiadm --mode discovery --type sendtargets --portal &lt;target_ip_address&gt;</code></pre>
+    <p>Replace <code>&lt;target_ip_address&gt;</code> with the IP address of the iSCSI target.</p>
+    <h3>4. Log in to the iSCSI Target</h3>
+    <p>Log in to the discovered iSCSI target:</p>
+    <pre><code>sudo iscsiadm --mode node --targetname iqn.2023-10.com.example:mytarget --login</code></pre>
+    <p>Replace <code>iqn.2023-10.com.example:mytarget</code> with the actual target name.</p>
+    <h3>5. Verify the iSCSI Connection</h3>
+    <p>Check the status of the iSCSI connection:</p>
+    <pre><code>sudo iscsiadm --mode session -p 0</code></pre>
+    <p>Note: 0 = inshort information, 1 = Half information, 2 = Full information</p>
+    <p>This command will display the active iSCSI sessions and their status.</p>
+    <h3>6. Configure Automatic Login</h3>
+    <p>To ensure the iSCSI initiator automatically logs in to the target on boot, modify the configuration file:</p>
+    <pre><code>sudo vim /etc/iscsi/initiatorname.iscsi</code></pre>
+    <p>Ensure the <code>node.startup</code> option is set to <code>automatic</code>:</p>
+    <pre><code>node.startup = automatic</code></pre>
+    <h3>7. Restart the iSCSI Service</h3>
+    <p>Restart the iSCSI service to apply the changes:</p>
+    <pre><code>sudo systemctl restart iscsid</code></pre>
+    <h2>Example Configuration</h2>
+    <p>Here is an example of a complete configuration for both SCSI and iSCSI:</p>
+    <pre><code># SCSI Target Configuration
+sudo targetcli
+/> backstores/block create name=myblockstore dev=/dev/sdb
+/> iscsi/ create iqn.2023-10.com.example:mytarget
+/> iscsi/mytarget/tpg1/luns/ create /backstores/block/myblockstore
+/> iscsi/mytarget/tpg1/acls/ create iqn.2023-10.com.example:initiator
+/> exit
+sudo targetcli saveconfig
+# iSCSI Initiator Configuration
+</code></pre>
+
+
+
+    </main>
+</body>
+</html>

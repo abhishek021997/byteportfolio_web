@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Bootloader Process</title>
+    <meta name="description" content="Step-by-step guide for the Linux bootloader process, including BIOS/UEFI initialization, MBR selection, bootloader execution, kernel loading, and user login.">
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+        
+       
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Linux Bootloader Process</h1>
+        <p>Step-by-step guide for Red Hat and Ubuntu</p>
+    
+    <section>
+        
+        <div class="step">
+            <h2>Step 1: BIOS/UEFI Initialization</h2>
+            <p>The system starts with BIOS or UEFI firmware initializing hardware components and locating the bootloader.</p>
+            <img src="images/bios_uefi.png" alt="BIOS/UEFI Initialization">
+        </div>
+        <div class="step">
+            <h2>Step 2: MBR Partitions Selection</h2>
+            <p>The BIOS/UEFI reads the Master Boot Record (MBR) or GUID Partition Table (GPT) to find the bootloader location.</p>
+            <img src="images/mbr.png" alt="MBR Partitions Selection">
+
+
+        </div>
+
+        <div class="step">
+            <h2>Step 3: Bootloader Execution</h2>
+            <p>The bootloader (GRUB for Red Hat and Ubuntu) is loaded into memory and executed.</p>
+            <img src="images/bootloader_execution.png" alt="Bootloader Execution">
+        </div>
+        <div class="step">
+            <h2>Step 4: Kernel Loading</h2>
+            <p>The bootloader loads the Linux kernel and initial RAM disk (initrd) into memory.</p>
+            <img src="images/kernel_loading.png" alt="Kernel Loading">
+        </div>
+        <div class="step">
+            <h2>Step 5: Init System</h2>
+            <p>The init system (systemd for modern Red Hat and Ubuntu) takes over and starts essential services.</p>
+            <img src="images/init_system.png" alt="Init System">
+        </div>
+        <div class="step">
+            <h2>Step 6: Systemd Service</h2>
+            <p>Systemd is the default init system for modern Linux distributions, managing services and dependencies.</p>
+            <img src="images/runlevel3.webp" alt="Systemd">
+        </div>
+
+
+        <div class="step">
+            <h2>Step 7: User Login</h2>
+            <p>The system reaches the login prompt or graphical interface, ready for user interaction.</p>
+            <img src="images/user_login.png" alt="User Login">
+        </div>
+    </section>
+</main>
+</body>
+</html>

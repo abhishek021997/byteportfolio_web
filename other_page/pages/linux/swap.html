@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about Linux swap and how to create a swap partition.">
+    <title>Linux Swap Details</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+
+    </style>
+</head>
+<body>
+    <main>
+    <h1>Linux Swap Details</h1>
+    <p>Swap space in Linux is a dedicated area on the disk used as virtual memory when the system's physical RAM is fully utilized. It helps prevent out-of-memory errors by temporarily moving inactive pages from RAM to the swap space.</p>
+
+    <h2>Steps to Create a Swap Partition</h2>
+    <ol>
+        <li>Check available disk space using the command: <code>lsblk</code></li>
+        <li>Create a swap partition using <code>fdisk</code> or <code>parted</code>.</li>
+        <li>Format the partition as swap space: <code>mkswap /dev/sdX</code> (replace <code>/dev/sdX</code> with your partition).</li>
+        <li>Enable the swap space: <code>swapon /dev/sdX</code>.</li>
+        <li>Make the swap space permanent by adding it to <code>/etc/fstab</code>:
+            <pre>
+/dev/sdX none swap sw 0 0
+            </pre>
+        </li>
+    </ol>
+
+    <h2>Example</h2>
+    <p>Here is an example of creating a swap partition:</p>
+    <pre>
+# Create a 1GB swap file using our particular disk 
+sudo  mkswap /dev/sdb1
+
+# Enable the swap file
+sudo swapon /dev/sdb1
+
+# Verify the swap is active
+swapon --show
+
+# Add to /etc/fstab for persistence
+echo '/dev/sdb1 none swap sw 0 0' | sudo tee -a /etc/fstab
+    </pre>
+
+    <h2>Creating SWAP partition using <code>dd</code> Command</h2>
+    <p>Alternatively, you can create a swap file using the <code>dd</code> command:</p>
+    <pre>
+# Create a 1GB swap file
+sudo dd if=/dev/zero of=/swapfile bs=1G count=1
+
+# Set the correct permissions
+sudo chmod 600 /swapfile
+
+# Format the file as swap
+sudo mkswap -v1 -f /swapfile
+
+# Enable the swap file
+sudo swapon /swapfile
+
+# Verify the swap is active
+swapon --show
+
+# Add to /etc/fstab for persistence
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+
+    </pre>
+
+    <h2>Checking Swap Usage</h2>
+    <p>To check the current swap usage, use the command:</p>
+    <pre>
+free -h
+    </pre>
+
+    <p>Or view detailed swap information:</p>
+    <pre>
+swapon --show
+    </pre>
+
+    <h2>Removing Swap Space</h2>
+    <p>To remove a swap partition or file, first disable it:</p>
+    <pre>
+sudo swapoff /dev/sdX
+    </pre>
+    <p>Then, remove the entry from <code>/etc/fstab</code> if it was added there. Finally, you can delete the swap file or partition using:</p>
+    <pre>
+sudo rm /swapfile
+sudo fdisk /dev/sdX
+# Follow the prompts to delete the partition
+
+    </pre>
+    <p>Always ensure you have sufficient RAM before removing swap space, as it can lead to system instability if the RAM is fully utilized.</p>
+    
+
+    
+    </main>
+</body>
+</html>

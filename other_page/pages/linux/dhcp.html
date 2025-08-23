@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Guide to install and configure DHCP on Ubuntu and Red Hat Linux.">
+    <title>Linux DHCP Installation and Configuration</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+       
+    </style>
+</head>
+<body>
+    <main>
+    <h1>Linux DHCP Installation and Configuration</h1>
+    <p>This guide provides step-by-step instructions to install and configure a DHCP server on Ubuntu and Red Hat Linux.</p>
+
+    <h2>1. Installing DHCP Server</h2>
+    <h3>On Ubuntu</h3>
+    <pre><code>sudo apt update
+sudo apt install isc-dhcp-server</code></pre>
+
+    <h3>On Red Hat</h3>
+    <pre><code>sudo yum install dhcp</code></pre>
+
+    <h2>2. Configuring DHCP Server</h2>
+    <p>Edit the DHCP configuration file to define the network settings.</p>
+
+    <h3>On Ubuntu</h3>
+    <pre><code>sudo nano /etc/dhcp/dhcpd.conf</code></pre>
+    <p>Add the following configuration:</p>
+    <pre><code>subnet 192.168.1.0 netmask 255.255.255.0 {
+    range 192.168.1.100 192.168.1.200;
+    option routers 192.168.1.1;
+    option domain-name-servers 8.8.8.8, 8.8.4.4;
+}</code></pre>
+
+    <h3>On Red Hat</h3>
+    <pre><code>sudo nano /etc/dhcp/dhcpd.conf</code></pre>
+    <p>Use the same configuration as above.</p>
+
+    <h2>3. Starting and Enabling DHCP Service</h2>
+    <h3>On Ubuntu</h3>
+    <pre><code>sudo systemctl start isc-dhcp-server
+sudo systemctl enable isc-dhcp-server</code></pre>
+
+    <h3>On Red Hat</h3>
+    <pre><code>sudo systemctl start dhcpd
+sudo systemctl enable dhcpd</code></pre>
+
+    <h2>4. Verifying DHCP Server</h2>
+    <p>Check the status of the DHCP server to ensure it is running:</p>
+    <h3>On Ubuntu</h3>
+    <pre><code>sudo systemctl status isc-dhcp-server</code></pre>
+
+    <h3>On Red Hat</h3>
+    <pre><code>sudo systemctl status dhcpd</code></pre>
+
+    <h2>5. Logs and Troubleshooting</h2>
+    <p>Check the logs for troubleshooting:</p>
+    <pre><code>sudo tail -f /var/log/syslog  # Ubuntu
+sudo tail -f /var/log/messages  # Red Hat</code></pre>
+
+    <p>For more details, refer to the official documentation:</p>
+    <ul>
+        <li><a href="https://ubuntu.com/server/docs/network-dhcp" target="_blank">Ubuntu DHCP Documentation</a></li>
+        <li><a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux" target="_blank">Red Hat DHCP Documentation</a></li>
+    </ul>
+
+    </main>
+</body>
+</html>

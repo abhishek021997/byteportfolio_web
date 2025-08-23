@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Linux YUM Configuration File and Commands with Examples">
+    <title>Linux YUM Configuration and Commands</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <main>
+    <h1>Linux YUM Configuration and Commands</h1>
+    <p>YUM (Yellowdog Updater Modified) is a package manager for RPM-based distributions like CentOS, RHEL, and Fedora. This page provides details about YUM configuration files, commands, and examples.</p>
+
+    <h2>Types of URL in YUM</h2>
+    <p>YUM can use different types of URLs to access repositories. The most common types are:</p>
+    <ul>
+        <li><strong>HTTP/HTTPS:</strong> Standard web protocols for accessing repositories over the internet.</li>
+        <li><strong>FTP:</strong> File Transfer Protocol, used for accessing repositories hosted on FTP servers.</li>
+        <li><strong>Local:</strong> Accessing local directories or files as repositories.</li>
+        <li><strong>File:</strong> Accessing local files directly, typically used for offline installations.</li>
+        <li><strong>EPEL:</strong> Download a Extra packages through the internet</li>
+    </ul>
+    <p>Example of a repository URL in a YUM configuration file:<code>/etc/yum.repo.d/file.repo</code></p>
+    <pre>
+        
+#HTTP base URL example
+[example-repo1]
+name=Example Repository
+baseurl=http://example.com/repo/
+enabled=1
+gpgcheck=0
+
+#File base URL example
+[example-repo2]
+name=Example Repository
+baseurl=file:///path/to/local/repo/
+enabled=1
+gpgcheck=0
+
+#GPG key example
+[example-repo3]
+name=Example Repository
+baseurl=file:///path/to/local/repo/
+enabled=1
+gpgcheck=1
+gpgkey=http://example.com/repo/RPM-GPG-KEY-example
+    </pre>
+    <p>In this example, the <code>baseurl</code> is an HTTP URL pointing to the repository.</p>
+    
+    <h2>YUM Configuration File</h2>
+    <p>The main configuration file for YUM is located at <code>/etc/yum.conf</code>. Below is an example of the configuration file:</p>
+    <pre>
+[main]
+cachedir=/var/cache/yum/$basearch/$releasever
+keepcache=0
+debuglevel=2
+logfile=/var/log/yum.log
+exactarch=1
+obsoletes=1
+gpgcheck=1
+plugins=1
+installonly_limit=3
+    </pre>
+    <p><strong>Description of Key Options:</strong></p>
+    <ul>
+        <li><code>cachedir</code>: Directory where YUM caches packages.</li>
+        <li><code>keepcache</code>: Whether to keep the cache after installation (0 or 1).</li>
+        <li><code>debuglevel</code>: Debugging level (0-10).</li>
+        <li><code>logfile</code>: Path to the log file.</li>
+        <li><code>gpgcheck</code>: Enable/disable GPG signature checking (0 or 1).</li>
+        <li><code>plugins</code>: Enable/disable YUM plugins (0 or 1).</li>
+    </ul>
+
+
+    <h2>YUM options</h2>
+    <p>YUM supports various options that can be used with its commands. Here are some common options:</p>
+    <ul>
+        <li><code>-y</code>: Automatically answer "yes" to prompts.</li>
+        <li><code>--enablerepo=repo_name</code>: Enable a specific repository.</li>
+        <li><code>--disablerepo=repo_name</code>: Disable a specific repository.</li>
+        <li><code>--nogpgcheck</code>: Skip GPG signature checking.</li>
+        <li><code>--setopt=option=value</code>: Set a specific option for the command.</li>
+        <li><code>--downloadonly</code>: Download packages without installing them.</li>
+        <li><code>--refresh</code>: Refresh the repository metadata.</li>
+        <li><code>--security</code>: Check for security updates.</li>
+        <li><code>--best</code>: Use the best available version of a package.</li>
+        <li><code>--noplugins</code>: Disable all plugins for the command.</li>
+    </ul>
+
+    <h2>YUM Command options</h2>
+    <p>YUM commands can be used with various options to perform different tasks. Here are some common YUM command options:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+                <th>Example</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>install</code></td>
+                <td>Install a package</td>
+                <td><code>yum install package_name</code></td>
+            </tr>
+            <tr>
+                <td><code>remove</code></td>
+                <td>Remove a package</td>
+                <td><code>yum remove package_name</code></td>
+            </tr>
+            <tr>
+                <td><code>update</code></td>
+                <td>Update all packages or a specific package</td>
+                <td><code>yum update package_name</code></td>
+            </tr>
+            <tr>
+                <td><code>search</code></td>
+                <td>Search for a package by name or description</td>
+                <td><code>yum search keyword</code></td>
+            </tr>
+            <tr>
+                <td><code>list</code></td>
+                <td>List installed or available packages</td>
+                <td><code>yum list installed</code></td>
+            </tr>
+            <tr>
+                <td><code>info</code></td>
+                <td>Display information about a package</td>
+                <td><code>yum info package_name</code></td>
+            </tr>
+            <tr>
+                <td><code>clean</code></td>
+                <td>Clean YUM cache and metadata</td>
+                <td><code>yum clean all</code></td>
+            </tr>
+            <tr>
+                <td><code>repolist</code></td>
+                <td>Display enabled repositories</td>
+                <td><code>yum repolist</code></td>
+            </tr>
+            <tr>
+                <td><code>config-manager</code></td>
+                <td>Manage YUM repositories</td>
+                <td><code>yum-config-manager --enable repo_name</code></td>
+            </tr>
+            <tr>
+                <td><code>history</code></td>
+                <td>View YUM transaction history</td>
+                <td><code>yum history</code></td>
+            </tr>
+            <tr>
+                <td><code>downgrade</code></td>
+                <td>Downgrade a package to an earlier version</td>
+                <td><code>yum downgrade package_name</code></td>
+            </tr>
+            <tr>
+                <td><code>groupinstall</code></td>
+                <td>Install a group of packages</td>
+                <td><code>yum groupinstall "Development Tools"</code></td>
+            </tr>
+            <tr>
+                <td><code>groupremove</code></td>
+                <td>Remove a group of packages</td>
+                <td><code>yum groupremove "Development Tools"</code></td>
+            </tr>
+            
+            <tr>
+                <td><code>check-update</code></td>
+                <td>Check for available updates</td>
+                <td><code>yum check-update</code></td>
+            </tr>
+            
+            
+            <tr>
+                <td><code>--nogpgcheck</code></td>
+                <td>Skip GPG signature checking</td>
+                <td><code>yum install package_name --nogpgcheck</code></td>
+            </tr>
+            
+            <tr>
+                <td><code>--downloadonly</code></td>
+                <td>Download packages without installing them</td>
+                <td><code>yum install package_name --downloadonly</code></td>
+            </tr>
+            <tr>
+                <td><code>--refresh</code></td>
+                <td>Refresh the repository metadata</td>
+                <td><code>yum update --refresh</code></td>
+            </tr>
+            <tr>
+                <td><code>--security</code></td>
+                <td>Check for security updates</td>
+                <td><code>yum update --security</code></td>
+            </tr>
+            
+            <tr>
+                <td><code>--noplugins</code></td>
+                <td>Disable all plugins for the command</td>
+                <td><code>yum install package_name --noplugins</code></td>
+            </tr>
+            
+        </tbody>
+    </table>
+
+    <h2>Common YUM Commands</h2>
+    <p>Below are some commonly used YUM commands with examples:</p>
+
+    <h3>1. Install a Package</h3>
+    <p>To install a package:</p>
+    <pre><code>yum install package_name</code></pre>
+    <div class="example">
+        <strong>Example:</strong> Install the <code>httpd</code> package:
+        <pre><code>yum install httpd</code></pre>
+    </div>
+
+    <h3>2. Remove a Package</h3>
+    <p>To remove a package:</p>
+    <pre><code>yum remove package_name</code></pre>
+    <div class="example">
+        <strong>Example:</strong> Remove the <code>httpd</code> package:
+        <pre><code>yum remove httpd</code></pre>
+    </div>
+
+    <h3>3. Update All Packages</h3>
+    <p>To update all installed packages:</p>
+    <pre><code>yum update</code></pre>
+
+    <h3>4. Search for a Package</h3>
+    <p>To search for a package:</p>
+    <pre><code>yum search keyword</code></pre>
+    <div class="example">
+        <strong>Example:</strong> Search for packages related to <code>nginx</code>:
+        <pre><code>yum search nginx</code></pre>
+    </div>
+
+    <h3>5. List Installed Packages</h3>
+    <p>To list all installed packages:</p>
+    <pre><code>yum list installed</code></pre>
+
+    <h3>6. Clean YUM Cache</h3>
+    <p>To clean the YUM cache:</p>
+    <pre><code>yum clean all</code></pre>
+
+    <h3>7. Enable/Disable a Repository</h3>
+    <p>To enable or disable a repository:</p>
+    <pre><code>yum-config-manager --enable repo_name</code></pre>
+    <pre><code>yum-config-manager --disable repo_name</code></pre>
+
+    <h3>Create a Repository using <code>createrepo</code> command</h3>
+    <p>To create a YUM repository, you can use the <code>createrepo</code> command. This command generates the necessary metadata for a directory containing RPM packages.</p>
+    <pre><code>createrepo /path/to/repo</code></pre>
+    <p>After running this command, the specified directory will contain the necessary metadata files for YUM to recognize it as a repository.</p>
+    <h3>8. View YUM Transaction History</h3>
+    <p>To view the YUM transaction history:</p>
+    <pre><code>yum history</code></pre>
+    <div class="example">
+        <strong>Example:</strong> View the last 5 transactions:
+        <pre><code>yum history list</code></pre>
+    </div>
+    <h3>9. Downgrade a Package</h3>
+    <p>To downgrade a package to an earlier version:</p>
+    <pre><code>yum downgrade package_name</code></pre>
+    <div class="example">
+        <strong>Example:</strong> Downgrade the <code>httpd</code> package:
+        <pre><code>yum downgrade httpd</code></pre>
+    </div>
+    <h3>10. Install a Group of Packages</h3>
+    <p>To install a group of packages:</p>
+    <pre><code>yum groupinstall "Group Name"</code></pre>
+    <div class="example">
+        <strong>Example:</strong> Install the "Development Tools" group:
+        <pre><code>yum groupinstall "Development Tools"</code></pre>
+    </div>
+    <h3>11. Remove a Group of Packages</h3>
+    <p>To remove a group of packages:</p>
+    <pre><code>yum groupremove "Group Name"</code></pre>
+    <div class="example">
+        <strong>Example:</strong> Remove the "Development Tools" group:
+        <pre><code>yum groupremove "Development Tools"</code></pre>
+    </div>
+    </main>
+</body>
+</html>

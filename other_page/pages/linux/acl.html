@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Detailed explanation of Linux ACL permissions with examples and descriptions.">
+    <title>Linux ACL Permissions</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <main>
+    <h1>Linux ACL Permissions</h1>
+    <p>Access Control Lists (ACLs) in Linux provide a more flexible permission mechanism for file systems. They allow you to define permissions for specific users or groups beyond the standard owner, group, and others model.</p>
+
+    <h2>What is ACL?</h2>
+    <p>ACLs allow you to grant or deny access to files and directories for specific users or groups. This is particularly useful in multi-user environments where the traditional permission model is insufficient.</p>
+
+    <h2>Enabling ACL</h2>
+    <p>To use ACLs, the file system must be mounted with ACL support. Most modern Linux distributions enable this by default. If not, you can remount the file system with the <code>acl</code> option:</p>
+    <pre><code>sudo mount -o remount,acl /mount/point</code></pre>
+
+    <h2>Basic Commands</h2>
+    <h3>Set ACL</h3>
+    <p>Use the <code>setfacl</code> command to set ACLs. For example:</p>
+    <pre><code>setfacl -m u:username:rw file.txt</code></pre>
+    <p>This grants read and write permissions to the user <code>username</code> for the file <code>file.txt</code>.</p>
+    <pre><code>setfacl -m g:username:rw file.txt</code></pre>
+    <p>This grants read and write permissions to the group <code>username</code> for the file <code>file.txt</code>.</p>
+    <pre><code>setfacl -m o:username:rw file.txt</code></pre>
+    <p>This grants read and write permissions to others for the file <code>file.txt</code>.</p>
+    
+
+
+    <h3>View ACL</h3>
+    <p>Use the <code>getfacl</code> command to view ACLs:</p>
+    <pre><code>getfacl file.txt</code></pre>
+
+    <h3>Remove ACL</h3>
+    <p>To remove an ACL entry, use:</p>
+    <pre><code>setfacl -x u:username file.txt</code></pre>
+    <p>This removes the ACL entry for the user <code>username</code> from the file <code>file.txt</code>.</p>
+    <p>To remove all ACL entries, use:</p>
+    <pre><code>setfacl -b file.txt</code></pre>
+    <p>This removes all ACL entries from the file <code>file.txt</code>.</p>
+    
+
+    <h2>Example</h2>
+    <div class="example">
+        <p>Suppose you have a file <code>example.txt</code> and you want to grant read and write permissions to a user named <code>abhishek</code> without changing the file's group or owner permissions.</p>
+        <ol>
+            <li>Set the ACL:
+                <pre><code>setfacl -m u:abhishek:rw example.txt</code></pre>
+            </li>
+            <li>Verify the ACL:
+                <pre><code>getfacl example.txt</code></pre>
+            </li>
+        </ol>
+        <p>The output will show an additional entry for <code>abhishek</code> with the specified permissions.</p>
+    </div>
+
+    <h2>Default ACL</h2>
+    <p>Default ACLs can be set for directories so that new files and subdirectories inherit the ACL. For example:</p>
+    <pre><code>setfacl -m d:u:username:rw /directory</code></pre>
+</main>
+</body>
+</html>

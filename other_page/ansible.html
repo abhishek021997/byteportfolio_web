@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="2050">
+    <title>Ansible</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    
+    <style>
+     
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Ansible</h1>
+    </header>
+      <nav class="navbar">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+          <span style="font-size:30px;cursor:pointer; float: right;" onclick="openNav()">&#9776;</span>
+    </nav>
+
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="bash_main.html">Bash Scripting</a>
+      <a href="../../index.html">Linux</a>
+      <a href="terraform.html">Terraform</a>
+      <a href="#">Powershell</a>
+      <a href="#">Github</a>
+      <a href="#">Jenkins</a>
+      <a href="#">Docker</a>
+      <a href="#">Kubernetes</a>
+      <a href="#">Prometheus</a>
+      <a href="#">Grafana</a>
+      <a href="#">AWS</a>
+      <a href="#">Azure</a>
+    </div>
+
+    <div class="container"> 
+      <span class="open_menu" onclick="openlistmenu()"><i class="fa fa-search"> More list</i></span>
+        <div class="left_menu" id="menu_list">
+          <a href="javascript:void(0)" class="closemenu" onclick="closelistmenu()">&times;</a>
+            <input type="text" id="mySearch" onkeyup="myFunction()" placeholder="Search.." title="Type in a category">
+        
+                <ul id="myMenu">
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Introduction</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Installation</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Invintory File</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Authentication</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Modules</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">AddHoc Methord</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Playbook Intro</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Basic Playbook </a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Playbook Variables</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Playbook variable call</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Playbook Invintory base variable</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Playbook Ansible Vault</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Playbook Tags</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Playbook Loop</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Playbook Hash Loop</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Playbook Condition</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Playbook Handlers</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Playbook Error Handlers</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Playbook Change Handlers</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Playbook Serial Forks</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Playbook Pause</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Playbook Async or poll</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Playbook Template</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Playbook Role</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Playbook Jinja2</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Playbook Jinja2 Condition</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Playbook Ansible Galaxy</a></li>
+                    
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Playbook Ansible Tower</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Playbook Ansible AWX</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Playbook Ansible API</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Playbook Ansible Callback</a></li>
+
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Playbook Ansible Cloud Interagation</a></li>
+                    
+                </ul>
+        </div>
+        <iframe src="pages/linux/find.html" class="main_frame" frameborder="0" name="display_page"></iframe>
+
+    </div>
+    <footer>
+        <p>&copy; 2023 My Blog. All rights reserved.</p>
+    </footer>
+</body>
+
+<script>
+// Search function for the left menu
+function myFunction() {
+  var input, filter, ul, li, a, i;
+  input = document.getElementById("mySearch");
+  filter = input.value.toUpperCase();
+  ul = document.getElementById("myMenu");
+  li = ul.getElementsByTagName("li");
+  for (i = 0; i < li.length; i++) {
+    a = li[i].getElementsByTagName("a")[0];
+    if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+  }
+}
+
+// Functions to open and close the side navigation menu
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+
+
+function openlistmenu() {
+  document.getElementById("menu_list").style.display = "block";
+  document.getElementsByClassName("open_menu")[0].style.display = "none";
+  document.getElementsByClassName("main_frame")[0].style.width = "75%";
+}
+
+function closelistmenu() {
+  document.getElementById("menu_list").style.display = "none";
+  document.getElementsByClassName("open_menu")[0].style.display = "block";
+  document.getElementsByClassName("main_frame")[0].style.width = "100%";
+
+  
+}
+</script>
+
+
+</html>

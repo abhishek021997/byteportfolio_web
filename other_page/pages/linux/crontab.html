@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about the Linux crontab command with examples and syntax for scheduling tasks.">
+    <title>Linux Crontab Command - Syntax and Examples</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <main>
+    <h1>Linux Crontab Command</h1>
+    <p>The <code>crontab</code> command in Linux is used to schedule tasks to run at specific times or intervals. These tasks are commonly referred to as "cron jobs."</p>
+
+    <h2>Crontab Syntax</h2>
+    <p>The basic syntax for a crontab entry is:</p>
+    <pre>
+* * * * * command_to_execute
+- - - - -
+| | | | |
+| | | | +---- Day of the week (0 - 7) [Both 0 and 7 represent Sunday]
+| | | +------ Month (1 - 12)
+| | +-------- Day of the month (1 - 31)
+| +---------- Hour (0 - 23)
++------------ Minute (0 - 59)
+    </pre>
+
+    <h2>Examples</h2>
+    <div class="example">
+        <h3>1. Run a script every day at 5:00 AM</h3>
+        <pre>
+0 5 * * * /path/to/script.sh
+        </pre>
+    </div>
+    <div class="example">
+        <h3>2. Run a command every Monday at 10:30 AM</h3>
+        <pre>
+30 10 * * 1 /path/to/command
+        </pre>
+    </div>
+    <div class="example">
+        <h3>3. Run a task every 15 minutes</h3>
+        <pre>
+*/15 * * * * /path/to/task
+        </pre>
+    </div>
+    <div class="example">
+        <h3>4. Run a backup script on the 1st of every month at midnight</h3>
+        <pre>
+0 0 1 * * /path/to/backup.sh
+        </pre>
+    </div>
+
+    <h2>Editing the Crontab File</h2>
+    <p>To edit the crontab file for the current user, use the command:</p>
+    <pre>
+crontab -e
+    </pre>
+    <p>To view the current user's crontab entries, use:</p>
+    <pre>
+crontab -l
+    </pre>
+    <p>To remove the current user's crontab, use:</p>
+    <pre>
+crontab -r
+    </pre>
+
+    <h2>Special Strings</h2>
+    <p>Crontab also supports special strings for common schedules:</p>
+    <ul>
+        <li><code>@reboot</code> - Run once at startup</li>
+        <li><code>@yearly</code> or <code>@annually</code> - Run once a year (0 0 1 1 *)</li>
+        <li><code>@monthly</code> - Run once a month (0 0 1 * *)</li>
+        <li><code>@weekly</code> - Run once a week (0 0 * * 0)</li>
+        <li><code>@daily</code> or <code>@midnight</code> - Run once a day (0 0 * * *)</li>
+        <li><code>@hourly</code> - Run once an hour (0 * * * *)</li>
+    </ul>
+
+    <h2>Conclusion</h2>
+    <p>The <code>crontab</code> command is a powerful tool for automating repetitive tasks in Linux. By understanding its syntax and options, you can efficiently schedule tasks to suit your needs.</p>
+    </main>
+</body>
+</html>

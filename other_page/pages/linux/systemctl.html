@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Linux systemctl command examples and options">
+    <title>Linux systemctl Command</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+
+    </style>
+</head>
+<body>
+    <main>
+    <h1>Linux systemctl Command</h1>
+    <p>The <code>systemctl</code> command is used to introspect and control the systemd system and service manager in Linux. It allows you to manage services, check their statuses, and perform various administrative tasks.</p>
+
+    <h2>Common Options</h2>
+    <ul>
+        <li><code>start</code>: Start a service.</li>
+        <li><code>stop</code>: Stop a service.</li>
+        <li><code>restart</code>: Restart a service.</li>
+        <li><code>status</code>: Check the status of a service.</li>
+        <li><code>enable</code>: Enable a service to start at boot.</li>
+        <li><code>disable</code>: Disable a service from starting at boot.</li>
+        <li><code>is-active</code>: Check if a service is active.</li>
+        <li><code>is-enabled</code>: Check if a service is enabled.</li>
+        <li><code>list-units</code>: List all loaded units.</li>
+    </ul>
+
+    <h2>Examples</h2>
+    <h3>Start a Service</h3>
+    <p>To start a service, use the following command:</p>
+    <pre><code>systemctl start nginx</code></pre>
+
+    <h3>Stop a Service</h3>
+    <p>To stop a service, use:</p>
+    <pre><code>systemctl stop nginx</code></pre>
+
+    <h3>Check the Status of a Service</h3>
+    <p>To check the status of a service:</p>
+    <pre><code>systemctl status nginx</code></pre>
+
+    <h3>Enable a Service</h3>
+    <p>To enable a service to start at boot:</p>
+    <pre><code>systemctl enable nginx</code></pre>
+
+    <h3>Disable a Service</h3>
+    <p>To disable a service from starting at boot:</p>
+    <pre><code>systemctl disable nginx</code></pre>
+
+    <h3>Restart a Service</h3>
+    <p>To restart a service:</p>
+    <pre><code>systemctl restart nginx</code></pre>
+
+    <h3>Check if a Service is Active</h3>
+    <p>To check if a service is active:</p>
+    <pre><code>systemctl is-active nginx</code></pre>
+
+    <h3>List All Loaded Units</h3>
+    <p>To list all loaded units:</p>
+    <pre><code>systemctl list-units</code></pre>
+
+    <h3>Check if a Service is Failed</h3>
+    <p>To check if a service has failed:</p>
+    <pre><code>systemctl is-failed nginx</code></pre>
+
+    <h3>Check all the failed services</h3>
+    <p>To check all the failed services:</p>
+    <pre><code>systemctl --failed</code></pre>
+
+    <h3>Check the list of all unit files</h3>
+    <p>To check the list the unit of all files:</p>
+    <pre><code>systemctl list-unit-files</code></pre>
+
+    <h3>Check the list of all unit temprory</h3>
+    <p>To check the list the unit of all files:</p>
+    <pre><code>systemctl list-unit-files --type=service</code></pre>
+
+
+    <h3>Check the list of all unit files with their status</h3>
+    <p>To check the list the unit of all files with their status:</p>
+    <pre><code>systemctl list-unit-files --type=service --state=enabled</code></pre>
+
+    <h3>Masking</h3>
+    <p>To prevent a service from being started, even manually, you can mask it:</p>
+    <pre><code>systemctl mask nginx</code></pre>
+    <p>This creates a symlink to /dev/null, effectively disabling the service.</p>
+    <h3>Unmasking</h3>
+    <p>To unmask a service, use:</p>
+    <pre><code>systemctl unmask nginx</code></pre>
+
+
+    </main>
+</body>
+</html>

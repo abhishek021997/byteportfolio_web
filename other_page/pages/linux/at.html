@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Linux 'at' Command - Options, Examples, and Descriptions">
+    <title>Linux 'at' Command</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <main>
+    <h1>Linux 'at' Command</h1>
+    <p>The <code>at</code> command in Linux is used to schedule a command or script to run at a specific time in the future. It is a powerful tool for task scheduling.</p>
+
+    <h2>Options</h2>
+    <ul>
+        <li><code>-f</code>: Specifies a file containing the commands to be executed.</li>
+        <li><code>-m</code>: Sends an email to the user after the job is completed, even if there is no output.</li>
+        <li><code>-v</code>: Displays the time the job is scheduled to run.</li>
+        <li><code>-l</code>: Lists the user's pending jobs (same as <code>atq</code>).</li>
+        <li><code>-d</code>: Deletes a job by its job number (same as <code>atrm</code>).</li>
+        <li><code>-q</code>: Specifies the queue to use (default is <code>a</code>).</li>
+        <li><code>-t</code>: Specifies the time in the format <code>[[CC]YY]MMDDhhmm[.ss]</code> to run the job.</li>
+        <li><code>-c</code>: Displays the contents of a job.</li>
+        <li><code>--help</code>: Displays help information for the <code>at</code> command.</li>
+        <li><code>--version</code>: Displays the version of the <code>at</code> command.</li>
+
+    </ul>
+
+    <h2>Examples</h2>
+
+    <div class="example">
+        <h3>1. Schedule a Command to Run at a Specific Time</h3>
+        <p>To schedule a command to run at 3:00 PM:</p>
+        <pre><code>echo "ls -l" | at 3:00 PM</code></pre>
+    </div>
+
+    <div class="example">
+        <h3>2. Schedule a Script Using a File</h3>
+        <p>To schedule a script stored in a file:</p>
+        <pre><code>at -f myscript.sh 5:00 PM</code></pre>
+    </div>
+
+    <div class="example">
+        <h3>3. List Pending Jobs</h3>
+        <p>To view all scheduled jobs:</p>
+        <pre><code>at -l</code></pre>
+    </div>
+
+    <div class="example">
+        <h3>4. Remove a Scheduled Job</h3>
+        <p>To remove a job with job number 2:</p>
+        <pre><code>at -d 2</code></pre>
+    </div>
+
+    <div class="example">
+        <h3>5. Remove a Scheduled Job</h3>
+        <p>To remove a job with job number 2:</p>
+        <pre><code>atrm 2</code></pre>
+    </div>
+
+
+
+    <div class="example">
+        <h3>6. Schedule a Command with Email Notification</h3>
+        <p>To schedule a command and receive an email notification:</p>
+        <pre><code>echo "df -h" | at -m 6:00 PM</code></pre>
+    </div>
+
+    <div class="example">
+        <h3>7. Schedule a Command with now to </h3>
+        <p>To schedule a command to run 10 minutes from now:</p>
+        <pre><code>echo "echo 'Hello, World!'" | at now + 10 minutes</code></pre>
+    </div>
+
+    <div class="example">
+        <h3>8. Schedule a Command for next month </h3>
+        <p>To schedule a command to run on the first day of next month at 8:00 AM:</p>
+        <pre><code>echo "echo 'New month started!'" | at 8:00 AM next month</code></pre>
+    </div>
+
+    <div class="example">
+        <h3>9. Schedule a Command with tomorrow </h3>
+        <p>To schedule a command to run tomorrow at 9:00 AM:</p>
+        <pre><code>echo "echo 'Good morning!'" | at 9:00 AM tomorrow</code></pre>
+    </div>
+    <div class="example">
+        <h3>10. Schedule a Command for 1week </h3>
+        <p>To schedule a command to run in one week at 10:00 AM:</p>
+        <pre><code>echo "echo 'One week later!'" | at 10:00 AM + 1 week</code></pre>
+        <pre><code>echo "echo 'One week later!'" | at 10:00 AM + 2 week</code></pre>
+    </div>
+
+    <div class="example">
+        <h3>11. Schedule a Command for 1 year </h3>
+        <p>To schedule a command to run in one year at 11:00 AM:</p>    
+        <pre><code>echo "echo 'One year later!'" | at 11:00 AM + 1 year</code></pre>
+        
+    </div>
+
+
+    <h2>Notes</h2>
+    <p>The <code>at</code> command requires the <code>atd</code> daemon to be running on your system. Ensure it is enabled and started before using the <code>at</code> command.</p>
+    </main>
+</body>
+</html>

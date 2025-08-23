@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Linux Networking Teaming Types and Configuration with Examples">
+    <title>Linux Networking Teaming</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+      
+    </style>
+</head>
+<body>
+    
+    <main>
+        <h1>Linux Networking Teaming</h1>
+        <p>Types and Configuration with Examples</p>
+        <section>
+            <h2>What is Network Teaming?</h2>
+            <p>Network teaming is a method of combining multiple network interfaces into a single logical interface to provide redundancy and increased throughput. It is commonly used in Linux systems for high availability and load balancing.</p>
+        </section>
+        <section>
+            <h2>Types of Network Teaming</h2>
+            <ul>
+                <li><strong>Active-Backup:</strong> Only one interface is active at a time. If the active interface fails, another interface takes over.</li>
+                <li><strong>Load Balancing:</strong> Traffic is distributed across all active interfaces to improve performance.</li>
+                <li><strong>Broadcast:</strong> All packets are sent through all interfaces.</li>
+                <li><strong>Round-Robin:</strong> Packets are sent sequentially across all interfaces.</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Configuration Example</h2>
+            <p>Below is an example of configuring network teaming in Linux:</p>
+            <h3>Step 1: Install the Teaming Tools</h3>
+            <pre>
+sudo yum install teamd
+            </pre>
+            <h3>Step 2: Create a Teaming Configuration File</h3>
+            <pre>
+sudo vim /etc/sysconfig/network-scripts/ifcfg-team0
+            </pre>
+            <p>Example content for <code>ifcfg-team0</code>:</p>
+            <pre>
+DEVICE=team0
+DEVICETYPE=Team
+ONBOOT=yes
+BOOTPROTO=none
+TEAM_CONFIG='{
+    "runner": {"name": "activebackup"},
+    "link_watch": {"name": "ethtool"}
+}'
+            </pre>
+            <h3>Step 3: Add Ports to the Team</h3>
+            <p>Create configuration files for the ports:</p>
+            <pre>
+sudo nano /etc/sysconfig/network-scripts/ifcfg-eth0
+            </pre>
+            <p>Example content for <code>ifcfg-eth0</code>:</p>
+            <pre>
+DEVICE=eth0
+ONBOOT=yes
+MASTER=team0
+SLAVE=yes
+            </pre>
+            <p>Repeat for other interfaces (e.g., <code>eth1</code>).</p>
+            <h3>Step 4: Restart the Network Service</h3>
+            <pre>
+sudo systemctl restart network
+            </pre>
+        </section>
+        <section>
+            <h2>Checking Teaming Status</h2>
+            <p>To check the status of the teaming configuration, use:</p>
+            <pre>
+teamdctl team0 state
+            </pre>
+            <p>This command will display the current state of the team, including active ports and their statuses.</p>
+        </section>
+        <section>
+            <h2>Teaming configuration using by command</h2>
+            <p>Network teaming can also be configured using the <code>teamd</code> command. Below is an example of how to create a team using the command line:</p>
+            <h3>Step 1: Create a Team</h3>
+            <pre>
+<code>
+sudo nmcli connection add type team con-name myteam ifname team0 config '{"runner": {"name": "activebackup"}}'
+</code>
+</pre>
+            <h3>Step 2: Add Ports to the Team</h3>
+            <pre>
+<code>
+sudo nmcli connection add type team-slave con-name myteam-slave1 ifname eth0 master team0
+sudo nmcli connection add type team-slave con-name myteam-slave2 ifname eth1 master team0
+</code>
+            </pre>
+            <h3>Step 3: Assign a IPaddress to Team bond</h3>
+            <pre>
+<code>
+nmcli connection modify team1 ipv4.addresses 192.168.0.100/24 gw4 192.168.0.1 ipv4.dns 8.8.8.8 ipv4.method manual</code>
+            </pre>
+
+            <h3>Step 4: Bring Up the Team</h3>
+            <pre>
+<code>
+sudo nmcli connection up myteam</code>
+            </pre>
+            <p>This will create a team named <code>myteam</code> with <code>eth0</code> and <code>eth1</code> as its members.</p>
+
+            <h3>Step 5: Verify the Teaming Configuration</h3>
+            <pre>
+<code>
+nmcli connection show</code>
+            </pre>
+            <p>This command will display the current network connections, including the team and its members.</p>
+            <h3>Step 6: To check Team information</h3>
+            <pre>
+<code>
+teamdctl team0 state</code>
+            </pre>
+            <p>This command will display the current state of the team, including active ports and their statuses.</p>
+
+
+        </section>
+            
+        
+    </main>
+</body>
+</html>

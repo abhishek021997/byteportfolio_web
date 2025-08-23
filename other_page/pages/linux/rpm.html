@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Comprehensive guide to the Linux RPM command with examples and descriptions of all options.">
+    <title>Linux RPM Command Guide</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+    </style>
+</head>
+<body>
+    <main>
+    <h1>Linux RPM Command Guide</h1>
+    <p>The <code>rpm</code> command is used to manage RPM packages in Linux. It allows you to install, update, query, verify, and remove software packages.</p>
+
+    <h2>Basic Syntax</h2>
+    <pre><code>rpm [OPTIONS] PACKAGE_NAME</code></pre>
+
+    <h2>Common Options</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+                <th>Example</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>-i</code></td>
+                <td>Install a package</td>
+                <td><code>rpm -i package.rpm</code></td>
+            </tr>
+            <tr>
+                <td><code>-U</code></td>
+                <td>Upgrade a package</td>
+                <td><code>rpm -U package.rpm</code></td>
+            </tr>
+            <tr>
+                <td><code>-e</code></td>
+                <td>Erase (remove) a package</td>
+                <td><code>rpm -e package_name</code></td>
+            </tr>
+            <tr>
+                <td><code>-q</code></td>
+                <td>Query a package</td>
+                <td><code>rpm -q package_name</code></td>
+            </tr>
+            <tr>
+                <td><code>-f</code></td>
+                <td>Find the package that owns a file</td>
+                <td><code>rpm -f /path/to/file</code></td>
+            </tr>
+            <tr>
+                <td><code>-V</code></td>
+                <td>Verify a package</td>
+                <td><code>rpm -V package_name</code></td>
+            </tr>
+            <tr>
+                <td><code>-h</code></td>
+                <td>Show hash marks during installation</td>
+                <td><code>rpm -i -h package.rpm</code></td>
+            </tr>
+            <tr>
+                <td><code>-v</code></td>
+                <td>Verbose output</td>
+                <td><code>rpm -iv package.rpm</code></td>
+            </tr>
+            <tr>
+                <td><code>-a</code></td>
+                <td>List all installed packages</td>
+                <td><code>rpm -qa</code></td>
+            </tr>
+            <tr>
+                <td><code>-l</code></td>
+                <td>List files in a package</td>
+                <td><code>rpm -ql package_name</code></td>
+            </tr>
+            <tr>
+                <td><code>-d</code></td>
+                <td>List documentation files of a package</td>
+                <td><code>rpm -qd package_name</code></td>
+            </tr>
+            <tr>
+                <td><code>-c</code></td>
+                <td>List configuration files of a package</td>
+                <td><code>rpm -qc package_name</code></td>
+            </tr>
+            <tr>
+                <td><code>-s</code></td>
+                <td>List files that are not part of any package</td>
+                <td><code>rpm -qf /path/to/file</code></td>
+            </tr>
+            <tr>
+                <td><code>-K</code></td>
+                <td>Check the signature of a package</td>
+                <td><code>rpm -K package.rpm</code></td>
+            </tr>
+
+            <tr>
+                <td><code>-qa</code></td>
+                <td>List all installed packages</td>
+                <td><code>rpm -qa</code></td>
+            </tr>
+            <tr>
+                <td><code>-qc</code></td>
+                <td>List configuration files of a package</td>
+                <td><code>rpm -qc package_name</code></td>
+            </tr>
+            <tr>
+                <td><code>--test</code></td>
+                <td>Test package installation without making changes</td>
+                <td><code>rpm -i --test package.rpm</code></td>
+            </tr>
+            <tr>
+                <td><code>--verify</code></td>
+                <td>Verify a package</td>
+                <td><code>rpm --verify package_name</code></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Examples</h2>
+    <h3>1. Installing a Package</h3>
+    <pre><code>rpm -i example-package.rpm</code></pre>
+    <p>This command installs the specified RPM package.</p>
+
+    <h3>2. Upgrading a Package</h3>
+    <pre><code>rpm -U example-package.rpm</code></pre>
+    <p>This command upgrades an existing package or installs it if it's not already installed.</p>
+
+    <h3>3. Removing a Package</h3>
+    <pre><code>rpm -e example-package</code></pre>
+    <p>This command removes the specified package from the system.</p>
+
+    <h3>4. Querying Installed Packages</h3>
+    <pre><code>rpm -qa</code></pre>
+    <p>This command lists all installed packages on the system.</p>
+
+    <h3>5. Verifying a Package</h3>
+    <pre><code>rpm --verify example-package</code></pre>
+    <p>This command checks the integrity and authenticity of the specified package.</p>
+
+    <h3>6. Install package without dependences</h3>
+    <pre><code>rpm -i --nodeps example-package.rpm</code></pre>
+    <p>This command installs the specified package without checking for dependencies. Use with caution as it may lead to broken packages.</p>
+
+    <h3>7. Install package forcefully</h3>
+    <pre><code>rpm -i --force example-package.rpm</code></pre>
+    <p>This command installs the specified package forcefully, overwriting any existing files. Use with caution as it may lead to system instability.</p>
+
+    <h3>8. Listing Files in a Package</h3>
+    <pre><code>rpm -ql example-package</code></pre>
+    <p>This command lists all files that are part of the specified package.</p>
+    
+    </main>
+</body>
+</html>

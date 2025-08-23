@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about Linux RAID configuration, types of RAID, commands, options, and examples.">
+    <title>Linux RAID Configuration and Details</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+   
+    </style>
+</head>
+<body>
+    
+    <main>
+        <h1>Linux RAID Configuration and Details</h1>
+        <section>
+            <h2>What is RAID?</h2>
+            <p>RAID (Redundant Array of Independent Disks) is a data storage virtualization technology that combines multiple physical drives into a single logical unit to improve performance, redundancy, or both.</p>
+        </section>
+        <section>
+            <h2>Types of RAID</h2>
+            <ul>
+                <li><strong>RAID 0:</strong> Striping for performance, no redundancy.</li>
+                <li><strong>RAID 1:</strong> Mirroring for redundancy.</li>
+                <li><strong>RAID 5:</strong> Striping with parity for redundancy and performance.</li>
+                <li><strong>RAID 6:</strong> Striping with double parity for higher redundancy.</li>
+                <li><strong>RAID 10:</strong> Combination of RAID 1 and RAID 0 for redundancy and performance.</li>
+            </ul>
+        </section>
+        <section>
+            <h2>RAID Configuration Commands</h2>
+            <p>Below are some common commands used to configure RAID in Linux:</p>
+            <h3>Install mdadm</h3>
+            <pre><code>sudo apt install mdadm</code></pre>
+            <p> Redhat base installation</p>
+            <pre><code>sudo yum install mdadm</code></pre>
+            <h3>Create a RAID Array</h3>
+            <pre><code>sudo mdadm --create /dev/md0 --active yes --level=1 --raid-devices=2 /dev/sdX /dev/sdY</code></pre>
+            <p><strong>Options:</strong></p>
+            <ul>
+                <li><code>--create</code>: Create a new RAID array.</li>
+                <li><code>/dev/md0</code>: The name of the RAID device to create.</li>
+                <li><code>--active yes</code>: Activate the array immediately.</li>
+                <li><code>--level</code>: Specify the RAID level (e.g., 0, 1, 5, 6, 10).</li>
+                <li><code>--raid-devices</code>: Number of devices in the array.</li>
+            </ul>
+            <h3>Check RAID Status</h3>
+            <pre><code>cat /proc/mdstat</code></pre>
+            <h3>Stop a RAID Array</h3>
+            <pre><code>sudo mdadm --stop /dev/md0</code></pre>
+            <h3>Remove a RAID Array</h3>
+            <pre><code>sudo mdadm --remove /dev/md0</code></pre>
+        </section>
+        <section>
+            <h2>Example RAID Configuration</h2>
+            <p>To create a RAID 1 array with two devices:</p>
+            <pre><code>sudo mdadm --create /dev/md0 --active yes --level=1 --raid-devices=2 /dev/sdX /dev/sdY</code></pre>
+            <p>After creating the array, format it with a filesystem:</p>
+            <pre><code>sudo mkfs.ext4 /dev/md0</code></pre>
+            <p>Then mount it:</p>
+            <pre><code>sudo mount /dev/md0 /mnt</code></pre>
+        </section>
+        <section>
+            <h2>Add a new disk in RAID configuration</h2>
+            <p>To add a new disk to an existing RAID array, follow these steps:</p>
+            <ol>
+                <li>Identify the new disk (e.g., /dev/sdZ).</li>
+                <li>Add the new disk to the RAID array:</li>
+                <pre><code>sudo mdadm --add /dev/md0 /dev/sdZ</code></pre>
+                <li>Resync the RAID array:</li>
+                <pre><code>sudo mdadm --grow /dev/md0 --raid-devices=3</code></pre>
+        </section>
+    </main>
+    
+</body>
+</html>

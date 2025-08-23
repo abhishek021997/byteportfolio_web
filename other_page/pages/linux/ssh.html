@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about Linux SSH command and configuration file with examples and descriptions.">
+    <title>Linux SSH Command and Configuration</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+</head>
+<body>
+    
+    <main>
+        <h1>Linux SSH Command and Configuration</h1>
+        <section>
+            <h2>What is SSH?</h2>
+            <p>SSH (Secure Shell) is a protocol used to securely connect to remote systems over a network. It provides encrypted communication and is commonly used for remote login and command execution.</p>
+        </section>
+        <section>
+            <p><b>Package name:</b> openssh_server <br>
+                <b>Demon name:</b> sshd <br>
+                <b>Port number:</b> 22 <br>
+                <b>Command name:</b> ssh <br>
+                <b>Service name:</b> sshd.service <br>
+                <b>Log file:</b> /var/log/secure<br>
+                <b>Configuration file:</b> /etc/ssh/sshd_config</p>
+            
+
+        </section>
+
+        <section>
+            <h2>Basic SSH Command</h2>
+            <p>The basic syntax of the SSH command is:</p>
+            <pre><code>ssh [user]@[hostname or IP address]</code></pre>
+            <p>Example:</p>
+            <pre><code>ssh user@192.168.1.100</code></pre>
+            <p>This command connects to the remote system with the username <code>user</code> at the IP address <code>192.168.1.100</code>.</p>
+
+        </section>
+
+        <section>
+            <h2>SSH Configuration File</h2>
+            <p>The SSH client configuration file is typically located at <code>~/.ssh/config</code>. It allows you to define shortcuts and settings for SSH connections.</p>
+            <p>Example configuration:</p>
+            <pre><code>
+Host myserver
+    HostName 192.168.1.100
+    User user
+    Port 22
+            </code></pre>
+            <p>With this configuration, you can connect to the server using:</p>
+            <pre><code>ssh myserver</code></pre>
+        </section>
+
+        <section>
+            <h2>Common SSH Options</h2>
+            <ul>
+                <li><code>-p [port]</code>: Specify the port to connect to (default is 22).</li>
+                <li><code>-i [identity_file]</code>: Specify the private key file for authentication.</li>
+                <li><code>-L [local_port]:[remote_host]:[remote_port]</code>: Set up port forwarding.</li>
+                <li><code>-R [remote_port]:[local_host]:[local_port]</code>: Set up reverse port forwarding.</li>
+                <li><code>-X</code>: Enable X11 forwarding for graphical applications.</li>
+                <li><code>-C</code>: Enable compression for the SSH session.</li>
+                <li><code>-v</code>: Enable verbose mode for debugging.</li>
+                <li><code>-q</code>: Quiet mode, suppresses warning messages.</li>
+                <li><code>-o [option]</code>: Specify options in the format <code>key=value</code>.</li>
+                <li><code>-t</code>: Force pseudo-terminal allocation.</li>
+                <li><code>-A</code>: Enable forwarding of the authentication agent connection.</li>
+                <li><code>-K</code>: Enable GSSAPI authentication and forwarding.</li>  
+                <li><code>-4</code>: Force SSH to use IPv4 addresses.</li>
+                <li><code>-6</code>: Force SSH to use IPv6 addresses.</li>
+                <li><code>-o StrictHostKeyChecking=no</code>: Disable host key checking (not recommended for production).</li>
+                <li><code>-o UserKnownHostsFile=/dev/null</code>: Ignore the known hosts file (not recommended for production).</li>
+                <li><code>-o LogLevel=ERROR</code>: Set the logging level to suppress non-error messages.</li>
+                <li><code>-o ConnectTimeout=[seconds]</code>: Set a timeout for the connection attempt.</li>
+                <li><code>-o ServerAliveInterval=[seconds]</code>: Set the interval for sending keepalive messages to the server.</li>
+                <li><code>-o ServerAliveCountMax=[count]</code>: Set the maximum number of keepalive messages before disconnecting.</li>
+                <li><code>-o PreferredAuthentications=[method]</code>: Specify the preferred authentication methods (e.g., publickey,password).</li>
+                <li><code>-o IdentityFile=[file]</code>: Specify the path to the private key file for authentication.</li>
+                <li><code>-o ForwardAgent=yes</code>: Enable forwarding of the authentication agent.</li>
+                <li><code>-o ForwardX11=yes</code>: Enable X11 forwarding.</li>
+                <li><code>-o Compression=yes</code>: Enable compression for the SSH session.</li>
+                <li><code>-o TCPKeepAlive=yes</code>: Enable TCP keepalive messages.</li>
+                <li><code>-o CheckHostIP=no</code>: Disable checking the IP address of the host (not recommended for production).</li>
+
+            </ul>
+        </section>
+
+        <section>
+            <h2>Example: Copying Files with SCP</h2>
+            <p>SSH is also used with SCP (Secure Copy) to transfer files securely:</p>
+            <pre><code>scp file.txt user@192.168.1.100:/path/to/destination</code></pre>
+            <p>This command copies <code>file.txt</code> to the remote server.</p>
+        </section>
+        <section>
+            <h2>SSH with information collect in remote host</h2>
+            <p>To collect information from a remote host using SSH, you can execute commands directly:</p>
+            <pre><code>ssh user@[hostname or IP address] "df -Th"</code></pre>
+            <p>This command connects to the remote host and runs the <code>df -Th</code> command to display disk usage information.</p>
+        </section>
+        <section>
+            <h2>SSH Deny user and Allow user</h2>
+            <p>To deny or allow specific users to connect via SSH, you can modify the SSH configuration file <code>/etc/ssh/sshd_config</code>.</p>
+            <p>To deny a user:</p>
+            <pre><code>echo "DenyUsers username" | sudo tee -a /etc/ssh/sshd_config</code></pre>
+            <p>To allow a user:</p>
+            <pre><code>echo "AllowUsers username" | sudo tee -a /etc/ssh/sshd_config</code></pre>
+            <p>After making changes, restart the SSH service:</p>
+            <pre><code>sudo systemctl restart sshd</code></pre>
+        </section>
+
+        <section>
+            <h2>Permanent Root login</h2>
+            <p>To allow root login via SSH, edit the SSH configuration file <code>/etc/ssh/sshd_config</code> and set the following:</p>
+            <pre><code>PermitRootLogin yes</code></pre>
+            <p>After making changes, restart the SSH service:</p>
+            <pre><code>sudo systemctl restart sshd</code></pre>
+
+        </section>
+        <section>
+            <h2>Password less SSH configuration step</h2>
+            <p>To set up passwordless SSH login, follow these steps:</p>
+            <pre>
+1. Generate an SSH key pair on the local machine:
+ssh-keygen -t rsa -b 2048
+2. Copy the public key to the remote server:
+ssh-copy-id user@remote_host
+3. Test the passwordless login:
+ssh user@remote_host
+            </pre>
+        </section>
+        <section>
+            <h2>SSH port change with SELinux</h2>
+            <p>To change the SSH port and configure SELinux, follow these steps:</p>
+            <pre>
+1. Edit the SSH configuration file:
+sudo vim /etc/ssh/sshd_config
+2. Change the port number:
+Port 2222
+3. Save and exit the file.
+4. Update SELinux to allow the new port:
+semanage port -a -t ssh_port_t -p tcp 2222
+5. Restart the SSH service:
+sudo systemctl restart sshd
+6. Verify the new port is allowed in SELinux:
+semanage port -l | grep ssh
+7. Update the firewall to allow the new port:
+sudo firewall-cmd --permanent --add-port=2222/tcp
+sudo firewall-cmd --reload
+            </pre>
+            <p>Note: Ensure that the new port is allowed in your firewall settings.</p>
+        </section>
+        <section>
+            <h2>Firewall Port forwarding step</h2>
+            <p>To change a Traffic in port 22 to 2222</p>
+            <pre>
+sudo firewall-cmd --permanent --add-forward-port=port=22:proto=tcp:toport=2222
+sudo firewall-cmd --reload
+            </pre>
+            <p>This command forwards incoming traffic on port 22 to port 2222.</p>
+            
+        </section>
+    </main>
+    
+</body>
+</html>

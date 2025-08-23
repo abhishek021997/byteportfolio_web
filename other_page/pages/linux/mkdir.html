@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about the Linux mkdir command, its options, and descriptions.">
+    <title>Linux mkdir Command</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <main>
+    <h1>Linux <code>mkdir</code> Command</h1>
+    <p>The <code>mkdir</code> command in Linux is used to create directories. Below is a list of commonly used options with their descriptions:</p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>-p</code></td>
+                <td>Create parent directories as needed. If the parent directory does not exist, it will be created.</td>
+            </tr>
+            <tr>
+                <td><code>-v</code></td>
+                <td>Display a message for each created directory.</td>
+            </tr>
+            <tr>
+                <td><code>--mode=MODE</code></td>
+                <td>Set the file permissions for the new directory.</td>
+            </tr>
+            <tr>
+                <td><code>--help</code></td>
+                <td>Display help information about the <code>mkdir</code> command.</td>
+            </tr>
+            <tr>
+                <td><code>--version</code></td>
+                <td>Display the version of the <code>mkdir</code> command.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Examples</h2>
+    <ul>
+        <li><code>mkdir new_folder</code> - Creates a directory named <code>new_folder</code>.</li>
+        <li><code>mkdir -p parent/child</code> - Creates a directory structure with <code>parent</code> and <code>child</code>.</li>
+        <li><code>mkdir -v new_folder</code> - Creates a directory and displays a message.</li>
+        <li><code>mkdir -m 755 new_folder</code> - Creates a directory with specific permissions.</li>
+    </ul>
+    </main>
+</body>
+</html>

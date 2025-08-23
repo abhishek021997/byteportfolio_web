@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Linux echo command with all options and examples.">
+    <title>Linux echo Command</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <main>
+    <h1>Linux <code>echo</code> Command</h1>
+    <p>The <code>echo</code> command in Linux is used to display a line of text or string passed as an argument. It is commonly used in shell scripts and batch files to output text or variables.</p>
+
+    <h2>Syntax</h2>
+    <pre><code>echo [OPTION]... [STRING]...</code></pre>
+
+    <h2>Options</h2>
+    <ul>
+        <li><code>-n</code>: Do not output the trailing newline.</li>
+        <li><code>-e</code>: Enable interpretation of backslash escapes.</li>
+        <li><code>-E</code>: Disable interpretation of backslash escapes (default).</li>
+    </ul>
+
+    <h2>Variable set</h2>
+    <ul>
+        <li><code>var1='this is simple text'</code>: this will store a simple testdata in 'val1'</li>
+        <li><code>var2="this is simple text $HOSTNAME"</code>: this will store a simple testdata in 'val2' also store a command </li>
+        <li><code>var3="this is simple text $(date)"</code>: this will store a simple testdata in 'val3' also store a command output</li>
+        <li><code>var4="this is simple text `date`"</code>: this will store a simple testdata in 'val4' also store a command output</li>
+        <li><code>var5="this is simple text \$(date)"</code>: this will store a simple testdata in 'val5' also store a command output but with backslash escape</li>        
+    </ul>
+
+
+    <h2>Backslash Escapes (used with <code>-e</code>)</h2>
+    <ul>
+        <li><code>\\</code>: Backslash</li>
+        <li><code>\a</code>: Alert (bell)</li>
+        <li><code>\b</code>: Backspace</li>
+        <li><code>\c</code>: Suppress trailing newline</li>
+        <li><code>\f</code>: Form feed</li>
+        <li><code>\n</code>: New line</li>
+        <li><code>\r</code>: Carriage return</li>
+        <li><code>\t</code>: Horizontal tab</li>
+        <li><code>\v</code>: Vertical tab</li>
+    </ul>
+
+    <h2>Examples</h2>
+    <h3>1. Display a simple message</h3>
+    <pre><code>echo "Hello, World!"</code></pre>
+    <p>Output:</p>
+    <pre><code>Hello, World!</code></pre>
+
+    <h3>2. Suppress the trailing newline</h3>
+    <pre><code>echo -n "Hello, World!"</code></pre>
+    <p>Output:</p>
+    <pre><code>Hello, World!</code></pre>
+
+    <h3>3. Enable interpretation of backslash escapes</h3>
+    <pre><code>echo -e "Line1\nLine2"</code></pre>
+    <p>Output:</p>
+    <pre><code>Line1
+Line2</code></pre>
+
+    <h3>4. Display a variable</h3>
+    <pre><code>name="Linux"
+echo "Welcome to $name"</code></pre>
+    <p>Output:</p>
+    <pre><code>Welcome to Linux</code></pre>
+
+    <h3>5. Disable interpretation of backslash escapes</h3>
+    <pre><code>echo -E "Line1\nLine2"</code></pre>
+    <p>Output:</p>
+    <pre><code>Line1\nLine2</code></pre>
+
+    <h3>5. Color output Display</h3>
+    <pre><code>echo -e "\e[31mThis is red text\e[0m"</code></pre>
+    <p>Output:</p>
+    <pre><code>This is red text</code></pre>
+
+    <h3>some colors are:</h3>
+    <ul>
+        <li><code>\e[31m</code>: Red</li>
+        <li><code>\e[32m</code>: Green</li>
+        <li><code>\e[33m</code>: Yellow</li>
+        <li><code>\e[34m</code>: Blue</li>
+        <li><code>\e[35m</code>: Magenta</li>
+        <li><code>\e[36m</code>: Cyan</li>
+        <li><code>\e[0m</code>: Reset color</li>
+    </ul>
+
+    <h3>6. Display a message with special characters</h3>
+    <pre><code>echo -e "This is a backslash: \\"</code></pre>
+
+    <p>Output:</p>
+    <pre><code>This is a backslash: \</code></pre>
+    <h3>7. Display a message with a tab space</h3>
+    <pre><code>echo -e "Column1\tColumn2"</code></pre>
+    <p>Output:</p>
+    <pre><code>Column1    Column2</code></pre>
+    <h3>8. Display a message with a bell sound</h3>
+    <pre><code>echo -e "This will ring the bell\a"</code></pre>
+    <p>Output: This will ring the bell (you may hear a sound depending on your terminal settings).</p>
+    <h3>9. Display a message with a form feed</h3>
+    <pre><code>echo -e "This is a form feed\f"</code></pre>
+    <p>Output: This is a form feed (the output may not be visible in all terminals).</p>
+    <h3>10. Display a message with a vertical tab</h3>
+    <pre><code>echo -e "This is a vertical tab\v"</code></pre>
+    <p>Output: This is a vertical tab (the output may not be visible in all terminals).</p>
+    <h3>11. Display a message with a carriage return</h3>
+    <pre><code>echo -e "This is a carriage return\rNew Line"</code></pre>
+    <p>Output: This is a carriage return
+New Line (the output will overwrite the previous line).</p>
+    <h3>12. Display a message with multiple lines</h3>
+    <pre><code>echo -e "Line1\nLine2\nLine3"</code></pre>
+    <p>Output:</p>
+    <pre><code>Line1
+Line2
+Line3</code></pre>
+
+    <h3>13. Display a message with a variable and special characters</h3>
+    <pre><code>greeting="Hello"
+echo -e "$greeting, World!\nThis is a test with a tab:\tEnd of line."</code></pre>
+
+    <p>Output:</p>
+    <pre><code>Hello, World!
+This is a test with a tab:    End of line.</code></pre>
+    <h3>14. Display a message with a variable and color</h3>
+    <pre><code>color="\e[32m"
+echo -e "${color}This is green text\e[0m"</code></pre>
+    <p>Output:</p>
+    <pre><code>This is green text</code></pre>
+
+    <h3>15. Display a message with a variable and backslash escape</h3>
+    <pre><code>path="/home/user"
+echo -e "The path is: $path\nThis is a backslash: \\"</code></pre>
+    <p>Output:</p>
+    <pre><code>The path is: /home/user
+This is a backslash: \</code></pre>
+    <h3>16. Display a message with a variable and multiple backslash escapes</h3>
+    <pre><code>message="Hello\nWorld"
+echo -e "Message:\n$message\nThis is a tab:\tEnd of line."</code></pre>
+    <p>Output:</p>
+    <pre><code>Message:
+Hello
+World   
+This is a tab:    End of line.</code></pre>
+
+    <h3>17. Display a message with a variable and multiple colors</h3>
+    <pre><code>color1="\e[34m"
+color2="\e[31m"
+echo -e "${color1}This is blue text${color2} and this is red text\e[0m"</code></pre>
+    <p>Output:</p>
+    <pre><code>This is blue text and this is red text</code></pre>
+
+    <h3>18. Display a message with a variable and special characters in a loop</h3>
+    <pre><code>for i in {1..3}; do
+    echo -e "Iteration $i: Hello\nWorld"
+done</code></pre>
+    <p>Output:</p>
+    <pre><code>Iteration 1: Hello
+World
+Iteration 2: Hello
+World
+Iteration 3: Hello
+World</code></pre>
+
+
+</main>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Install Apache on Linux</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+       
+    </style>
+</head>
+<body>
+    <main>
+    <h1>How to Install Apache on Ubuntu</h1>
+    <p>Follow these steps to install the Apache HTTP server on a Linux system:</p>
+
+    <h2>Step 1: Update the Package Index</h2>
+    <p>Run the following command to update your package index:</p>
+    <pre><code>
+        sudo apt update
+    </code></pre>
+
+    <h2>Step 2: Install Apache</h2>
+    <p>Use the following command to install Apache:</p>
+    <pre><code>
+        sudo apt install apache2
+    </code></pre>
+
+    <h2>Step 3: Start and Enable Apache</h2>
+    <p>Start the Apache service and enable it to start on boot:</p>
+    <pre><code>
+        sudo systemctl start apache2
+        sudo systemctl enable apache2
+    </code></pre>
+
+    <h2>Step 4: Verify Installation</h2>
+    <p>Open a web browser and navigate to <code>http://your_server_ip</code>. You should see the default Apache welcome page.</p>
+
+    <h2>Step 5: Adjust Firewall Settings (Optional)</h2>
+    <p>If you are using a firewall, allow HTTP and HTTPS traffic:</p>
+    <pre><code>
+        sudo ufw allow 'Apache'
+        sudo ufw reload
+    </code></pre>
+
+    <p>That's it! Apache is now installed and running on your Linux system.</p>
+
+    <h2>Step 6: Configuration file and use webpage via domain name</h2>
+    <p>If we need to setup our website using via domain name</p>
+    <pre><code>
+        sudo vim /etc/apache2/sites-available/your_domain.conf
+    </code></pre>
+
+    <p>Then add the following lines to the file:</p>
+    <pre><code>
+        &lt;VirtualHost *:80&gt;
+            ServerAdmin webmaster.com
+            ServerName your_domain
+            DocumentRoot /var/www/html
+            ErrorLog ${APACHE_LOG_DIR}/error.log
+            CustomLog ${APACHE_LOG_DIR}/access.log combined
+        &lt;/VirtualHost&gt;
+
+        &lt;VirtualHost *:443&gt;
+            ServerAdmin webmaster.com
+            ServerName your_domain
+            DocumentRoot /var/www/html
+            ErrorLog ${APACHE_LOG_DIR}/error.log
+            CustomLog ${APACHE_LOG_DIR}/access.log combined
+            SSLEngine on
+            SSLCertificateFile /etc/ssl/certs/your_domain.crt
+            SSLCertificateKeyFile /etc/ssl/private/your_domain.key
+            SSLCertificateChainFile /etc/ssl/certs/your_domain.ca-bundle
+        &lt;/VirtualHost&gt;
+
+        &lt;directory /var/www/html&gt;
+            Options Indexes FollowSymLinks
+            AllowOverride All
+            Require all granted
+        &lt;/directory&gt;
+    </code></pre>
+
+    <p>After all the entry run this commnad this will show you all syntex is right formate:</p>
+    <pre><code>
+        httpd -t
+    </code></pre>
+    
+    <h2>Step 7: New Entry into Host</h2>
+    <p>Then entry into host file:</p>
+    <pre><code>
+        sudo vim /etc/hosts
+    </code></pre>
+
+
+    <p>Then add the following lines to the file:</p>
+
+    <pre><code>
+        localIP your_domain
+        -> example:  192.168.0.101 webmaster.com
+        Note1: localIP is your server IP address & your_domain is your domain name
+        Note2: If you are using a domain name, make sure to point it to your server's IP address in your DNS settings.
+        Note3: If you set domanin entry so change hostname to your_domain
+    </code></pre>
+
+    <h2>Step 8: Restart Apache</h2>
+
+    <p>Finally, restart Apache to apply the changes:</p>
+    <pre><code>
+        sudo systemctl restart apache2
+    </code></pre>
+    <p>Now you can access your website using the domain name you configured.</p>
+
+
+
+    <h2>Step 9: Check Apache Status</h2>
+    <p>To check the status of Apache, use the following command:</p>
+    <pre><code>
+        sudo systemctl status apache2
+    </code></pre>
+
+    <p>This will show you whether Apache is running and any errors if it is not.</p>
+    <h2>Step 10: Enable SSL (Optional)</h2>
+    <p>If you want to enable SSL for secure connections, you can use the following command:</p>
+    <pre><code>
+        sudo a2enmod ssl
+        sudo systemctl restart apache2
+    </code></pre>
+    <p>Then create a self-signed SSL certificate:</p>
+    <pre><code>
+        sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt
+    </code></pre>
+    <p>And update your Apache configuration to use the SSL certificate.</p>
+    <h2>Step 11: Test SSL Configuration</h2>
+    <p>To test your SSL configuration, you can use the following command:</p>
+    <pre><code>
+        sudo apachectl configtest
+    </code></pre>
+    <p>If there are no errors, restart Apache:</p>
+    <pre><code>
+        sudo systemctl restart apache2
+    </code></pre>
+    <p>Now you can access your website using HTTPS.</p>
+    <h2>Step 12: Install PHP (Optional)</h2>
+    <p>If you want to run PHP applications, you can install PHP and the required modules:</p>
+    <pre><code>
+        sudo apt install php libapache2-mod-php
+        sudo systemctl restart apache2
+    </code></pre>
+    <p>Now you can create a PHP file in the web root directory to test PHP:</p>
+    <pre><code>
+        echo &lt;?php phpinfo(); ?&gt; | sudo tee /var/www/html/info.php
+    </code></pre>
+    <p>Then access it in your web browser at <code>http://your_server_ip/info.php</code>.</p>
+    <h2>Step 13: Install MySQL (Optional)</h2>
+    <p>If you want to run a database server, you can install MySQL:</p>
+    <pre><code>
+        sudo apt install mysql-server
+        sudo mysql_secure_installation
+    </code></pre>
+    <p>Follow the prompts to secure your MySQL installation.</p>
+    <h2>Step 14: Install PHPMyAdmin (Optional)</h2>
+    <p>If you want to manage your MySQL databases through a web interface, you can install PHPMyAdmin:</p>
+    <pre><code>
+        sudo apt install phpmyadmin
+        sudo phpenmod mbstring
+        sudo systemctl restart apache2
+    </code></pre>
+    <p>Follow the prompts to configure PHPMyAdmin.</p>
+    <h2>Step 15: Conclusion</h2>
+    <p>You have successfully installed Apache on your Linux system. You can now host websites and web applications.</p>
+    <h2>Step 16: Additional Resources</h2>
+    <p>For more information, you can refer to the official Apache documentation:</p>
+    <p><a href="https://httpd.apache.org/docs/" target="_blank">Apache HTTP Server Documentation</a></p>
+    <p>For troubleshooting, you can check the Apache error logs:</p>
+    <pre><code>
+        sudo tail -f /var/log/apache2/error.log
+    </code></pre>
+
+
+<!-- RHEL linux  -->
+    <h1>How to Install Apache Tomcat on Redhat</h1>
+    <p>Follow these steps to install the Apache HTTP server on a Redhat/CentOS Linux system:</p>
+
+    <h2>Step 1: Update the Package Index</h2>
+    <p>Run the following command to update your package index:</p>
+    <pre><code>
+        sudo yum update
+    </code></pre>
+    <h2>Step 2: Install Apache</h2>
+    <p>Use the following command to install Apache:</p>
+    <pre><code>
+        sudo yum install httpd
+    </code></pre>
+    <h2>Step 3: Start and Enable Apache</h2>
+    <p>Start the Apache service and enable it to start on boot:</p>
+    <pre><code>
+        sudo systemctl start httpd
+        sudo systemctl enable httpd
+    </code></pre>
+    <h2>Step 4: Verify Installation</h2>
+    <p>Open a web browser and navigate to <code>http://your_server_ip</code>. You should see the default Apache welcome page.</p>
+    <h2>Step 5: Adjust Firewall Settings (Optional)</h2>
+    <p>If you are using a firewall, allow HTTP and HTTPS traffic:</p>
+    <pre><code>
+        sudo firewall-cmd --permanent --add-service=http
+        sudo firewall-cmd --permanent --add-service=https
+        sudo firewall-cmd --reload
+    </code></pre>
+    <p>That's it! Apache is now installed and running on your Redhat/CentOS Linux system.</p>
+    <h2>Step 6: Configuration file and use webpage via domain name</h2>
+    <p>If we need to setup our website using via domain name</p>
+    <pre><code>
+        sudo vim /etc/httpd/conf.d/your_domain.conf
+    </code></pre>
+    <p>Then add the following lines to the file:</p>
+
+    <pre><code>
+        &lt;VirtualHost *:80&gt;
+            ServerAdmin webmaster.com
+            ServerName your_domain
+            DocumentRoot /var/www/html
+            ErrorLog ${APACHE_LOG_DIR}/error.log
+            CustomLog ${APACHE_LOG_DIR}/access.log combined
+        &lt;/VirtualHost&gt;
+
+        &lt;VirtualHost *:443&gt;
+            ServerAdmin webmaster.com
+            ServerName your_domain
+            DocumentRoot /var/www/html
+            ErrorLog ${APACHE_LOG_DIR}/error.log
+            CustomLog ${APACHE_LOG_DIR}/access.log combined
+            SSLEngine on
+            SSLCertificateFile /etc/ssl/certs/your_domain.crt
+            SSLCertificateKeyFile /etc/ssl/private/your_domain.key
+            SSLCertificateChainFile /etc/ssl/certs/your_domain.ca-bundle
+        &lt;/VirtualHost&gt;
+
+        &lt;directory /var/www/html&gt;
+            Options Indexes FollowSymLinks
+            AllowOverride All
+            Require all granted
+        &lt;/directory&gt;
+    </code></pre>
+    <p>After all the entry run this commnad this will show you all syntex is right formate:</p>
+    <pre><code>
+        httpd -t
+    </code></pre>
+    <p>Then entry into host file:</p>
+    <pre><code>
+        sudo vim /etc/hosts
+    </code></pre>
+    <p>Then add the following lines to the file:</p>
+    <pre><code>
+        localIP your_domain
+        -> example:  192.168.0.101 webmaster.com
+        Note1: localIP is your server IP address & your_domain is your domain name
+        Note2: If you are using a domain name, make sure to point it to your server's IP address in your DNS settings.
+        Note3: If you set domanin entry so change hostname to your_domain
+    </code></pre>
+    <p>Finally, restart Apache to apply the changes:</p>
+    <pre><code>
+        sudo systemctl restart httpd
+    </code></pre>
+    <p>Now you can access your website using the domain name you configured.</p>
+    <p>To check the status of Apache, use the following command:</p>
+    <pre><code>
+        sudo systemctl status httpd
+    </code></pre>
+    <p>This will show you whether Apache is running and any errors if it is not.</p>
+    <p>To test your SSL configuration, you can use the following command:</p>
+    <pre><code>
+        sudo apachectl configtest
+    </code></pre>
+    <p>If there are no errors, restart Apache:</p>
+    <pre><code>
+        sudo systemctl restart httpd
+    </code></pre>
+    <p>Now you can access your website using HTTPS.</p>
+    <p>If you want to run PHP applications, you can install PHP and the required modules:</p>
+    <pre><code>
+        sudo yum install php php-mysql
+        sudo systemctl restart httpd
+    </code></pre>
+    <p>Now you can create a PHP file in the web root directory to test PHP:</p>
+    <pre><code>
+        echo &lt;?php phpinfo(); ?&gt; | sudo tee /var/www/html/info.php
+    </code></pre>
+    <p>Then access it in your web browser at <code>http://your_server_ip/info.php</code>.</p>
+    <p>If you want to run a database server, you can install MySQL:</p>
+    <pre><code>
+        sudo yum install mysql-server
+        sudo mysql_secure_installation
+    </code></pre>
+    <p>Follow the prompts to secure your MySQL installation.</p>
+    <p>If you want to manage your MySQL databases through a web interface, you can install PHPMyAdmin:</p>
+    <pre><code>
+        sudo yum install phpmyadmin
+        sudo systemctl restart httpd
+    </code></pre>
+    <p>Follow the prompts to configure PHPMyAdmin.</p>
+
+    <p>You have successfully installed Apache on your Redhat/CentOS Linux system. You can now host websites and web applications.</p>
+    <p>For more information, you can refer to the official Apache documentation:</p>
+    <p><a href="https://httpd.apache.org/docs/" target="_blank">Apache HTTP Server Documentation</a></p>
+    <p>For troubleshooting, you can check the Apache error logs:</p>
+    <pre><code>
+        sudo tail -f /var/log/httpd/error_log
+    </code></pre>
+    <p>This will show you the latest error messages from Apache.</p>
+    <p>That's it! You have successfully installed Apache on your Linux system.</p>
+        
+    <!-- how to change apache port number -->
+
+    <h1>How to Change Apache Port Number</h1>
+    <p>To change the default port number of Apache from 80 to another port (e.g., 8080), follow these steps:</p>
+    <h2>Step 1: Open the Apache Configuration File</h2>
+    <p>Open the Apache configuration file using a text editor. The location of the file may vary depending on your Linux distribution:</p>
+    <pre><code>
+        sudo vim /etc/httpd/conf/httpd.conf
+    </code></pre>
+    <p>or</p>
+    <pre><code>
+        sudo vim /etc/apache2/ports.conf
+    </code></pre>
+    <p>or</p>
+    <pre><code>
+        sudo vim /etc/apache2/sites-available/000-default.conf
+    </code></pre>
+    <p>or</p>
+    <pre><code>
+        sudo vim /etc/apache2/apache2.conf
+    </code></pre>
+    <h2>Step 2: Change the Port Number</h2>
+    <p>Find the line that specifies the port number. It usually looks like this:</p>
+
+    <pre><code>
+        Listen 80
+    </code></pre>
+    <p>Change it to the desired port number, for example:</p>
+
+    <pre><code>
+        Listen 8080
+    </code></pre>
+
+    <h2>Step 3: Update Virtual Host Configuration</h2>
+
+    <p>If you have virtual host configurations, update the port number there as well. For example:</p>
+    <pre><code>
+        &lt;VirtualHost *:80&gt;
+            ServerAdmin webmaster@localhost
+            DocumentRoot /var/www/html
+        &lt;/VirtualHost&gt;
+    </code></pre>
+    <p>Change it to:</p>
+    <pre><code>
+        &lt;VirtualHost *:8080&gt;
+            ServerAdmin webmaster@localhost
+            DocumentRoot /var/www/html
+        &lt;/VirtualHost&gt;
+    </code></pre>
+    <p>Make sure to change the port number in all virtual host configurations.</p>
+    <h2>Step 4: Save and Exit</h2>
+    <p>Save the changes and exit the text editor.</p>
+    <h2>Step 5: Restart Apache</h2>
+    <p>Restart the Apache service to apply the changes:</p>
+    <pre><code>
+        sudo systemctl restart apache2
+    </code></pre>
+    <p>or</p>
+    <pre><code>
+        sudo systemctl restart httpd
+    </code></pre>
+    <p>or</p>
+    <pre><code>
+        sudo service apache2 restart
+    </code></pre>
+    <p>or</p>
+    <pre><code>
+        sudo service httpd restart
+    </code></pre>
+    <h2>Step 6: Access Apache on the New Port</h2>
+    <p>Open a web browser and navigate to <code>http://your_server_ip:8080</code> (replace 8080 with your new port number). You should see the Apache welcome page.</p>
+    <p>If you have a firewall enabled, make sure to allow traffic on the new port:</p>
+    <pre><code>
+        sudo ufw allow 8080
+    </code></pre>
+    <p>or</p>
+    <pre><code>
+        sudo firewall-cmd --permanent --add-port=8080/tcp
+        sudo firewall-cmd --reload
+    </code></pre>
+
+    <p>or</p>
+    <p>If there is SElinux enable so add a new port also:</p>
+    <pre><code>
+        sudo semanage port -a -t http_port_t -p tcp 8080
+    </code></pre>
+
+    <p>Now restart Apache service</p>
+    <pre><code>
+        sudo systemctl restart apache2
+    </code></pre>
+    <p>or</p>
+    <pre><code>
+        sudo systemctl restart httpd
+    </code></pre>
+
+
+<p>That's it! You have successfully changed the Apache port number.</p>
+
+</main> 
+
+</body>
+</html>

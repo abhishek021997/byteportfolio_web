@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about the Linux cut command with examples and descriptions of all options.">
+    <title>Linux cut Command - Examples and Options</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <main>
+    <h1>Linux <code>cut</code> Command</h1>
+    <p>The <code>cut</code> command in Linux is used to extract sections of text from files or standard input. It is particularly useful for processing delimited data.</p>
+
+    <h2>Syntax</h2>
+    <pre><code>cut [OPTION]... [FILE]...</code></pre>
+
+    <h2>Options</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>-b</code></td>
+                <td>Select only the bytes specified.</td>
+            </tr>
+            <tr>
+                <td><code>-c</code></td>
+                <td>Select only the characters specified.</td>
+            </tr>
+            <tr>
+                <td><code>-d</code></td>
+                <td>Specify a delimiter (default is tab).</td>
+            </tr>
+            <tr>
+                <td><code>-f</code></td>
+                <td>Select only the fields specified (requires <code>-d</code>).</td>
+            </tr>
+            <tr>
+                <td><code>--complement</code></td>
+                <td>Complement the selection (select everything except the specified).</td>
+            </tr>
+            <tr>
+                <td><code>--output-delimiter</code></td>
+                <td>Specify the output delimiter (default is the input delimiter).</td>
+            </tr>
+            <tr>
+                <td><code>--help</code></td>
+                <td>Display help information.</td>
+            </tr>
+            <tr>
+                <td><code>--version</code></td>
+                <td>Display version information.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Examples</h2>
+    <h3>1. Extract specific fields from a file</h3>
+    <pre><code>cut -d',' -f1,3 file.txt</code></pre>
+    <p>This command extracts the 1st and 3rd fields from <code>file.txt</code>, assuming fields are separated by commas.</p>
+
+    <h3>2. Extract specific characters</h3>
+    <pre><code>cut -c1-5 file.txt</code></pre>
+    <p>This command extracts the first 5 characters from each line of <code>file.txt</code>.</p>
+
+    <h3>3. Extract specific bytes</h3>
+    <pre><code>cut -b1-10 file.txt</code></pre>
+    <p>This command extracts the first 10 bytes from each line of <code>file.txt</code>.</p>
+
+    <h3>4. Change the output delimiter</h3>
+    <pre><code>cut -d',' -f1,2 --output-delimiter='|' file.txt</code></pre>
+    <p>This command extracts the 1st and 2nd fields from <code>file.txt</code> and separates them with a pipe (<code>|</code>) in the output.</p>
+
+    <h2>Conclusion</h2>
+    <p>The <code>cut</code> command is a powerful tool for text processing in Linux. By mastering its options, you can efficiently extract and manipulate data from files or standard input.</p>
+    </main>
+</body>
+</html>

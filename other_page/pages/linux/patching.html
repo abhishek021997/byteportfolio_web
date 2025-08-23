@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Patching Steps</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+    </style>
+</head>
+<body>
+    <main>
+    <h1>Linux Patching Steps</h1>
+    <p>This page provides detailed steps for patching Linux systems on Red Hat and Ubuntu, including both full path and manual patching methods.</p>
+
+    <h2>Introduction</h2>
+    <p>Patching is a critical process in maintaining the security and stability of Linux systems. This guide covers the steps for patching Red Hat and Ubuntu systems, including how to handle both full path updates and manual installations.</p>
+
+    <h2>Prerequisites</h2>
+    <ul>
+        <li>Access to the terminal with root or sudo privileges.</li>
+        <li>Internet connection for downloading updates.</li>
+        <li>Backup of important data before applying patches.</li>
+        <li>Registered system with Red Hat Subscription Manager for Red Hat systems.</li>
+        <li>Knowledge of the package manager used by the distribution (YUM for Red Hat, APT for Ubuntu).</li>
+    </ul>
+    <h2>Red Hat Patching Overview</h2>
+    <p>Red Hat uses the YUM package manager for managing software packages. Patching can be done through full path updates or by manually installing specific RPM packages.</p>
+    <h2>Ubuntu Patching Overview</h2>
+    <p>Ubuntu uses the APT package manager for managing software packages. Patching can be done through full path updates or by manually installing specific .deb packages.</p>
+    
+    <h2>Overview of Patching</h2>
+    <img src="../linux/images/patching.png" alt="Patching Overview" class="img-responsive">
+    
+
+    <h2>Patching Setp by step process and requirement</h2>
+    <h3>Path management Best Practices</h3>
+    <ol>
+        <li>Identify System that are non-complaince or unpatched (Scan System Daily)</li>
+        <li>Prioritize patched based on the potential impact calculated risk, performance and time considerations</li>
+        <li>Patches are usually shipped once a month or sooner</li>
+        <li>Test patches in a staging environment before applying them to production systems</li>
+    </ol>
+
+    <p>Follow the steps below to patch your Linux system effectively.</p>
+    
+    <h3>Step1:</h3>
+    <ol>
+        <li>Check the patched availability 
+             <pre>
+<code># dnf check-update</code>
+                or
+<code># yum check-update</code>
+            </pre></li>
+            <li>Get the schedule down-time from there concern team and client</li>
+            <li>Raise the RFL or change request as per the schedule in the change management tool involing the client, higher management and all the other operations team <br> like:- DB team, Backup team, Application team, etc.</li>
+            <li>Collect the server per-checks details and documented them into another server
+                <p>Precheck command</p>
+                <pre>
+<code>uname -a</code>
+<code>uptime</code>
+<code>df -h</code>
+<code>free -m</code>
+<code>lscpu</code>
+<code>lspci</code>
+<code>lsblk</code>
+<code>cat /etc/redhat-release</code>
+<code>cat /etc/os-release</code>
+<code>cat /etc/issue</code>
+<code>cat /etc/fstab</code>
+<code>cat /etc/hosts</code>
+<code>cat /etc/resolv.conf</code>
+<code>cat /etc/sysctl.conf</code>
+<code>vgdisplay</code>
+<code>lvdisplay</code>
+<code>multipath -ll</code>
+<code>cat /etc/grub.cfg</code>
+<code>fdisk -l</code>
+<code>ifconfig -a</code>
+<code>ip addr show</code>
+<code>ip route show</code>
+<code>cat /etc/sysconfig/network-scripts/ifcfg-*</code></pre>
+            </li>
+            <li>Then save the precheck file output into a Main server(like:- Nim server)</li>
+            <li>Get the details of server what type of stuff running on this server if the database is running there, so you need to engage the DB team & request to them to do "precheck" from DB end</li>
+            <li>check whether server running in cluster or not if running as cluster, so collect the cluster information with the respective team <strong>eg- vsc/pcs cluster</strong></li>
+            <li>In case of bare metal server, check the console/ILO status</li>
+            <li>Check with application/database team if they required to exclude any package like kernal, sence the application/database may not have the compatibility with the updated kernal</li>
+            <li>Submit the change request. It will go to the CAB (change advisory board) for approval</li>
+            <li>Once the change got schedule, we can executed a change as per the change window time</li>
+            <li>At the change windows time you can apply the patches nmanually or using patch management tool like:- Redhat satellite server, katello forman, Ansible and  other </li>
+            <h3>Manually patch applying</h3>
+            <p>Step: 1</p>
+            <pre>
+<code>dnf clean all</code>
+    or
+<code>yum clean all</code>
+    and
+<code>dnf repolist</code>
+    or
+<code>yum repolist</code>
+            </pre>
+            <p>Step: 2</p>
+            <pre>
+<code>dnf check-update -y</code>
+    or
+<code>yum check-update -y</code>
+            </pre>
+            <p>Step: 3</p>
+            <pre>
+<code>dnf update podman -y</code>
+    or
+<code>yum update podman -y</code>
+            </pre>
+            <p>Step: 4</p>
+            <p>If we required some package downgrade</p>
+            <pre>
+<code>dnf downgrade &lt;package-name&gt; -y</code>
+    or
+<code>yum downgrade &lt;package-name&gt; -y</code>
+            </pre>
+            <p>Step: 5</p>
+            <p>If we required some package install</p>
+            <pre>
+<code>dnf install &lt;package-name&gt; -y</code>
+    or
+<code>yum install &lt;package-name&gt; -y</code>
+            </pre>
+            <p>Step: 6</p>
+            <p>If we required some package remove</p>
+            <pre>
+<code>dnf remove &lt;package-name&gt; -y</code>
+    or
+<code>yum remove &lt;package-name&gt; -y</code>
+            </pre>
+            <p>Step: 7</p>
+            <p>If we required some package reinstall</p>
+            <pre>
+<code>dnf reinstall &lt;package-name&gt; -y</code>
+    or
+<code>yum reinstall &lt;package-name&gt; -y</code>
+            </pre>
+            <p>Step: 8</p>
+            <p>If we check install and upgrade package history</p>
+            <pre>
+<code>dnf history</code>
+    or
+<code>yum history</code>
+            </pre>
+            <p>Step: 9</p>
+            <p>If we check install and upgrade package history details</p>
+            <pre>
+<code>dnf history info &lt;transaction-id&gt;</code>
+    or
+<code>yum history info &lt;transaction-id&gt;</code>
+            </pre>
+            <p>Step: 10</p>
+            <p>If we check install and upgrade package history details</p>
+            <pre>   
+<code>dnf history undo &lt;transaction-id&gt;</code>
+    or
+<code>yum history undo &lt;transaction-id&gt;</code>
+            </pre>
+
+            <li>Automate patching using Ansible tool 
+                <p>Ansible playbook</p>
+
+                <pre>
+                    <code>vim patching.yml</code>
+# write this content in this playbook for pathcing 
+- name: patching playbook
+  host: all
+  become: true
+  tasks:
+       - name: performaning  the pre-check operations
+         script: /home/abhi/precheck.sh
+         args:
+            creates: /home/abhishek/precheck.sh
+
+
+       - name: Appling all the available patches
+         dnf:
+            name: "*"
+            state: latest
+
+       - name: rebooting the machines
+         reboot:
+            reboot_timeout:6000
+
+       - name: performing the post-check operations
+         script: /home/abhishek/postcheck.sh
+         args:
+            creates: /home/abhishek/postcheck.sh
+
+       - name: Finding the pre & post check result file
+         shell: (cd /home/abhishek; find . -maxdepth 1 -iname "*.txt") | cut -d'/' -f 2
+                register: file_to_fetch
+          
+       - name: Fetching the pre & post check result file
+        fetch:
+            src: "/home/abhishek/{{ item }}"
+            dest: "/home/abhishek/patching_result/"
+            flat: yes
+            with_items: "{{ file_to_fetch.stdout_lines }}"
+            when: file_to_fetch.stdout_lines is defined
+                </code>
+                <p>Run the playbook</p>
+                <code>ansible-playbook patching.yml -i inventory</code>
+                </pre>
+
+            </li>
+            <li>After the patching completed, check the server status and application status</li>
+            <li>Check the server post-checks details and documented them into another server
+                <p>Postcheck command</p>
+                <pre>
+<code>uname -a</code>
+<code>uptime</code>
+<code>df -h</code>
+<code>free -m</code>
+<code>lscpu</code>
+<code>lspci</code>
+<code>lsblk</code>
+<code>cat /etc/redhat-release</code>
+<code>cat /etc/os-release</code>
+<code>cat /etc/issue</code>
+<code>cat /etc/fstab</code>
+<code>cat /etc/hosts</code>
+<code>cat /etc/resolv.conf</code>
+<code>cat /etc/sysctl.conf</code>
+<code>vgdisplay</code>
+<code>lvdisplay</code>
+<code>multipath -ll</code>
+<code>cat /etc/grub.cfg</code>
+<code>fdisk -l</code>
+<code>ifconfig -a</code>
+<code>ip addr show</code>
+<code>ip route show</code></pre></li>            
+            <li>Monitor the server health status (Use monitoring tool in case of large number of server)</li>
+            <li>Check the server logs and application logs for any errors or issues</li>
+            <li>Notify the concerned teams about the successful patching and any issues encountered</li>
+            <li>Document the patching process, including any issues faced and resolutions applied</li>
+            <li>Update the change management tool with the patching details and close the change request</li>
+        
+    </ol>
+
+
+
+
+
+
+    <h2>Red Hat Patching</h2>
+    <h3>Full Path Patching</h3>
+    <ol>
+        <li>Ensure the system is registered with Red Hat Subscription Manager:
+            <pre><code>sudo subscription-manager register --username <your-username> --password <your-password></code></pre>
+        </li>
+        <li>Attach the system to a subscription:
+            <pre><code>sudo subscription-manager attach --auto</code></pre>
+        </li>
+        <li>Update the system:
+            <pre><code>sudo yum update -y</code></pre>
+        </li>
+    </ol>
+    <h3>Manual Patching</h3>
+    <ol>
+        <li>Download the required RPM package from the Red Hat Customer Portal.</li>
+        <li>Install the package using:
+            <pre><code>sudo rpm -Uvh <package-name>.rpm</code></pre>
+        </li>
+    </ol>
+
+    <h2>Ubuntu Patching</h2>
+    <h3>Full Path Patching</h3>
+    <ol>
+        <li>Update the package list:
+            <pre><code>sudo apt update</code></pre>
+        </li>
+        <li>Upgrade all packages:
+            <pre><code>sudo apt upgrade -y</code></pre>
+        </li>
+        <li>Reboot the system if necessary:
+            <pre><code>sudo reboot</code></pre>
+        </li>
+    </ol>
+    <h3>Manual Patching</h3>
+    <ol>
+        <li>Download the required .deb package from a trusted source.</li>
+        <li>Install the package using:
+            <pre><code>sudo dpkg -i <package-name>.deb</code></pre>
+        </li>
+        <li>Fix any dependency issues:
+            <pre><code>sudo apt --fix-broken install</code></pre>
+        </li>
+    </ol>
+
+    <div class="example">
+        <h3>Example: Updating a Specific Package</h3>
+        <p>To update a specific package, such as <code>nginx</code>, use the following commands:</p>
+        <h4>Ubuntu:</h4>
+        <pre><code>sudo apt install --only-upgrade nginx</code></pre>
+    </div>
+    </main>
+</body>
+</html>

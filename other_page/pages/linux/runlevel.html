@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about Linux runlevels and how to change them with commands and examples.">
+    <title>Linux Runlevels</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+    </style>
+</head>
+<body>
+    <main>
+    <h1>Understanding Linux Runlevels</h1>
+    <p>In Linux, a <strong>runlevel</strong> is a mode of operation that defines what services and processes are running on the system. Each runlevel is assigned a specific purpose, such as system shutdown, single-user mode, or multi-user mode.</p>
+
+    <h2>Common Runlevels</h2>
+    <ul>
+        <li><strong>0</strong>: Halt the system (shutdown).</li>
+        <li><strong>1</strong>: Single-user mode (maintenance mode).</li>
+        <li><strong>2</strong>: Multi-user mode without networking.</li>
+        <li><strong>3</strong>: Multi-user mode with networking (text-based).</li>
+        <li><strong>4</strong>: Undefined (custom use).</li>
+        <li><strong>5</strong>: Multi-user mode with networking and graphical interface (GUI).</li>
+        <li><strong>6</strong>: Reboot the system.</li>
+    </ul>
+
+    <h2>How to Change Runlevels</h2>
+    <p>To change the runlevel in Linux, you can use the <code>telinit</code> or <code>systemctl</code> command, depending on your system's init system.</p>
+
+    <h3>Using <code>telinit</code> Command</h3>
+    <p>For systems using <strong>SysVinit</strong>, you can change the runlevel with the <code>telinit</code> command:</p>
+    <pre><code>sudo telinit <runlevel></code></pre>
+    <div class="example">
+        <strong>Example:</strong> To switch to runlevel 3 (multi-user mode with networking):
+        <pre><code>sudo telinit 3</code></pre>
+    </div>
+
+    <h3>Using <code>systemctl</code> Command</h3>
+    <p>For systems using <strong>systemd</strong>, you can change the runlevel by switching the target:</p>
+    <pre><code>sudo systemctl isolate <target>.target</code></pre>
+    <div class="example">
+        <strong>Example:</strong> To switch to graphical mode (runlevel 5 equivalent):
+        <pre><code>sudo systemctl isolate graphical.target</code></pre>
+    </div>
+    <p>To switch to multi-user mode (runlevel 3 equivalent):</p>
+    <pre><code>sudo systemctl isolate multi-user.target</code></pre>
+    <p>To switch to single-user mode (runlevel 1 equivalent):</p>
+    <pre><code>sudo systemctl isolate rescue.target</code></pre>
+
+
+    <h2>Checking the Current Runlevel</h2>
+    <p>To check the current runlevel, use the following command:</p>
+    <pre>
+<code>runlevel</code>
+or
+<code>systemctl get-default</code>
+or
+<code>who -r</code>
+    </pre>
+    <p>The output will show the previous and current runlevels.</p>
+    </main>
+</body>
+</html>

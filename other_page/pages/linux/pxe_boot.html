@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Guide to PXE Boot Installation in Linux">
+    <title>PXE Boot Installation in Linux</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+   
+    </style>
+</head>
+<body>
+    <main>
+        <h1>PXE Boot Installation in Linux</h1>
+        <h2>What is PXE Boot?</h2>
+        <p>PXE (Preboot Execution Environment) allows a computer to boot from a network interface, enabling the installation of operating systems without physical media.</p>
+
+        <h2>Steps to Set Up PXE Boot in Linux</h2>
+        <ol>
+            <li><strong>Install Required Packages:</strong> Install a DHCP server, TFTP server, and optionally an HTTP/FTP server.</li>
+            <pre>
+sudo apt update
+sudo apt install isc-dhcp-server tftpd-hpa
+            </pre>
+            <li><strong>Configure DHCP Server:</strong> Edit the DHCP server configuration file to enable PXE boot.</li>
+            <pre><code>
+# /etc/dhcp/dhcpd.conf
+subnet 192.168.1.0 netmask 255.255.255.0 {
+    range 192.168.1.100 192.168.1.200;
+    option routers 192.168.1.1;
+    filename "pxelinux.0";
+    next-server 192.168.1.10;
+}           
+            </code></pre>
+            
+            <li><strong>Set Up TFTP Server:</strong> Place the PXE bootloader and configuration files in the TFTP root directory.</li>
+            <pre> <code>
+sudo cp /usr/lib/PXELINUX/pxelinux.0 /var/lib/tftpboot/
+sudo mkdir -p /var/lib/tftpboot/pxelinux.cfg
+            </code>
+            </pre>
+            <li><strong>Prepare Bootable Files:</strong> Add the Linux kernel and initrd files to the TFTP directory.</li>
+            <pre>
+sudo cp vmlinuz initrd.img /var/lib/tftpboot/
+            </pre>
+            <li><strong>Restart Services:</strong> Restart the DHCP and TFTP services to apply changes.</li>
+            <pre><code>
+sudo systemctl restart isc-dhcp-server tftpd-hpa
+            </code>
+            </pre>
+        </ol>
+
+        <h2>Testing PXE Boot</h2>
+        <p>Configure a client machine to boot from the network and verify that it loads the PXE boot menu.</p>
+    </main>
+    
+</body>
+</html>

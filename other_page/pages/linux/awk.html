@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Comprehensive guide to the Linux awk command with examples and descriptions of all options.">
+    <title>Linux awk Command - Examples and Options</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+      
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Linux <code>awk</code> Command</h1>
+        <p>The <code>awk</code> command in Linux is a powerful text-processing tool used for pattern scanning and processing. It allows you to manipulate and analyze text files or streams efficiently.</p>
+
+        <h2>Syntax</h2>
+        <pre><code>awk [options] 'pattern {action}' file</code></pre>
+
+        <h2>Options</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Option</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>-F</code></td>
+                    <td>Specifies the input field separator.</td>
+                </tr>
+                <tr>
+                    <td><code>-v</code></td>
+                    <td>Assigns a variable before execution.</td>
+                </tr>
+                <tr>
+                    <td><code>--help</code></td>
+                    <td>Displays help information.</td>
+                </tr>
+                <tr>
+                    <td><code>--version</code></td>
+                    <td>Displays the version of <code>awk</code>.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Examples</h2>
+        <h3>1. Print the first column of a file</h3>
+        <pre><code>awk '{print $1}' file.txt</code></pre>
+        <p>This command prints the first column of each line in <code>file.txt</code>.</p>
+
+        <h3>2. Use a custom field separator</h3>
+        <pre><code>awk -F: '{print $1}' /etc/passwd</code></pre>
+        <p>This command uses <code>:</code> as the field separator and prints the first field of each line in the <code>/etc/passwd</code> file.</p>
+        <pre><code>awk -F'[:;.]'' '{print $1}' /etc/passwd</code></pre>
+        <p>This command uses multiple field separators (<code>:</code>, <code>;</code>, and <code>.</code>) and prints the first field of each line in the <code>/etc/passwd</code> file.</p>
+        <pre><code>awk  '{print $1}' FS=':' /etc/passwd</code></pre>
+        <p>This command uses the <code>FS</code> variable to set the field separator to <code>:</code> and prints the first field of each line in the <code>/etc/passwd</code> file.</p>
+
+
+        <h3>3. Print lines matching a pattern</h3>
+        <pre><code>awk '/pattern/ {print $0}' file.txt</code></pre>
+        <p>This command prints all lines in <code>file.txt</code> that match the specified pattern.</p>
+
+        <h3>4. Perform arithmetic operations</h3>
+        <pre><code>awk '{print $1, $2, $1 + $2}' file.txt</code></pre>
+        <p>This command prints the first two columns and their sum for each line in <code>file.txt</code>.</p>
+
+        <h3>5. To Replace a feild separators with another using OFS option</h3>
+        <pre><code>awk 'BEGIN -F':' '{print $1, $2}' OFS="--" file.txt</code></pre>
+        <p>This command uses the <code>BEGIN</code> block to set the field separator to <code>:</code> and the output field separator to <code>--</code>, printing the first two fields of each line in <code>file.txt</code>.</p>
+        
+        
+    </main>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about the standard Linux partition process with detailed steps and examples.">
+    <title>Linux Partition Process</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    
+    <main>
+        <h1>Linux Partition Process</h1>
+        <h2>Introduction</h2>
+        <p>Partitioning is an essential step in setting up a Linux system. It involves dividing a storage device into separate sections, each of which can be managed independently. This guide explains the standard Linux partition process with detailed steps and examples.</p>
+
+
+        <h2>Partition types</h2>
+        <ul>
+            <li><strong>MBR</strong></li>
+            <li><strong>GPT</strong></li>
+
+        </ul>
+        <h2>Partitioning Tools</h2>
+        <ul>
+            <li><strong>fdisk</strong> - A command-line utility for managing disk partitions.</li>
+            <li><strong>parted</strong> - A more advanced command-line tool that supports both MBR and GPT partition tables.</li>
+            <li><strong>gparted</strong> - A graphical partition editor for Linux.</li>
+        </ul>
+        <h2>Common Filesystems</h2>
+        <ul>
+            <li><strong>ext4</strong> - The most commonly used filesystem in Linux.</li>
+            <li><strong>xfs</strong> - A high-performance filesystem suitable for large files.</li>
+            <li><strong>btrfs</strong> - A modern filesystem with advanced features like snapshots and RAID support.</li>
+            <li><strong>swap</strong> - A special partition used for virtual memory.</li>
+        </ul>
+        <h2>Partitioning Schemes</h2>
+        <ul>
+            <li><strong>Standard Partitioning</strong> - Divides the disk into primary and extended partitions.</li>
+            <li><strong>LVM (Logical Volume Management)</strong> - Allows for flexible disk management, enabling resizing and creating snapshots.</li>
+        </ul>
+        <h2>Partitioning Guidelines</h2>
+        <ul>
+            <li><strong>Root Partition (/)</strong> - Contains the operating system and should be at least 20GB.</li>
+            <li><strong>Home Partition (/home)</strong> - Stores user data; size depends on user needs.</li>
+            <li><strong>Swap Partition</strong> - Typically equal to the size of RAM, but can vary based on system usage.</li>
+            <li><strong>Boot Partition (/boot)</strong> - Optional, but useful for systems with complex boot configurations.</li>
+            <li><strong>EFI System Partition (ESP)</strong> - Required for UEFI systems, typically around 200-500MB.</li>
+        </ul>
+        <h2>Partitioning Best Practices</h2>
+        <ul>
+            <li><strong>Backup Data</strong> - Always back up important data before partitioning.</li>
+            <li><strong>Use GPT for Large Disks</strong> - For disks larger than 2TB, use GPT to avoid MBR limitations.</li>
+            <li><strong>Plan Partition Sizes</strong> - Estimate the size of each partition based on usage patterns.</li>
+            <li><strong>Keep a Separate /home Partition</strong> - This allows for easier upgrades and system reinstalls without losing user data.</li>
+            <li><strong>Consider LVM</strong> - If you need flexibility in resizing partitions, consider using LVM.</li>
+        </ul>
+        <h2>Common Partitioning Commands</h2>
+        <ul>
+            <li><strong>fdisk</strong> - Used for creating and managing partitions on MBR disks.</li>
+            <li><strong>parted</strong> - Used for creating and managing partitions on both MBR and GPT disks.</li>
+            <li><strong>mkfs</strong> - Used to format a partition with a specific filesystem (e.g., <code>mkfs.ext4</code>).</li>
+            <li><strong>mount</strong> - Used to mount a partition to a directory.</li>
+            <li><strong>umount</strong> - Used to unmount a partition.</li>
+            <li><strong>lsblk</strong> - Lists all block devices and their partitions.</li>
+            <li><strong>blkid</strong> - Displays information about block devices, including UUIDs and filesystems.</li>
+            <li><strong>df</strong> - Displays disk space usage for mounted filesystems.</li>
+            <li><strong>partprobe</strong> - Informs the OS of partition table changes without rebooting.</li>
+        </ul>
+
+        
+        
+
+        <h2>Steps for Partitioning in Linux</h2>
+        <ol>
+            <li><strong>Identify the Disk:</strong> Use the <code>lsblk</code> or <code>fdisk -l</code> command to list available disks.</li>
+            <li><strong>Create a New Partition:</strong> Use a partitioning tool like <code>fdisk</code> or <code>parted</code> to create a new partition.</li>
+            <li><strong>Format the Partition:</strong> Format the partition with a filesystem such as ext4 using the <code>mkfs</code> command.</li>
+            <li><strong>Mount the Partition:</strong> Mount the partition to a directory using the <code>mount</code> command.</li>
+            <li><strong>Update fstab:</strong> Add an entry to the <code>/etc/fstab</code> file to ensure the partition is mounted automatically on boot.</li>
+        </ol>
+
+        <h2>Example: Partitioning a Disk</h2>
+        <h3>Step 1: Identify the Disk</h3>
+        <pre><code>sudo lsblk</code></pre>
+        <p>This command lists all available disks and partitions. Identify the target disk (e.g., <code>/dev/sdb</code>).</p>
+
+        <h3>Step 2: Create a New Partition</h3>
+        <pre><code>sudo fdisk /dev/sdb</code></pre>
+        <p>Follow the interactive prompts to create a new partition.</p>
+
+        <p>For example, type <code>n</code> to create a new partition, then specify the partition type (primary or extended), partition number, and size.</p>
+        <p>Here’s a quick guide on the fdisk commands:</p>
+        <ul>
+            <li><code>n</code> - Create a new partition.</li>
+            <li><code>p</code> - Print the partition table.</li>
+            <li><code>d</code> - Delete a partition.</li>
+            <li><code>t</code> - Change the partition type.</li>
+            <li><code>w</code> - Write changes and exit.</li>
+            <li><code>q</code> - Quit without saving changes.</li>
+        </ul>
+        <p>After creating the partition, type <code>w</code> to write the changes and exit.</p>
+
+        <h3>After partition create run <code>lsblk</code> this will show us new partition, If <code>lsblk</code> will not showing any new disk partition so run this command:</h3>
+        <pre><code>sudo partprobe</code></pre>
+        <p>This command informs the OS of partition table changes without rebooting.</p>
+        
+        <h3>Step 3: Format the Partition</h3>
+        <pre><code>sudo mkfs.ext4 /dev/sdb1</code></pre>
+        <p>This formats the partition <code>/dev/sdb1</code> with the ext4 filesystem.</p>
+
+        <h3>Step 4: Mount the Partition</h3>
+        <pre><code>sudo mkdir /mnt/new_partition
+sudo mount /dev/sdb1 /mnt/new_partition</code></pre>
+        <p>The partition is now mounted to <code>/mnt/new_partition</code>.</p>
+
+        <h3>Step 5: Update fstab</h3>
+        <pre><code>echo '/dev/sdb1 /mnt/new_partition ext4 defaults 0 0' | sudo tee -a /etc/fstab</code></pre>
+        <p>This ensures the partition is mounted automatically on boot.</p>
+
+        <h2>Example: Creating a Partition with fdisk</h2>
+        <p>To create a new partition using <code>fdisk</code>, follow these steps:</p>
+        <ol>
+            <li>Open the terminal and run <code>sudo fdisk /dev/sdX</code>, replacing <code>sdX</code> with your target disk (e.g., <code>sda</code>).</li>
+            <li>Type <code>n</code> to create a new partition.</li>
+            <li>Select the partition type (primary or extended).</li>
+            <li>Specify the partition number and size.</li>
+            <li>Type <code>w</code> to write the changes and exit.</li>
+        </ol>
+        <p>After creating the partition, format it with a filesystem using <code>mkfs</code> and mount it as described in the previous section.</p>
+        <h2>Example: Creating a Partition with parted</h2>
+        <p>To create a new partition using <code>parted</code>, follow these steps:</p>
+        <ol>
+            <li>Open the terminal and run <code>sudo parted /dev/sdX</code>, replacing <code>sdX</code> with your target disk (e.g., <code>sda</code>).</li>
+            <li>Type <code>mklabel gpt</code> to create a new GPT partition table.</li>
+            <li>Type <code>mkpart primary ext4 1MiB 20GiB</code> to create a primary partition from 1MiB to 20GiB.</li>
+            <li>Type <code>quit</code> to exit parted.</li>
+            <li>Format the new partition with <code>sudo mkfs.ext4 /dev/sdX1</code>, replacing <code>sdX1</code> with the new partition name.</li>
+            <li>Mount the partition with <code>sudo mount /dev/sdX1 /mnt/new_partition</code>.</li>
+        </ol>
+        <p>After creating the partition, you can add it to <code>/etc/fstab</code> for automatic mounting on boot.</p>
+
+    </main>
+    
+</body>
+</html>

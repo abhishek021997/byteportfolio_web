@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about Linux NTP, Chrony service, and configuration with examples and descriptions.">
+    <title>Linux NTP and Chrony Service Configuration</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <main>
+    <h1>Linux NTP and Chrony Service Configuration</h1>
+    <p>Network Time Protocol (NTP) is used to synchronize the system clock of a computer to a reference time source. In Linux, the <code>chronyd</code> service is a popular implementation of NTP.</p>
+
+    <h2>What is Chrony?</h2>
+    <p>Chrony is a versatile implementation of NTP. It is designed to perform well in a wide range of conditions, including systems with intermittent network connections or systems that are frequently suspended and resumed.</p>
+
+    <h2>Installing Chrony</h2>
+    <p>To install Chrony on a Linux system, use the following commands:</p>
+    <pre><code># On RHEL/CentOS
+sudo yum install chrony
+
+# On Ubuntu/Debian
+sudo apt install chrony
+    </code></pre>
+
+    <h2>Configuring Chrony</h2>
+    <p>The main configuration file for Chrony is <code>/etc/chrony/chrony.conf</code>. Below is an example configuration:</p>
+    <pre><code># Use public NTP servers
+server 0.centos.pool.ntp.org iburst
+server 1.centos.pool.ntp.org iburst
+server 2.centos.pool.ntp.org iburst
+server 3.centos.pool.ntp.org iburst
+
+# Allow NTP client access from local network
+allow 192.168.0.0/24
+
+# Specify the drift file
+driftfile /var/lib/chrony/drift
+
+# Log statistics
+logdir /var/log/chrony
+    </code></pre>
+
+    <h2>Starting and Enabling Chrony</h2>
+    <p>After configuring Chrony, start and enable the service:</p>
+    <pre><code>sudo systemctl start chronyd
+sudo systemctl enable chronyd
+    </code></pre>
+
+    <h2>Verifying Chrony</h2>
+    <p>To check the status of Chrony and verify synchronization, use the following commands:</p>
+    <pre><code># Check service status
+sudo systemctl status chronyd
+
+# Verify synchronization
+chronyc tracking
+chronyc sources
+    </code></pre>
+
+    <h2>Using Cron to Automate Tasks</h2>
+    <p>Cron is a time-based job scheduler in Linux. You can use it to automate tasks like restarting the Chrony service periodically. For example:</p>
+    <pre><code># Edit the crontab
+crontab -e
+
+# Add the following line to restart Chrony every day at midnight
+0 0 * * * sudo systemctl restart chronyd
+    </code></pre>
+
+    <h2>Conclusion</h2>
+    <p>Chrony is a powerful and flexible NTP implementation for Linux systems. By configuring it properly and using tools like Cron, you can ensure accurate time synchronization and automate related tasks.</p>
+    </main>
+</body>
+</html>

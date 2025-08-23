@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Comprehensive guide to Linux sed command with examples and descriptions of all options.">
+    <title>Linux sed Command - Examples and Options</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <main>
+    <h1>Linux sed Command</h1>
+    <p>The <code>sed</code> command in Linux is a powerful stream editor used to perform basic text transformations on an input stream (a file or input from a pipeline). Below is a detailed guide with examples and descriptions of all options.</p>
+
+    <h2>Basic Syntax</h2>
+    <pre><code>sed [options] 'script' inputfile</code></pre>
+
+    <h2>Common Options</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>-n</code></td>
+                <td>Suppress automatic printing of pattern space.</td>
+            </tr>
+            <tr>
+                <td><code>-e</code></td>
+                <td>Allows multiple editing commands to be executed.</td>
+            </tr>
+            <tr>
+                <td><code>-f</code></td>
+                <td>Reads sed commands from a file.</td>
+            </tr>
+            <tr>
+                <td><code>-i</code></td>
+                <td>Edits files in place (modifies the original file).</td>
+            </tr>
+            <tr>
+                <td><code>-r</code></td>
+                <td>Uses extended regular expressions.</td>
+            </tr>
+            <tr>
+                <td><code>--help</code></td>
+                <td>Displays help information.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Examples</h2>
+    <h3>1. Replace a word in a file</h3>
+    <pre><code>sed 's/oldword/newword/' file.txt</code></pre>
+    <p>This replaces the first occurrence of <code>oldword</code> with <code>newword</code> in each line of <code>file.txt</code>.</p>
+
+    <h3>2. Replace all occurrences of a word</h3>
+    <pre><code>sed 's/oldword/newword/g' file.txt</code></pre>
+    <p>The <code>g</code> flag replaces all occurrences of <code>oldword</code> with <code>newword</code>.</p>
+
+    <h3>3. Delete lines containing a specific word</h3>
+    <pre><code>sed '/word/d' file.txt</code></pre>
+    <p>This deletes all lines containing <code>word</code> in <code>file.txt</code>.</p>
+
+    <h3>4. Print specific lines</h3>
+    <pre><code>sed -n '2,4p' file.txt</code></pre>
+    <p>The <code>-n</code> option suppresses automatic printing, and <code>2,4p</code> prints lines 2 to 4.</p>
+
+    <h3>5. Edit a file in place</h3>
+    <pre><code>sed -i 's/oldword/newword/g' file.txt</code></pre>
+    <p>This replaces all occurrences of <code>oldword</code> with <code>newword</code> directly in <code>file.txt</code>.</p>
+
+    <h3>6. Delete a line</h3>
+    <pre><code>sed '3d' file.txt</code></pre>
+    <p>This deletes the third line of <code>file.txt</code>.</p>
+    <h3>7. Append text after a specific line</h3>
+    <pre><code>sed '2a\This is appended text' file.txt</code></pre>
+    <p>This appends "This is appended text" after the second line of <code>file.txt</code>.</p>
+    <h3>8. Insert text before a specific line</h3>
+    <pre><code>sed '2i\This is inserted text' file.txt</code></pre>
+    <p>This inserts "This is inserted text" before the second line of <code>file.txt</code>.</p>
+    <h3>9. Change a line</h3>
+    <pre><code>sed '3c\This is the new line' file.txt</code></pre>
+    <p>This changes the third line of <code>file.txt</code> to "This is the new line".</p>
+    <h3>10. Use a script file</h3>
+    <pre><code>sed -f script.sed file.txt</code></pre>
+    <p>This applies the sed commands written in <code>script.sed</code> to <code>file.txt</code>.</p>
+    <h3>11. Use extended regular expressions</h3>
+    <pre><code>sed -r 's/(pattern1|pattern2)/replacement/' file.txt</code></pre>
+    <p>This uses extended regular expressions to replace either <code>pattern1</code> or <code>pattern2</code> with <code>replacement</code>.</p>
+    <h3>12. Print lines matching a pattern</h3>
+    <pre><code>sed -n '/pattern/p' file.txt</code></pre>
+    <p>This prints only the lines that match <code>pattern</code> in <code>file.txt</code>.</p>
+    <h3>13. Replace a word in multiple files</h3>
+    <pre><code>sed -i 's/oldword/newword/g' file1.txt file2.txt</code></pre>
+    <p>This replaces all occurrences of <code>oldword</code> with <code>newword</code> in both <code>file1.txt</code> and <code>file2.txt</code>.</p>
+    <h3>14. Use sed with a pipeline</h3>
+    <pre><code>echo "Hello oldword" | sed 's/oldword/newword/'</code></pre>
+    <p>This replaces <code>oldword</code> with <code>newword</code> in the output of the <code>echo</code> command.</p>
+    <h3>15. Replace a word in a file with a backup</h3>
+    <pre><code>sed -i.bak 's/oldword/newword/g' file.txt</code></pre>
+    <p>This replaces all occurrences of <code>oldword</code> with <code>newword</code> in <code>file.txt</code> and creates a backup of the original file as <code>file.txt.bak</code>.</p>
+    <h3>16. Replace a word in a file with a specific delimiter</h3>
+    <pre><code>sed 's/oldword/newword/g' file.txt</code></pre>
+    <p>This replaces all occurrences of <code>oldword</code> with <code>newword</code> using the pipe character <code>|</code> as a delimiter instead of the default slash <code>/</code>.</p>
+    <h3>17. Replace a word in a file with a case-insensitive search</h3>
+    <pre><code>sed 's/oldword/newword/Ig' file.txt</code></pre>
+    <p>This replaces all occurrences of <code>oldword</code> with <code>newword</code> in a case-insensitive manner.</p>
+    <h3>18. Replace a word in a file with a specific line number</h3>
+    <pre><code>sed '3s/oldword/newword/' file.txt</code></pre>
+    <p>This replaces the first occurrence of <code>oldword</code> with <code>newword</code> only on the third line of <code>file.txt</code>.</p>
+    <h3>19. Replace a word in a file with a specific range of lines</h3>
+    <pre><code>sed '2,4s/oldword/newword/g' file.txt</code></pre>
+    <p>This replaces all occurrences of <code>oldword</code> with <code>newword</code> only in lines 2 to 4 of <code>file.txt</code>.</p>
+    <h3>19. Replace a mulitiple word in a file in a single command</h3>
+    <pre><code>sed -e 's/oldword1/newword1/g' -e 's/oldword2/newword2/g' file.txt</code></pre>
+    <p>This replaces all occurrences of <code>oldword1</code> with <code>newword1</code> and <code>oldword2</code> with <code>newword2</code> in <code>file.txt</code>.</p>
+    <h3>20. Replace a word in a file with a specific pattern</h3>
+    <pre><code>sed 's/oldword\([0-9]\+\)/newword\1/g' file.txt</code></pre>
+    <p>This replaces all occurrences of <code>oldword</code> followed by one or more digits with <code>newword</code> followed by the same digits in <code>file.txt</code>.</p>
+    
+
+
+
+    
+    </main>
+</body>
+</html>

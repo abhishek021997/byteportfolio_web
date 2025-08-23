@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about Linux filesystem permissions and how to manage them.">
+    <title>Linux Filesystem Permissions</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    
+    <main>
+        <h1>Linux Filesystem Permissions</h1>
+        <section>
+            <h2>Introduction</h2>
+            <p>Linux filesystem permissions are a fundamental part of the operating system's security model. They determine who can read, write, or execute files and directories.</p>
+        </section>
+        <section>
+            <h2>Types of Permission</h2>
+            <p>In Linux, permissions are divided into three categories:</p>
+            <ul>
+                <li><strong>Owner:</strong> The user who owns the file or directory.</li>
+                <li><strong>Group:</strong> A set of users who share the same permissions.</li>
+                <li><strong>Others:</strong> All other users on the system.</li>
+            </ul>
+            <p>Each category can have different permissions assigned to it.</p>
+        </section>
+
+        <section>
+
+
+            <h2>Permission Types</h2>
+            <ul>
+                <li><strong>Read (r):</strong> Allows viewing the contents of a file or listing a directory.</li>
+                <li><strong>Write (w):</strong> Allows modifying the contents of a file or creating/deleting files in a directory.</li>
+                <li><strong>Execute (x):</strong> Allows running a file as a program or accessing a directory.</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Permission Structure</h2>
+            <p>Permissions are represented as a string of 10 characters. For example:</p>
+            <p><code>-rw-r--r--</code></p>
+            <ul>
+                <li>The first character indicates the file type (<code>-</code> for a file, <code>d</code> for a directory).</li>
+                <li>The next nine characters are grouped into three sets of three, representing permissions for the owner, group, and others.</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Understanding Permission Notation</h2>
+            <p>Permissions can be represented in symbolic or numeric notation:</p>
+            <ul>
+                <li><strong>Symbolic Notation:</strong> Uses letters (r, w, x) to represent permissions.</li>
+                <li><strong>Numeric Notation:</strong> Uses numbers (0-7) to represent permissions. For example, <code>7</code> represents <code>rwx</code>.</li>
+            </ul>
+            <p>Numeric representation is calculated by adding the values of the permissions:</p>
+            <ul>
+                <li><code>r = 4</code></li>
+                <li><code>w = 2</code></li>
+                <li><code>x = 1</code></li>
+            </ul>
+            <p>For example, <code>rwx</code> (read, write, execute) is represented as <code>4 + 2 + 1 = 7</code>.</p>
+        </section>
+        <section>
+            <h2>Setting Permissions</h2>
+            <p>Permissions can be set using either symbolic or numeric notation. For example:</p>
+            <p><code>chmod u+x filename</code></p>
+            <p>This adds execute permission for the owner of the file.</p>
+            <p>Or using numeric notation:</p>
+            <p><code>chmod 755 filename</code></p>
+            <p>This sets the permissions to <code>rwxr-xr-x</code>.</p>
+        </section>
+        <section>
+            <h2>Changing Permissions</h2>
+            <p>Use the <code>chmod</code> command to change file permissions. For example:</p>
+            <p><code>chmod 755 filename</code></p>
+            <p>This sets the permissions to <code>rwxr-xr-x</code>.</p>
+        </section>
+        <section>
+            <h2>Umask value</h2>
+            <p>The <code>umask</code> command sets default permissions for newly created files and directories. The default value is usually <code>022</code>, which means new files will have <code>rw-r--r--</code> permissions.</p>
+            <p>To change the umask value, use the following command:</p>
+            <p><code>umask 027</code></p>
+            <p>This sets the default permissions to <code>rwxr-x---</code> for new files.</p>
+            <p>To check the current umask value, use:</p>
+            <p><code>umask</code></p>
+            <p>Output:</p>
+            <pre>
+<code>0022</code></pre>
+            <p>This indicates the current umask value.</p>
+        </section>
+        <section>
+            <h2>Changing Ownership</h2>
+            <p>Use the <code>chown</code> command to change the owner of a file or directory. For example:</p>
+            <p><code>chown user:group filename</code></p>
+            <p>This changes the owner to <code>user</code> and the group to <code>group</code>.</p>
+            <p>To change the owner recursively for a directory and its contents, use:</p>
+            <p><code>chown -R user:group directory</code></p>
+            <p>This changes the owner and group for all files and subdirectories within <code>directory</code>.</p>
+        </section>
+        <section>
+            <h2>Changing Group Ownership</h2>
+            <p>Use the <code>chgrp</code> command to change the group ownership of a file or directory. For example:</p>
+            <p><code>chgrp groupname filename</code></p>
+            <p>This changes the group ownership of <code>filename</code> to <code>groupname</code>.</p>
+            <p>To change the group ownership recursively for a directory and its contents, use:</p>
+            <p><code>chgrp -R groupname directory</code></p>
+            <p>This changes the group ownership for all files and subdirectories within <code>directory</code>.</p>
+        </section>
+        <section>
+            <h2>Viewing Permissions</h2>
+            <p>Use the <code>ls -l</code> command to view file permissions. For example:</p>
+            <p><code>ls -l</code></p>
+            <p>Output:</p>
+            <pre>
+-rw-r--r-- 1 user group 1234 Oct 10 12:34 filename
+            </pre>
+        </section>
+    </main>
+    
+</body>
+</html>

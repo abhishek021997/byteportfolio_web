@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="2050">
+    <title>BASH Scripting</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    
+    <style>
+     
+    </style>
+</head>
+<body>
+    <header>
+        <h1>BASH Scripting</h1>
+    </header>
+      <nav class="navbar">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+          <span style="font-size:30px;cursor:pointer; float: right;" onclick="openNav()">&#9776;</span>
+    </nav>
+
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="../../index.html">Linux</a>
+      <a href="ansible.html">Ansible</a>
+      <a href="terraform.html">Terraform</a>
+      <a href="#">Powershell</a>
+      <a href="#">Github</a>
+      <a href="#">Jenkins</a>
+      <a href="#">Docker</a>
+      <a href="#">Kubernetes</a>
+      <a href="#">Prometheus</a>
+      <a href="#">Grafana</a>
+      <a href="#">AWS</a>
+      <a href="#">Azure</a>
+    </div>
+
+
+    <div class="container"> 
+      <span class="open_menu" onclick="openlistmenu()"><i class="fa fa-search"> More list</i></span>
+        <div class="left_menu" id="menu_list">
+          <a href="javascript:void(0)" class="closemenu" onclick="closelistmenu()">&times;</a>
+            <input type="text" id="mySearch" onkeyup="myFunction()" placeholder="Search.." title="Type in a category">
+        
+                <ul id="myMenu">
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Introduction</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Shell Structure</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Variables</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Loops</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">For Loop Example</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">While Loop Example</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Case Loop Example</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Loop With Condition</a></li>
+                    <li><a href="#" onclick="closelistmenu()" target="display_page">Loop With Html presentation</a></li>
+                    
+                </ul>
+        </div>
+        <iframe src="pages/linux/find.html" class="main_frame" frameborder="0" name="display_page"></iframe>
+
+     
+
+    </div>
+    <footer>
+        <p>&copy; 2025 My Blog. All rights reserved.</p>
+    </footer>
+</body>
+
+<script>
+// Search function for the left menu
+function myFunction() {
+  var input, filter, ul, li, a, i;
+  input = document.getElementById("mySearch");
+  filter = input.value.toUpperCase();
+  ul = document.getElementById("myMenu");
+  li = ul.getElementsByTagName("li");
+  for (i = 0; i < li.length; i++) {
+    a = li[i].getElementsByTagName("a")[0];
+    if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+  }
+}
+
+
+// Functions to open and close the side navigation menu
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+
+
+function openlistmenu() {
+  document.getElementById("menu_list").style.display = "block";
+  document.getElementsByClassName("open_menu")[0].style.display = "none";
+  document.getElementsByClassName("main_frame")[0].style.width = "75%";
+}
+
+function closelistmenu() {
+  document.getElementById("menu_list").style.display = "none";
+  document.getElementsByClassName("open_menu")[0].style.display = "block";
+  document.getElementsByClassName("main_frame")[0].style.width = "100%";
+
+  
+}
+
+</script>
+
+
+</html>

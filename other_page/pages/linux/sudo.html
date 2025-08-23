@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about Linux sudo permissions, file entries, and alias usage with examples and descriptions.">
+    <title>Linux Sudo Permissions and Alias</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    
+    <main>
+        <h1>Understanding Linux Sudo Permissions and Alias</h1>
+        <section>
+            <h2>What is Sudo?</h2>
+            <p>The <code>sudo</code> command in Linux allows a permitted user to execute a command as the superuser or another user, as specified by the security policy. It is commonly used to perform administrative tasks.</p>
+        </section>
+
+        <section>
+            <h2>Example: Granting Sudo Permissions</h2>
+            <p>To grant a user sudo permissions, you can edit the <code>/etc/sudoers</code> file or add a configuration file in the <code>/etc/sudoers.d/</code> directory. Use the <code>visudo</code> command to safely edit the sudoers file.</p>
+            <pre><code># Grant sudo access to a user
+username ALL=(ALL) NOPASSWD:ALL
+</code></pre>
+            <p>Replace <code>username</code> with the actual username.</p>
+        </section>
+
+        <section>
+            <h2>File Entries in Sudoers</h2>
+            <p>The <code>/etc/sudoers</code> file contains entries that define user privileges. Each entry consists of the following fields:</p>
+            <ul>
+                <li><strong>User:</strong> The username or group name.</li>
+                <li><strong>Host:</strong> The hostname where the rule applies.</li>
+                <li><strong>Runas:</strong> The user to run the command as.</li>
+                <li><strong>Command:</strong> The command that can be executed.</li>
+            </ul>
+            <p>Example entry:</p>
+            <pre><code>username ALL=(ALL) NOPASSWD: /usr/bin/apt-get</code></pre>
+            <p>This entry allows the user <code>username</code> to run the <code>apt-get</code> command without a password.</p>
+        </section>
+        <section>
+            <h2>Using Aliases in Sudoers</h2>
+            <p>You can define aliases for users, hosts, and commands to simplify the sudoers file. For example:</p>
+            <pre><code># User alias
+User_Alias ADMINS = user1, user2
+# Command alias
+Cmnd_Alias WEB_CMDS = /usr/bin/systemctl restart apache2, /usr/bin/systemctl restart nginx
+# Host alias
+Host_Alias WEBSERVERS = web1, web2
+# Granting permissions
+ADMINS WEBSERVERS = (ALL) NOPASSWD: WEB_CMDS
+</code></pre>
+            <p>This example creates aliases for users, commands, and hosts, allowing the specified users to run the defined commands on the specified hosts without a password.</p>
+        </section>
+        <section>
+            <h2>Sudo Group permission entry</h2>
+            <p>In Linux, the <code>sudo</code> group is a special group that allows its members to execute commands with superuser privileges. The group is typically defined in the <code>/etc/sudoers</code> file.</p>
+            <p>Example entry for the <code>sudo</code> group:</p>
+            <pre><code>%sudo ALL=(ALL:ALL) ALL</code></pre>
+            <p>This entry allows all members of the <code>sudo</code> group to execute any command as any user on any host.</p>
+            <p>To add a user to the <code>sudo</code> group, you can use the following command:</p>
+            <pre><code>sudo usermod -aG sudo username</code></pre>
+            <p>Replace <code>username</code> with the actual username.</p>
+            <p>After adding a user to the <code>sudo</code> group, the user can execute commands with superuser privileges by prefixing them with <code>sudo</code>.</p>
+            <p>Example:</p>
+            <pre><code>sudo apt-get update</code></pre>
+            <p>This command updates the package list using superuser privileges.</p>
+            
+        </section>
+        <section>
+            <h2>User can check his sudo permission</h2>
+            <p>To check if a user has sudo permissions, you can use the following command:</p>
+            <pre><code>sudo -l</code></pre>
+            <p>This command lists the allowed and forbidden commands for the user.</p>
+            <p>Example output:</p>
+            <pre><code>(ALL : ALL) ALL
+(ALL : ALL) NOPASSWD: /usr/bin/systemctl restart apache2
+</code></pre>
+            <p>This output indicates that the user can run any command as any user, and can restart the Apache service without a password.</p>
+        </section>
+        
+            
+    </main>
+</body>
+</html>

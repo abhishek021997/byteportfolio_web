@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Linux find command with options, descriptions, and examples.">
+    <title>Linux Find Command</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <main>
+    <h1>Linux Find Command</h1>
+    <p>The <code>find</code> command in Linux is used to search for files and directories in a directory hierarchy. It is a powerful tool with many options to customize the search.</p>
+
+    <h2>Options and Examples</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Option</th>
+                <th>Description</th>
+                <th>Example</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>-name</code></td>
+                <td>Search for files by name.</td>
+                <td><code>find /path/to/search -name "file.txt"</code></td>
+            </tr>
+            <tr>
+                <td><code>-type</code></td>
+                <td>Search for a specific type of file (e.g., <code>f</code> for files, <code>d</code> for directories).</td>
+                <td><code>find /path/to/search -type d</code></td>
+            </tr>
+            <tr>
+                <td><code>-size</code></td>
+                <td>Search for files by size (e.g., <code>+1M</code> for files larger than 1MB).</td>
+                <td><code>find /path/to/search -size +1M</code></td>
+            </tr>
+            <tr>
+                <td><code>-mtime</code></td>
+                <td>Search for files modified within the last N days.</td>
+                <td><code>find /path/to/search -mtime -7</code></td>
+            </tr>
+            <tr>
+                <td><code>-exec</code></td>
+                <td>Execute a command on the found files.</td>
+                <td><code>find /path/to/search -name "*.log" -exec rm {} \;</code></td>
+            </tr>
+            <tr>
+                <td><code>-user</code></td>
+                <td>Search for files owned by a specific user.</td>
+                <td><code>find /path/to/search -user username</code></td>
+            </tr>
+            <tr>
+                <td><code>-iname</code></td>
+                <td>Search for files by name, ignoring case.</td>
+                <td><code>find /path/to/search -iname "*.jpg"</code></td>
+                
+            </tr>
+            <tr>
+                <td><code>-inum</code></td>
+                <td>Search for files by inode number.</td>
+                <td><code>find /path/to/search -inum 123456</code></td>
+            </tr>
+            <tr>
+                <td><code>-empty</code></td>
+                <td>Search for empty files or directories.</td>
+                <td><code>find /path/to/search -empty</code></td>
+            </tr>
+            <tr>
+                <td><code>-perm</code></td>
+                <td>Search for files with specific permissions.</td>
+                <td><code>find /path/to/search -perm 644</code></td>
+            </tr>
+            <tr>
+                <td><code>-group</code></td>
+                <td>Search for files owned by a specific group.</td>
+                <td><code>find /path/to/search -group groupname</code></td>
+            </tr>
+            
+        </tbody>
+    </table>
+
+    <h2>Basic Example</h2>
+    <p>To find all files with the extension <code>.txt</code> in the <code>/home</code> directory:</p>
+    <pre><code>find /home -name "*.txt"</code></pre>
+
+    <h2>Advanced Example</h2>
+    <p>To find all files larger than 10MB and delete them:</p>
+    <pre><code>find /path/to/search -size +10M -exec rm {} \;</code></pre>
+    </main>
+</body>
+</html>

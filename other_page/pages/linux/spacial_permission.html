@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about Linux file and directory special permissions with examples and descriptions.">
+    <title>Linux Special Permissions</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+ 
+    </style>
+</head>
+<body>
+    <main>
+    <h1>Linux File and Directory Special Permissions</h1>
+    <p>In Linux, there are three special permissions that can be applied to files and directories:</p>
+    <ul>
+        <li><strong>Setuid (Set User ID)</strong></li>
+        <li><strong>Setgid (Set Group ID)</strong></li>
+        <li><strong>Sticky Bit</strong></li>
+    </ul>
+
+    <h2>Special permission using by values</h2>
+    <p>Special permissions can be set using octal values:</p>
+    <ul>
+        <li><strong>Setuid:</strong> 4</li>
+        <li><strong>Setgid:</strong> 2</li>
+        <li><strong>Sticky Bit:</strong> 1</li>
+    </ul>
+    
+    
+    
+    <p>To check the permissions of a file or directory, you can use the <code>ls -l</code> command:</p>
+    <pre><code># ls -l file_name</code></pre>
+    <p>This will display the permissions in the format <code>-rwsr-xr-x</code>, where the <code>s</code> indicates the <code>setuid</code> permission.</p>
+    <p>For directories, the output will look like <code>drwxr-sr-x</code>, where the <code>s</code> indicates the <code>setgid</code> permission.</p>
+    <p>For the sticky bit, the output will look like <code>drwxrwxrwt</code>, where the <code>t</code> indicates the <code>sticky bit</code>.</p>
+    
+
+
+
+    <h2>1. Setuid (Set User ID)</h2>
+    <p>The <code>setuid</code> permission allows a file to be executed with the privileges of the file owner, rather than the user who runs it.</p>
+    <p><strong>Example:</strong></p>
+    <pre><code># chmod u+s file_name
+# ls -l file_name
+-rwsr-xr-x 1 root root 12345 Jan 1 12:34 file_name</code></pre>
+    <p>Here, the <code>s</code> in the owner's execute field indicates the <code>setuid</code> permission.</p>
+
+    <p>To set these permissions, you can use the <code>chmod</code> command with the appropriate octal value. For example:</p>
+    <pre><code># chmod 4755 file_name</code></pre>
+    <p>This sets the <code>setuid</code> permission on the file, along with read and execute permissions for the owner, group, and others.</p>
+
+
+    <h2>2. Setgid (Set Group ID)</h2>
+    <p>The <code>setgid</code> permission allows files to be executed with the privileges of the group owner. For directories, it ensures that files created within the directory inherit the group ownership of the directory.</p>
+    <p><strong>Example:</strong></p>
+    <pre><code># chmod g+s directory_name
+# ls -ld directory_name
+drwxr-sr-x 2 user group 4096 Jan 1 12:34 directory_name</code></pre>
+    <p>Here, the <code>s</code> in the group execute field indicates the <code>setgid</code> permission.</p>
+    <p>To set the <code>setgid</code> permission, you can use:</p>
+    <pre><code># chmod 2755 directory_name</code></pre>
+    <p>This sets the <code>setgid</code> permission on the directory, along with read and execute permissions for the owner, group, and others.</p>
+
+
+    <h2>3. Sticky Bit</h2>
+    <p>The <code>sticky bit</code> is used on directories to restrict file deletion. Only the file owner, directory owner, or root can delete files within the directory.</p>
+    <p><strong>Example:</strong></p>
+    <pre><code># chmod +t directory_name
+# ls -ld directory_name
+drwxrwxrwt 2 user group 4096 Jan 1 12:34 directory_name</code></pre>
+    <p>Here, the <code>t</code> at the end indicates the <code>sticky bit</code>.</p>
+    <p>To set the <code>sticky bit</code>, you can use:</p>
+    <pre><code># chmod 1777 directory_name</code></pre>
+    <p>This sets the <code>sticky bit</code> on the directory, along with read, write, and execute permissions for the owner, group, and others.</p>
+
+
+    <h2>Remove Permission</h2>
+    <p>To remove the special permissions, you can use the <code>chmod</code> command with the appropriate octal value:</p>
+    <pre><code># chmod 755 file_name</code></pre>
+    <p>This removes the <code>setuid</code> permission from the file, setting it to read and execute permissions for the owner, group, and others.</p>
+    <p>To remove the <code>setgid</code> permission, you can use:</p>
+    <pre><code># chmod 755 directory_name</code></pre>
+    <p>This removes the <code>setgid</code> permission from the directory, setting it to read and execute permissions for the owner, group, and others.</p>
+    <p>To remove the <code>sticky bit</code>, you can use:</p>
+    <pre><code># chmod 777 directory_name</code></pre>
+    <p>This removes the <code>sticky bit</code> from the directory, setting it to read, write, and execute permissions for the owner, group, and others.</p>
+    <p>To check the permissions of a file or directory, you can use the <code>ls -l</code> command:</p>
+    <pre><code># ls -l file_name</code></pre>
+
+    <h2>Summary</h2>
+    <p>Special permissions in Linux provide additional control over file and directory behavior. Use them carefully to enhance security and functionality.</p>
+    </main>
+</body>
+</html>

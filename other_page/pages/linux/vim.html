@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about the Vim editor, a powerful text editor for Linux users.">
+    <title>Vim Editor - Linux Guide</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+</head>
+<body>
+    
+    <main>
+        <h1>Vim Editor</h1>
+        <section>
+            <h2>Introduction to Vim</h2>
+            <p>Vim is a highly configurable text editor built to enable efficient text editing. It is an improved version of the vi editor distributed with most UNIX systems.</p>
+        </section>
+        <section>
+            <h2>Key Features</h2>
+            <ul>
+                <li>Syntax highlighting</li>
+                <li>Multi-level undo</li>
+                <li>Powerful search and replace</li>
+                <li>Support for hundreds of programming languages</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Basic Commands</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Command</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>:w</code></td>
+                        <td>Save the file</td>
+                    </tr>
+                    <tr>
+                        <td><code>:q</code></td>
+                        <td>Quit Vim</td>
+                    </tr>
+                    <tr>
+                        <td><code>:x</code></td>
+                        <td>Save and quit</td>
+                    </tr>
+                    <tr>
+                        <td><code>i</code></td>
+                        <td>Enter insert mode</td>
+                    </tr>
+                    <tr>
+                        <td><code>a</code></td>
+                        <td>Append text after the cursor</td>
+                    </tr>
+                    <tr>
+                        <td><code>o</code></td>
+                        <td>Open a new line below the current line</td>
+                    </tr>
+                    <tr>
+                        <td><code>shift+o</code></td>
+                        <td>Open a new line above the current line</td>
+                    </tr>
+                    <tr>
+                        <td><code>esc</code></td>
+                        <td>Exit insert mode</td>
+                    </tr>
+                    <tr>
+                        <td><code>esc Shift+Z+Z</code></td>
+                        <td>Save and quit</td>
+                    </tr>
+                    <tr>
+                        <td><code>esc Shift+g</code></td>
+                        <td>Go to the end of the file</td>
+                    </tr>
+                    <tr>
+                        <td><code>esc g+g</code></td>
+                        <td>Go to the beginning of the file</td>                        
+                    </tr>
+                    <tr>
+                        <td><code>esc shift+0</code></td>
+                        <td>Go to the beginning of the line</td>
+                    </tr>
+                    <tr>
+                        <td><code>esc shift+$</code></td>
+                        <td>Go to the end of the line</td>
+                    </tr>
+                    
+                    
+                </tbody>
+            </table>
+        </section>
+
+
+
+        <section>
+            <h2>Vim Command mode</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Command</th>
+                        <th></th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>y+y</code></td>
+                        <td><code>3+y+y</code> : Three line copy</td>
+                        <td>Yank (copy) a line</td>
+                    </tr>
+                    <tr>
+                        <td><code>p</code></td>
+                        <td></td>
+                        <td>Paste the copied text</td>
+                    </tr>
+                    <tr>
+                        <td><code>u</code></td>
+                        <td></td>
+                        <td>Undo last action</td>
+                    </tr>
+                    <tr>
+                        <td><code>ctrl+r</code></td>
+                        <td></td>
+                        <td>Redo last undone action</td>
+                    </tr>
+                    <tr>
+                        <td><code>c+c</code></td>
+                        <td><code>3+c+c</code>: cut the 3 line</td>
+                        <td>Change a line</td>
+                    </tr>
+                    <tr>
+                        <td><code>2+y+w</code></td>
+                        <td></td>
+                        <td>Yank (copy) two words</td>
+                    </tr>
+                    <tr>
+                        <td><code>c+w</code></td>
+                        <td></td>
+                        <td>Change a word</td>
+                    </tr>
+                    <tr>
+                        <td><code>:se nu</code></td>
+                        <td></td>
+                        <td>Show line numbers</td>
+                    </tr>
+                    <tr>
+                        <td><code>:se nonu</code></td>
+                        <td></td>
+                        <td>Hide line numbers</td>
+                    </tr>
+
+                    <tr>
+                        <td><code>d+d</code></td>
+                        <td></td>
+                        <td>Delete a line</td>
+                    </tr>
+                    <tr>
+                        <td><code>x</code></td>
+                        <td><code>5+x</code>: Delete 5 character at a time</td>
+                        <td>Delete a character</td>
+                    </tr>
+                    <tr>
+                        <td><code>/SearchWord</code></td>
+                        <td></td>
+                        <td>Search for a word</td>
+                    </tr>
+                    <tr>
+                        <td><code>:20</code><code>:5</code></td>
+                        <td></td>
+                        <td>Go to line 20 or Go to line 5</td>
+                    </tr>
+                    <tr>
+                        <td><code>:se ic</code><code>/SearchWord</code></td>
+                        <td></td>
+                        <td>Ignore case while searching</td>
+                    </tr>
+                    <tr>
+                        <td><code>:se noic</code><code>/SearchWord</code></td>
+                        <td></td>
+                        <td>Case sensitive search</td>
+                    </tr>
+                    <tr>
+                        <td><code>:nohl</code></td>
+                        <td></td>
+                        <td>Clear search highlighting</td>
+                    </tr>
+                    <tr>
+                        <td><code>:edit /home/path/file.txt</code></td>
+                        <td>we can also use to copy any word in one file to another</td>
+                        <td>Open a file without exit current editing</td>
+                    </tr>
+                    <tr>
+                        <td><code>:%s/ReplaceWord/to another word/igc</code><br>
+                            <code>:1s/ReplaceWord/to another word/igc</code><br>
+                            <code>:1,20s/ReplaceWord/to another word/igc</code>
+                        </td>
+                        <td><code>g :- global</code><br>
+                            <code>i :- ignore</code><br>
+                            <code>c :- conformation</code><br>
+                            <p>y : Yes, n : No, q : Quit, a : To change all  </p>
+
+                        </td>
+                        <td>Replace a word in the file</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>

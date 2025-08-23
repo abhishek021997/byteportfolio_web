@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Detailed guide on Linux LVM partitioning with steps and examples.">
+    <title>Linux LVM Partitioning - Full Guide</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+       
+    </style>
+</head>
+<body>
+
+    <main>
+        <h1>Linux LVM Partitioning - Full Guide</h1>
+        <section>
+            <h2>What is LVM?</h2>
+            <p>Logical Volume Manager (LVM) is a storage management solution in Linux that allows for flexible disk management. It enables resizing, creating, and managing disk partitions without unmounting or rebooting the system.</p>
+        </section>
+        <section>
+            <h2>Steps to Configure LVM</h2>
+            <ol>
+                <li><strong>Install LVM tools:</strong> Ensure the <code>lvm2</code> package is installed on your system.</li>
+                <li><strong>Create Physical Volumes (PVs):</strong> Initialize the disks or partitions for LVM using the <code>pvcreate</code> command.</li>
+                <li><strong>Create a Volume Group (VG):</strong> Combine physical volumes into a volume group using the <code>vgcreate</code> command.</li>
+                <li><strong>Create Logical Volumes (LVs):</strong> Allocate space from the volume group to create logical volumes using the <code>lvcreate</code> command.</li>
+                <li><strong>Format and Mount:</strong> Format the logical volume with a filesystem and mount it for use.</li>
+            </ol>
+        </section>
+        <section>
+            <h2>Difference between xfs and ext4</h2>
+            <p><strong>xfs</strong> and <strong>ext4</strong> are two popular filesystems in Linux. Here are their key differences:</p>
+            <ul>
+                <li><strong>Performance:</strong> xfs is optimized for high-performance applications and large files, while ext4 is more versatile for general use.</li>
+                <li><strong>Scalability:</strong> xfs supports larger files and filesystems, making it suitable for enterprise environments.</li>
+                <li><strong>Features:</strong> xfs supports advanced features like dynamic inode allocation and delayed allocation, while ext4 has journaling and extents for better performance.</li>
+                <li><strong>Recovery:</strong> xfs has robust recovery tools, while ext4 is easier to repair with fsck.</li>
+                <li><strong>Compatibility:</strong> ext4 is widely supported across various Linux distributions, while xfs is often used in enterprise-grade systems.</li>
+            </ul>
+
+        </section>
+        <section>
+            <h2>Common LVM Commands</h2>
+            <ul>
+                <li><code>pvcreate</code> - Initialize a physical volume.</li>
+                <li><code>vgcreate</code> - Create a volume group from physical volumes.</li>
+                <li><code>lvcreate</code> - Create a logical volume from a volume group.</li>
+                <li><code>lvextend</code> - Extend the size of a logical volume.</li>
+                <li><code>lvreduce</code> - Reduce the size of a logical volume (requires unmounting).</li>
+                <li><code>lvdisplay</code> - Display information about logical volumes.</li>
+                <li><code>vgdisplay</code> - Display information about volume groups.</li>
+                <li><code>pvdisplay</code> - Display information about physical volumes.</li>
+                <li><code>lvremove</code> - Remove a logical volume.</li>
+                <li><code>vgremove</code> - Remove a volume group.</li>
+                <li><code>pvremove</code> - Remove a physical volume.</li>
+                <li><code>lvrename</code> - Rename a logical volume.</li>
+                <li><code>vgextend</code> - Add a physical volume to an existing volume group.</li>
+                <li><code>vgreduce</code> - Remove a physical volume from a volume group.</li>
+                <li><code>lvcreate -s</code> - Create a snapshot of a logical volume.</li>
+                <li><code>lvchange -ay</code> - Activate a logical volume.</li>
+                <li><code>lvchange -an</code> - Deactivate a logical volume.</li>
+                <li><code>lvs</code> - Scan for all logical volumes.</li>
+                <li><code>vgs</code> - Scan for all volume groups.</li>
+                <li><code>pvs</code> - Scan for all physical volumes.</li>
+                <li><code>lvresize</code> - Resize a logical volume (can be used to both extend and reduce).</li>
+                
+            </ul>
+
+            <section>
+                <h3>Extent or Chunks</h3>
+                <p>In LVM, an extent is the basic unit of storage allocation. When you create a logical volume, it is made up of one or more extents. Each extent is typically 4MB in size, but this can be configured during the creation of the volume group.</p>
+                <p>Extents allow LVM to manage storage more efficiently by allocating space in fixed-size chunks. This helps in reducing fragmentation and improving performance when resizing logical volumes.</p>
+            </section>
+
+            <section>
+                <h3>PE calcuation</h3>
+                <p>Physical Extents (PE) are the smallest unit of space that LVM uses to manage storage. When you create a volume group, it divides the available space into physical extents. The size of each physical extent is determined when the volume group is created and is typically 4MB by default.</p>
+                <p>To calculate the number of physical extents in a volume group, you can use the following formula:</p>
+                <p><strong>Number of PEs = Total Size of Volume Group / Size of Each Physical Extent</strong></p>
+                <p>For example, if you have a volume group with a total size of 100GB and the size of each physical extent is 4MB, the calculation would be:</p>
+                <p><strong>Number of 125 PE * 4 LE = 500 MB</strong></p>
+                <p>This means that the volume group can be divided into 25,600 physical extents, each of which can be allocated to logical volumes as needed.</p>
+
+            </section>
+
+        </section>
+        <section>
+            <h2>Example</h2>
+            <h3>Step-by-Step Commands</h3>
+            <pre>
+# Install LVM tools
+sudo apt install lvm2
+
+# Create physical volumes
+sudo pvcreate /dev/sdb /dev/sdc
+
+# Create a volume group
+sudo vgcreate my_vg /dev/sdb /dev/sdc
+
+# Create a logical volume
+sudo lvcreate -L 10G -n my_lv my_vg
+
+# Format the logical volume
+sudo mkfs.ext4 /dev/my_vg/my_lv
+
+# Create a mount point and mount the volume
+sudo mkdir /mnt/my_data
+sudo mount /dev/my_vg/my_lv /mnt/my_data
+
+# Verify the setup
+df -h /mnt/my_data
+            </pre>
+        </section>
+        <section>
+            <h2>To provide a inode number range</h2>
+            <p>When creating a filesystem, you can specify the inode number range using the <code>-i</code> option with the <code>mkfs</code> command. For example:</p>
+            <pre>
+sudo mkfs.ext4 -i 4096 /dev/my_vg/my_lv
+            </pre>
+            <p>This command sets the inode size to 4096 bytes, which determines how many inodes are created for the filesystem. The number of inodes affects how many files can be stored on the filesystem.</p>
+
+        </section>
+        <section>
+            <h2>Extend a partition size step</h2>
+            <p>To extend a partition size in LVM, you can follow these steps:</p>
+            <ol>
+                <li><strong>Check the current size of the logical volume:</strong> Use the <code>lvdisplay</code> command to see the current size of the logical volume.</li>
+                <pre>
+<code>sudo lvdisplay /dev/my_vg/my_lv</code></pre>
+                <li><strong>Check available space in the volume group:</strong> Use the <code>vgdisplay</code> command to see how much free space is available in the volume group.</li>
+                <pre>
+<code>sudo vgdisplay my_vg</code></pre>
+                <li><strong>Resize the physical volume:</strong> If you have additional space on the physical disk, you can resize the partition using a tool like <code>fdisk</code> or <code>parted</code>. After resizing the partition, run <code>partprobe</code> to inform the OS of the changes.</li>
+                <pre>
+<code> partprobe /dev/sdb</code></pre>
+                <li><strong>Resize the volume group:</strong> If you have resized the physical volume, you may need to resize the volume group using the <code>vgextend</code> command if you added a new physical volume.</li>
+                <pre>
+<code>sudo vgextend my_vg /dev/sdb1</code></pre>
+                <li><strong>Resize the logical volume:</strong> Use the <code>lvextend</code> command to increase the size of the logical volume. For example, to extend it by 5GB:</li>
+                <pre>
+sudo lvextend -L +5G /dev/my_vg/my_lv
+                </pre>
+                <li><strong>Resize the filesystem:</strong> After extending the logical volume, you need to resize the filesystem to utilize the new space. For ext4 filesystems, use:</li>
+                <pre>
+sudo resize2fs /dev/my_vg/my_lv
+                </pre>
+                <p>For xfs filesystems, use:</p>
+                <pre>
+sudo xfs_growfs /dev/my_vg/my_lv
+                </pre>
+                <li><strong>Verify the changes:</strong> Use the <code>df -h</code> command to check the new size of the filesystem.</li>
+            </ol>
+            <p>These steps will allow you to extend a logical volume and resize the filesystem accordingly.</p>
+        </section>
+
+        <section>
+        <h2>Extend a LV partition(LV partition formate in ext4)</h2>
+        <p>To extend a logical volume, you can use the <code>lvextend</code> command. For example, to extend the logical volume by 5GB:</p>
+        <pre>
+sudo lvextend -L +5G /dev/my_vg/my_lv
+# Resize the filesystem to use the new space
+sudo resize2fs /dev/my_vg/my_lv
+        </pre>
+        <p>This command increases the size of the logical volume by 5GB and then resizes the filesystem to utilize the additional space.</p>
+        </section>
+        <section>
+            <h2>Extend a LV partition(LV partition formate in xfs)</h2>
+            <p>To extend a logical volume formatted with xfs, you can use the <code>lvextend</code> command followed by the <code>xfs_growfs</code> command. For example, to extend the logical volume by 5GB:</p>
+            <pre>
+sudo lvextend -L +5G /dev/my_vg/my_lv
+# Resize the filesystem to use the new space
+sudo xfs_growfs /dev/my_vg/my_lv
+            </pre>
+            <p>This command increases the size of the logical volume by 5GB and then resizes the xfs filesystem to utilize the additional space.</p>
+        </section>
+
+        <section>
+            <h2>Extend a LV partition with resizing in a single command</h2>
+            <p>To extend a logical volume and resize the filesystem in a single command, you can use the following syntax:</p>
+            <pre>
+sudo lvextend -L +5G -r /dev/my_vg/my_lv
+            </pre>
+            <p>The <code>-r</code> option automatically resizes the filesystem after extending the logical volume, making it a convenient way to manage space.</p>  
+        </section>
+
+        <section>
+            <h2>Advantages of LVM</h2>
+            <ul>
+                <li>Dynamic resizing of partitions.</li>
+                <li>Snapshots for backup and recovery.</li>
+                <li>Combining multiple physical disks into a single logical volume.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Migrate two VG in Single VG</h2>
+            <p>To migrate two volume groups (VGs) into a single VG, you can follow these steps:</p>
+            <ol>
+                <li><strong>Check the current VGs:</strong> Use the <code>vgs</code> command to list the existing volume groups.</li>
+                <pre>
+<code>sudo vgs</code></pre>
+                <li><strong>unmounting:</strong> All Active LV unmount related to migrate vg part</li>
+                <pre>
+<code>sudo umount /dev/old_vg/old_lv</code></pre>
+                <li><strong>Deactivate the old VG:</strong> Before merging, you need to deactivate the old volume group.</li>
+                <pre>
+<code>sudo vgchange -an old_vg</code></pre>
+                <li><strong>Migrate:</strong>Now we can migrate Vg2 to Vg1</li>
+                <pre>
+<code>sudo vgmerge new_vg old_vg</code></pre>
+                <li><strong>Activate the new VG:</strong> After merging, activate the new volume group.</li>
+                <pre>
+<code>sudo vgchange -ay new_vg</code></pre>
+                <li><strong>Verify the migration:</strong> Use the <code>vgs</code> command to check that the new volume group contains the logical volumes from both original VGs.</li>
+                <pre>
+<code>sudo vgs</code></pre>
+                <li><strong>Mount the logical volumes:</strong> If needed, remount the logical volumes from the new volume group.</li>
+                <pre>
+<code>sudo mount /dev/new_vg/new_lv /mnt/new_data</code></pre>
+            </ol>
+            
+        </section>
+
+    <section>
+        <h2>How to set PE size</h2>
+        <p>To set a custom physical extent (PE) size when creating a volume group, you can use the <code>-s</code> option with the <code>vgcreate</code> command. For example, to set the PE size to 8MB:</p>
+        <pre>
+sudo vgcreate -s 8M my_vg /dev/sdb /dev/sdc
+        </pre>
+        <p>This command creates a volume group named <code>my_vg</code> with a physical extent size of 8MB, using the specified physical volumes.</p>
+    </section>
+
+
+    <section>
+        <h2>Restore LVM</h2>
+        <p>To restore LVM configuration from a backup, you can follow these steps:</p>
+        <ol>
+            <li><strong>Backup the current LVM configuration:</strong> Before restoring, it's a good practice to back up the current LVM configuration.</li>
+            <pre>
+<code>sudo vgcfgbackup</code></pre>
+                <li><strong>Restore the LVM configuration list:</strong> Use the <code>vgcfgrestore -l</code> command to list all avilable vg backup list</li>
+            <pre>
+<code>sudo vgcfgrestore -l my_vg</code></pre>
+            <li><strong>Restore the LVM configuration:</strong> Use the <code>vgcfgrestore</code> command to restore the volume group configuration from a backup file.</li>
+            <pre>
+<code>sudo vgcfgrestore -f /etc/lvm/backup/my_vg</code>
+or
+<code>sudo vgcfgrestore -f /etc/lvm/archive/my_vg123344.vg my_vg</code>
+</pre>   
+            <li><strong>Activate the volume group:</strong> After restoring, you may need to activate the volume group.</li>
+            <pre>
+<code>sudo vgchange -ay my_vg</code></pre>
+            <li><strong>Verify the restoration:</strong> Use the <code>vgs</code> command to check that the volume group and its logical volumes are restored correctly.</li>
+            <pre>
+<code>sudo vgs</code></pre>
+        </ol>
+        <p>These steps will help you restore the LVM configuration from a backup, ensuring that your logical volumes and volume groups are back to their previous state.</p>
+        
+    </section>
+        
+        
+
+
+
+    </main>
+
+</body>
+</html>

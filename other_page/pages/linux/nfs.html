@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Guide to install and configure NFS on Linux.">
+    <title>NFS Installation in Linux</title>
+    <link rel="stylesheet" href="../../../css/other_pg.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <main>
+    <h1>NFS Installation in Linux</h1>
+    <p>Network File System (NFS) allows a system to share directories and files with others over a network. Below is a step-by-step guide to install and configure NFS on a Linux system.</p>
+
+
+    <p>
+        <b>Ubuntu Package name:</b> nfs-common <br>
+        <b>Redhat Package name:</b> nfs-utils <br>
+        <b>Demon Name:</b> nfsd / nfs-server <br>
+        <b>Configuration File:</b> /etc/exports <br>
+        <b>Service Name:</b> nfs-server <br>
+        <b>Port Number:</b> 2049 <br>
+
+    </p>
+
+    <h2>Prerequisites form client end</h2>
+    <p>Ensure you have root or sudo privileges on the system where you want to install NFS.</p>
+    <p>Make sure your system is updated:</p>
+    <pre><code>
+        sudo apt update && sudo apt upgrade
+    </code></pre>
+    
+    <p>Install the necessary packages:</p>
+    <pre><code>
+        sudo apt install nfs-common
+    </code></pre>
+
+    <p>Ensure that the system has a static IP address assigned.</p>
+    <p>Check the current IP address:</p>
+    <pre><code>
+        ip addr show
+    </code></pre>
+    <p>Make sure the firewall allows NFS traffic:</p>
+
+    <h1>NFS Installation in Ubuntu</h1>
+    <h2>Step 1: Install NFS Server</h2>
+    <p>Run the following command to install the NFS server package:</p>
+    <pre><code>
+        sudo apt update && sudo apt install nfs-kernel-server
+    </code></pre>
+
+    <h2>Step 2: Create a Shared Directory</h2>
+    <p>Create a directory that you want to share over the network:</p>
+    <pre><code>
+        sudo mkdir -p /mnt/shared
+    </code></pre>
+
+    <p>Set the appropriate permissions:</p>
+    <pre><code>
+        sudo chown nobody:nogroup /mnt/shared
+    </code></pre>
+
+    <h2>Step 3: Configure Exports</h2>
+    <p>Edit the <code>/etc/exports</code> file to define the shared directory and its permissions:</p>
+    <pre><code>
+        sudo nano /etc/exports
+    </code></pre>
+
+    <p>Add the following line:</p>
+    <pre><code>
+        /mnt/shared 192.168.1.0/24(rw,sync,no_subtree_check)
+    </code></pre>
+    <p>Replace <code>192.168.1.0/24</code> with your network's IP range.</p>
+    <p>Type of permission (rw)"Read-write", (ro)"Read-only"</p>
+
+    <h2>Step 4: Apply Changes</h2>
+    <p>Run the following command to apply the changes:</p>
+    <pre><code>
+        sudo exportfs -a
+    </code></pre>
+    <p>Restart the NFS server:</p>
+    <pre><code>
+        sudo systemctl restart nfs-kernel-server
+    </code></pre>
+
+    <h2>Step 5: Configure Firewall</h2>
+    <p>Allow NFS through the firewall:</p>
+    <pre><code>
+        sudo ufw allow from 192.168.1.0/24 to any port nfs
+    </code></pre>
+
+    <h2>Step 6: Mount NFS Share on Client</h2>
+    <p>On the client machine, install the NFS client package:</p>
+    <pre><code>
+        sudo apt install nfs-common
+    </code></pre>
+    <p>Mount the shared directory:</p>
+    <pre><code>
+        sudo mount 192.168.1.100:/mnt/shared /mnt
+    </code></pre>
+    <p>Replace <code>192.168.1.100</code> with the server's IP address.</p>
+
+    <h2>Conclusion</h2>
+    <p>You have successfully installed and configured NFS on your Linux system. The shared directory is now accessible from the client machine.</p>
+
+<!-- Redhat NFS installation -->
+    <h1>NFS Installation in Redhat</h1>
+
+    <h2>Step 1: Install NFS Server in Redhat</h2>
+    <p>Run the following command to install the NFS server package:</p>
+    <pre><code>
+        sudo yum install nfs-utils
+    </code></pre>
+    <p>Enable and start the NFS service:</p>
+    <pre><code>
+        sudo systemctl enable nfs-server
+        sudo systemctl start nfs-server
+    </code></pre>
+    <p>Check the status of the NFS service:</p>
+    <pre><code>
+        sudo systemctl status nfs-server
+    </code></pre> 
+
+    <h2>Step 2: Create a Shared Directory</h2>
+    <p>Create a directory that you want to share over the network:</p>
+    <pre><code>
+        sudo mkdir -p /mnt/shared
+    </code></pre>
+    <p>Set the appropriate permissions:</p>
+    <pre><code>
+        sudo chown nobody:nogroup /mnt/shared
+    </code></pre>
+    <h2>Step 3: Configure Exports</h2>
+    <p>Edit the <code>/etc/exports</code> file to define the shared directory and its permissions:</p>
+    <pre><code>
+        sudo vim /etc/exports
+    </code></pre>
+    <p>Add the following line:</p>
+    <pre><code>
+        /mnt/shared 192.168.1.0/24(rw,sync)
+    </code></pre>
+    <p>Replace <code>192.168.1.0/24</code> with your network's IP range.</p>
+    <p>Replace <code>*(rw)</code> Other method to give all connected machine to share</p>
+    <p>Type of permission (rw)"Read-write", (ro)"Read-only"</p>
+
+    <h2>Step 4: Apply Changes</h2>
+    <p>Run the following command to apply the changes:</p>
+    <pre><code>
+        sudo exportfs -a
+    </code></pre>
+    <p>Restart the NFS server:</p>
+    <pre><code>
+        sudo systemctl restart nfs-server
+    </code></pre>
+
+    <h2>Step 5: Configure Firewall</h2>
+    <p>Allow NFS through the firewall:</p>
+    <pre><code>
+        sudo firewall-cmd --permanent --add-service=nfs
+        sudo firewall-cmd --permanent --add-service=rpc-bind
+        sudo firewall-cmd --permanent --add-service=mountd
+    </code></pre>
+    <p>Reload the firewall:</p>
+    <pre><code>
+        sudo firewall-cmd --reload
+    </code></pre>
+    <h2>Step 6: Mount NFS Share on Client</h2>
+    <p>On the client machine, install the NFS client package:</p>
+    <pre><code>
+        sudo yum install nfs-utils
+    </code></pre>
+    <p>Mount the shared directory:</p>
+
+
+    <h1>NFS Client Side Installation</h1>
+    <h2>Step 1: Install NFS Client</h2>
+    <p>Run the following command to install the NFS client package:</p>
+    <pre><code>
+        sudo apt install nfs-common
+    </code></pre>
+    <p>For Redhat, use:</p>
+    <pre><code>
+        sudo yum install nfs-utils
+    </code></pre>
+
+    <p>Enable and start the NFS service:</p>
+    <pre><code>
+        sudo systemctl enable nfs-common
+    </code></pre>
+    <pre><code>
+        sudo systemctl start nfs-common
+    </code></pre>
+    <p>For Redhat, use:</p>
+    <pre><code>
+        sudo systemctl enable nfs-server
+    </code></pre>
+    <pre><code>
+        sudo systemctl start nfs-server
+    </code></pre>
+
+    <p>Check the status of the NFS service:</p>
+    <pre><code>
+        sudo systemctl status nfs-common
+    </code></pre>
+
+    <p>For Redhat, use:</p>
+    <pre><code>
+        sudo systemctl status nfs-server
+    </code></pre>
+    
+    <p>Check the NFS share available on the server:</p>
+
+    <h2>Step 2: Create a Mount Point</h2>
+    <p>Create a directory where you want to mount the NFS share:</p>
+    <pre><code>
+        sudo mkdir -p /mnt/nfs_share
+    </code></pre>
+    
+    <h2>Step 3: Mount the NFS Share</h2>
+    <p>Mount the NFS share using the following command:</p>
+    <pre><code>
+        -> To check the NFS share available on the server:
+        showmount -e &lt;server_ip_address&gt;      #  Replace with the server's IP address
+
+        -> Mount the NFS share:
+        sudo mount -t nfs &lt;server_ip_address&gt;:/mnt/shared /mnt/nfs_share
+
+        -> If there is different version of NFS, use:
+        sudo mount -t nfs -o nfsvers=4 &lt;server_ip_address&gt;:/mnt/shared /mnt/nfs_share
+
+    </code></pre>
+    <p>Replace <code>&lt;server_ip_address&gt;</code> with the server's IP address.</p>
+
+    <p>To check the mounted NFS share:</p>
+    <pre><code>
+        df -h
+    </code></pre>
+    <p> NFS Permanently add in Fstab</p>
+    <p>To make the NFS share mount automatically at boot, add the following line to the <code>/etc/fstab</code> file:</p>
+    <pre><code>
+        &lt;server_ip_address&gt;:/mnt/shared /mnt/nfs_share nfs defaults 0 0
+    </code></pre>
+    <p>Replace <code>
+        &lt;server_ip_address&gt;
+    </code> with the server's IP address.</p>
+    <p>Save and exit the file.</p>
+    
+
+</main>
+</body>
+</html>
