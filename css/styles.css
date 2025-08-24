@@ -455,6 +455,7 @@ nav.scrolled {
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s ease;
+    text-decoration: none;
 }
 
 .feature-content .btn-primary:hover, .feature-content .btn-secondary:hover {

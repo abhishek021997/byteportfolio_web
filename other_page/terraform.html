@@ -3,194 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="2050">
-    <title>Terraform</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../../css/style.css">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="This website for Study content">
+    <meta name="keywords" content="Linux, Bash scripting, html, css, ansible, docker, kubernet, aws, azure">
+    <meta name="author" content="Abhishek Sharma">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="icon" href="../images/logo/Portfolio_img.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../images/logo/Portfolio_img.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="canonical" href="https://www.example.com/">
+    <link rel="alternate" href="https://www.example.com/rss" type="application/rss+xml">
+    <link rel="alternate" href="https://www.example.com/feed" type="application/atom+xml">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!--bootstrap icon link-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+
+    <title>BytePortfolio</title>
+
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/other_pg.css">
     
-    <style>
-     
-    </style>
+
 </head>
 <body>
-    <header>
-        <h1>Terraform</h1>
-    </header>
-    <nav class="navbar">
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-        <span style="font-size:30px;cursor:pointer; float: right;" onclick="openNav()">&#9776;</span>
+    
+    <div class="grid-bg"></div>
+    <div class="gradient-overlay"></div>
+    <div class="scanlines"></div>
+ 
+    <div class="shapes-container">
+        <div class="shape shape-circle"></div>
+        <div class="shape shape-triangle"></div>
+        <div class="shape shape-square"></div>
+        <div class="shape shape-parallelogram"></div>
+    </div>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="logo-link">
+                <img src="../images/logo/Portfolio_img.png" alt="Byte Portfolio Logo" class="logo-image">
+                <span class="logo-text">BYTEPORTFOLIO</span>
+            </a>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                
+            </ul>
+
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
     </nav>
 
-    <div id="mySidenav" class="sidenav">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-      <a href="bash_main.html">Bash Scripting</a>
-      <a href="ansible.html">Ansible</a>
-      <a href="../../index.html">Linux</a>
-      <a href="#">Powershell</a>
-      <a href="#">Github</a>
-      <a href="#">Jenkins</a>
-      <a href="#">Docker</a>
-      <a href="#">Kubernetes</a>
-      <a href="#">Prometheus</a>
-      <a href="#">Grafana</a>
-      <a href="#">AWS</a>
-      <a href="#">Azure</a>
-    </div>
-
-
-    <div class="container"> 
-      <span class="open_menu" onclick="openlistmenu()"><i class="fa fa-search"> More list</i></span>
-        <div class="left_menu" id="menu_list">
-          <a href="javascript:void(0)" class="closemenu" onclick="closelistmenu()">&times;</a>
-            <input type="text" id="mySearch" onkeyup="myFunction()" placeholder="Search.." title="Type in a category">
-        
-                <ul id="myMenu">
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Introduction</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Installation</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Commands</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Providers</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Variables</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform State</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Modules</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Workspaces</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Outputs</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Remote Backend</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Provisioners</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Data Sources</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Lifecycle</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Import</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Graph</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Destroy</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Taint</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Plan</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Apply</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Validate</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Format</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Console</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Condition</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Loop</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Function</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Collection</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Workspace</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Environment Variables</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Dependency Management</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Debugging</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Ssh </a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Best Practices</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Security</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform CI/CD</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Cloud</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Enterprise</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform API</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform CLI</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform GUI</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform AWS</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Azure</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform GCP</a></li>
+    <section id="home" class="home-section">
+        <div class="home-content">
+                    <a href="#" onclick="closelistmenu()" target="display_page">Introduction</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Installation</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Commands</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Providers</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Variables</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform State</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Modules</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Workspaces</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Outputs</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Remote Backend</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Provisioners</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Data Sources</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Lifecycle</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Import</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Graph</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Destroy</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Taint</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Plan</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Apply</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Validate</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Format</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Console</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Condition</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Loop</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Function</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Collection</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Workspace</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Environment Variables</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Dependency Management</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Debugging</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Ssh </a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Best Practices</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Security</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform CI/CD</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Cloud</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Enterprise</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform API</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform CLI</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform GUI</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform AWS</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Azure</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform GCP</a>
                     <!--
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform OpenStack</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Kubernetes</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Docker</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Vagrant</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Ansible</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Packer</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Chef</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Puppet</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform SaltStack</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform CloudFormation</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Pulumi</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Crossplane</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform CDK</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform GitOps</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Flux</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform ArgoCD</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Spinnaker</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Jenkins</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform GitHub Actions</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform GitLab CI</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform CircleCI</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Travis CI</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Bamboo</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform TeamCity</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Azure DevOps</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Atlassian</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Bitbucket</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Jira</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Confluence</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Slack</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Microsoft Teams</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Discord</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Rocket.Chat</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Mattermost</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Zulip</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Flock</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Telegram</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform WhatsApp</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Signal</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform WeChat</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform QQ</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Weibo</a></li>
-                    <li><a href="#" onclick="closelistmenu()" target="display_page">Terraform Baidu</a></li>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform OpenStack</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Kubernetes</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Docker</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Vagrant</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Ansible</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Packer</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Chef</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Puppet</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform SaltStack</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform CloudFormation</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Pulumi</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Crossplane</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform CDK</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform GitOps</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Flux</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform ArgoCD</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Spinnaker</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Jenkins</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform GitHub Actions</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform GitLab CI</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform CircleCI</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Travis CI</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Bamboo</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform TeamCity</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Azure DevOps</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Atlassian</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Bitbucket</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Jira</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Confluence</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Slack</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Microsoft Teams</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Discord</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Rocket.Chat</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Mattermost</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Zulip</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Flock</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Telegram</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform WhatsApp</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Signal</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform WeChat</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform QQ</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Weibo</a>
+                    <a href="#" onclick="closelistmenu()" target="display_page">Terraform Baidu</a>
                     -->
-
-                </ul>
-        </div>
-        <iframe src="pages/linux/find.html" class="main_frame" frameborder="0" name="display_page"></iframe>
-
-     
-
-    </div>
-    <footer>
-        <p>&copy; 2025 My Blog. All rights reserved.</p>
-    </footer>
-</body>
-
-<script>
-// Search function for the left menu
-function myFunction() {
-  var input, filter, ul, li, a, i;
-  input = document.getElementById("mySearch");
-  filter = input.value.toUpperCase();
-  ul = document.getElementById("myMenu");
-  li = ul.getElementsByTagName("li");
-  for (i = 0; i < li.length; i++) {
-    a = li[i].getElementsByTagName("a")[0];
-    if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
-      li[i].style.display = "";
-    } else {
-      li[i].style.display = "none";
-    }
-  }
-}
-
-
-// Functions to open and close the side navigation menu
-function openNav() {
-  document.getElementById("mySidenav").style.width = "250px";
-}
-
-function closeNav() {
-  document.getElementById("mySidenav").style.width = "0";
-}
-
-
-function openlistmenu() {
-  document.getElementById("menu_list").style.display = "block";
-  document.getElementsByClassName("open_menu")[0].style.display = "none";
-  document.getElementsByClassName("main_frame")[0].style.width = "75%";
-}
-
-function closelistmenu() {
-  document.getElementById("menu_list").style.display = "none";
-  document.getElementsByClassName("open_menu")[0].style.display = "block";
-  document.getElementsByClassName("main_frame")[0].style.width = "100%";
-
   
-}
+    </div>
+  </section>
 
-</script>
+  <section>
+      <iframe id="display_page" name="display_page" src="pages/linux/introduction.html" class="iframe-content"></iframe>
+
+  </section>
+  
+
+  <!-- Footer Section -->
+  <footer class="footer">
+      <div class="footer-container">
+          <div class="footer-text">
+              <p>&copy; 2025 BytePortfolio. All rights reserved.</p>
+              <p>Designed by Abhishek Sharma</p>
+          </div>
+          
+      </div>
+
+  </footer>
 
 
+  <script src="../js/script.js"></script>
+
+</body>
 </html>
