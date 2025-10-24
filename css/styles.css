@@ -200,7 +200,7 @@ nav.scrolled {
     backdrop-filter: blur(10px);
 }
 
-.tab-item {
+.tab-item, .project-tab-item {
     padding: 15px 20px;
     margin-bottom: 10px;
     cursor: pointer;
@@ -214,18 +214,18 @@ nav.scrolled {
     font-size: 1.1rem;
 }
 
-.tab-item:hover {
+.tab-item:hover, .project-tab-item:hover {
     background: rgba(255, 94, 0, 0.1);
     border-color: rgba(255, 94, 0, 0.3);
 }
 
-.tab-item.active {
+.tab-item.active, .project-tab-item.active {
     background: linear-gradient(45deg, rgba(255, 94, 0, 0.2), rgba(0, 178, 255, 0.2));
     border-color: #FF5E00;
     box-shadow: 0 0 20px rgba(255, 94, 0, 0.3);
 }
 
-.tab-icon {
+.tab-icon, .project-tab-item {
     font-size: 1.5rem;
 }
 
@@ -239,16 +239,16 @@ nav.scrolled {
     min-height: 400px;
 }
 
-.content-panel {
+.content-panel, .project-content-panel {
     display: none;
     animation: fadeIn 0.5s ease;
 }
 
-.content-panel.active {
+.content-panel.active, .project-content-panel.active {
     display: block;
 }
 
-.content-panel h3 {
+.content-panel h3, .project-content-panel h3 {
     font-family: 'Orbitron', monospace;
     font-size: 2rem;
     margin-bottom: 20px;
@@ -258,16 +258,36 @@ nav.scrolled {
     -webkit-text-fill-color: transparent;
 }
 
-.content-panel p {
+.content-panel p, .project-content-panel p {
     line-height: 1.8;
     opacity: 0.8;
     margin-bottom: 20px;
     font-size: 1.1rem;
 }
 
+.project-content-panel p img {
+    width: 40px;
+    height: 35px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(255, 94, 0, 0.2);
+    margin: 5px 0;
+    padding: 5px;
+    background-color: #ffffff;
+}
+
+.project-content-panel p i {
+    color: #FF5E00;
+    margin-right: 10px;
+    font-size: 1.2rem;
+    vertical-align: middle;
+
+}
+
+
 .feature-list {
     list-style: none;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .feature-list li {
@@ -294,6 +314,15 @@ nav.scrolled {
         filter: brightness(1.5);
         text-shadow: 0 0 40px rgba(255, 94, 0, 0.8);
     }
+}
+
+
+.feature-list .demo_img{
+    width: 30%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(255, 94, 0, 0.2);
+    margin-top: 20px;
 }
 
 .nav-links {
@@ -582,7 +611,7 @@ nav.scrolled {
     width: 100%;
 }
 
-.card-view h1 {
+.card-view h1, .features h1{
     width: 100%;
     text-align: center;
     font-size: 2.5rem;
@@ -1731,8 +1760,6 @@ nav.scrolled {
     }
 
 }
-
-
 
 
 

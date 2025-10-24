@@ -32,5 +32,27 @@
             });
         });
     });
+
+    // Tab functionality for the projects section
+    document.addEventListener('DOMContentLoaded', function() {
+        const tabs1 = document.querySelectorAll('.project-tab-item');
+        const panels1 = document.querySelectorAll('.project-content-panel');
+
+        tabs1.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs and panels
+                tabs1.forEach(t => t.classList.remove('active'));
+                panels1.forEach(p => p.classList.remove('active'));
+
+                // Add active class to clicked tab and corresponding panel
+                this.classList.add('active');
+                const activePanel = document.getElementById(this.dataset.tab);
+                activePanel.classList.add('active');
+            });
+        });
+
     
+    });
+    
+    projects
 
